@@ -12,7 +12,8 @@ A0 ---- B0
 A1 ---- B1
 ```
 
-Each grid edge has one lane and is 100 m long. SUMO supplies the default
-two-phase traffic-light programs for the four junctions. Routes use only the
-eight internal grid edges; no external network or stochastic traffic demand is
-needed for the smoke test.
+Each grid edge has one lane and is 100 m long. Each junction uses a
+deterministic four-phase program: green for the first approach, yellow,
+green for the second approach, and yellow. Routes use only the eight internal
+grid edges; no external network or stochastic traffic demand is needed for the
+smoke test.

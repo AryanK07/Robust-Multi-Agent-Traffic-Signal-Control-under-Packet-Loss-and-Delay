@@ -8,3 +8,5 @@
 - Phase 1 deterministic SUMO grid, routes, configuration, and TraCI wrapper.
 - Traffic-state extraction, signal control, metrics, integration tests, and
   smoke-test tooling.
+- Phase 2 single-agent RL environment, NumPy-only linear Q-learning baseline,
+  model persistence, smoke training, and evaluation logging.

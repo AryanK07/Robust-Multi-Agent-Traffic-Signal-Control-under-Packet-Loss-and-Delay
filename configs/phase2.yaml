@@ -1,0 +1,16 @@
+phase2:
+  controlled_intersection: A0
+  max_steps_per_episode: 20
+  episodes: 2
+  evaluation_episodes: 1
+  seed: 42
+  learning_rate: 0.05
+  discount_factor: 0.95
+  epsilon_start: 1.0
+  epsilon_end: 0.1
+  epsilon_decay: 0.95
+  queue_reward_weight: 1.0
+  waiting_reward_weight: 0.1
+  checkpoint: results/phase2/single_agent_q_model.npz
+  training_log: results/phase2/training.csv
+  evaluation_output: results/phase2/evaluation.json

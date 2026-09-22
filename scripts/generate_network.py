@@ -5,6 +5,7 @@ import argparse
 import re
 import shutil
 import subprocess
+import xml.etree.ElementTree as ET
 
 import yaml
 
@@ -49,6 +50,22 @@ def main() -> None:
     generated = args.output.read_text(encoding="utf-8")
     generated = re.sub(r"<!-- generated.*?-->\s*", "", generated, count=1, flags=re.DOTALL)
     args.output.write_text(generated, encoding="utf-8")
+    tree = ET.parse(args.output)
+    root = tree.getroot()
+    phases = network.get("phases")
+    if not isinstance(phases, list) or not phases:
+        raise ValueError("network.phases must contain at least one phase")
+    for tls_logic in root.findall("tlLogic"):
+        for phase in list(tls_logic):
+            tls_logic.remove(phase)
+        for phase in phases:
+            ET.SubElement(
+                tls_logic,
+                "phase",
+                duration=str(phase["duration"]),
+                state=str(phase["state"]),
+            )
+    tree.write(args.output, encoding="UTF-8", xml_declaration=True)
     print(f"Generated {args.output}")
 
 

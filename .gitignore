@@ -22,6 +22,8 @@ results/processed/
 results/figures/
 results/tables/
 experiments/logs/
+results/phase2/
+checkpoints/
 *.log
 
 # SUMO generated files

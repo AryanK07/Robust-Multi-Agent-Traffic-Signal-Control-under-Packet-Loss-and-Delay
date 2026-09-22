@@ -6,11 +6,11 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 1: SUMO Environment**. Phase 1 provides
-a small deterministic SUMO scenario, a programmatic TraCI wrapper, traffic
-state extraction, signal control, and reusable basic metrics. Reinforcement
-learning, MARL, and communication impairment components are intentionally
-deferred to later phases.
+The repository is currently in **Phase 2: Single-Agent RL**. Phase 1 provides
+the deterministic SUMO scenario and simulator wrapper; Phase 2 adds one
+learning-controlled intersection using a small NumPy-only linear Q-learning
+baseline. MARL, communication, and communication-impairment components are
+intentionally deferred to later phases.
 
 ## Requirements
 
@@ -34,12 +34,9 @@ py -m pip install --upgrade pip
 py -m pip install -e ".[dev]"
 ```
 
-The optional machine-learning dependencies can be installed when Phase 2
-begins:
-
-```powershell
-py -m pip install -e ".[ml]"
-```
+No additional ML framework is required for Phase 2. PyTorch is not installed
+because it is not required by the NumPy-only baseline and its Python 3.14
+compatibility is not assumed.
 
 ## Tests
 
@@ -86,6 +83,35 @@ To launch the same scenario in SUMO-GUI:
 sumo-gui -c sumo\simulation\grid.sumocfg --start --quit-on-end
 ```
 
+## Phase 2 single-agent baseline
+
+Only intersection `A0` is controlled by the learning agent. The observation
+is a five-element `float32` vector containing normalized local queue length,
+waiting time, vehicle count, lane occupancy, and signal phase. Action `0`
+maintains the current phase; action `1` selects the next green phase. The
+reward is:
+
+```text
+reward = queue_reward_weight * (previous_queue - current_queue)
+       + waiting_reward_weight * (previous_waiting - current_waiting)
+```
+
+The default weights are `1.0` and `0.1`, configured in
+`configs/phase2.yaml`. The implementation is an online linear Q-learning
+agent using NumPy, selected to keep Phase 2 reproducible on Python 3.14
+without adding an unverified ML framework. Checkpoints use portable `.npz`
+files.
+
+Run the small train-save-load-evaluate smoke pipeline:
+
+```powershell
+py scripts\run_phase2_smoke_training.py
+```
+
+It writes ignored functional-verification outputs under `results/phase2/`.
+The smoke run is not a research experiment and does not establish performance
+or superiority.
+
 ## Repository layout
 
 ```text
@@ -94,6 +120,7 @@ src/           Python package
 tests/         Automated tests
 scripts/       Network generation and smoke-test scripts
 sumo/         Network, routes, and SUMO configuration
+results/       Ignored smoke-training outputs
 ```
 
 Experiment outputs are intentionally excluded from version control by default.

@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 1 — SUMO Environment
+Phase 2 — Single-Agent RL
 
 ## Completed
 
@@ -15,21 +15,29 @@ Phase 1 — SUMO Environment
 - Reusable metrics collector provides waiting-time, queue, vehicle, completed
   trip, and simulation-duration summaries.
 - Phase 1 tests and a headless smoke-test script added.
+- Single-agent RL environment added for intersection `A0`.
+- Five-component normalized local observation and two-action phase-control
+  interface added.
+- Configurable delta queue/waiting-time reward added.
+- NumPy-only linear Q-learning agent with `.npz` save/load added.
+- Reproducible smoke training, CSV logging, JSON evaluation, and tests added.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 1.
+- None for Phase 2.
 
 ## Upcoming
 
-- Phase 2: validate single-agent RL logic without adding it to Phase 1.
+- Phase 3: expand to multiple cooperating agents.
 
 ## Tests
 
 Tests validate configuration loading, required SUMO files, package metadata,
 YAML templates, and live SUMO start/step/signal-control/metrics/shutdown
-behavior when SUMO is available.
+behavior when SUMO is available, as well as Phase 2 observation/action
+validation, model construction, persistence, environment lifecycle, and
+episode termination.
 
 ## Experiments
 
@@ -39,8 +47,11 @@ No experiments have been run.
 
 - The scenario is intentionally small and uses deterministic internal grid
   routes; it is a functional foundation, not a realistic traffic benchmark.
-- PyTorch remains an optional later-phase dependency and is not used here.
+- The Phase 2 baseline uses NumPy-only linear Q-learning; no ML framework was
+  installed for Python 3.14 compatibility.
+- The smoke training is a functional check only; no performance conclusion
+  has been drawn.
 
 ## Latest Commit
 
-Phase 1 implementation commit: `eb56b41`.
+Phase 2 commit: to be recorded after verification.

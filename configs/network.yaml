@@ -9,3 +9,12 @@ network:
   grid_size: 2
   grid_length: 100.0
   junction_type: traffic_light
+  phases:
+    - duration: 30
+      state: Gr
+    - duration: 3
+      state: yy
+    - duration: 30
+      state: rG
+    - duration: 3
+      state: yy
