@@ -43,4 +43,4 @@ No experiments have been run.
 
 ## Latest Commit
 
-Phase 1 commit: to be recorded after verification.
+Phase 1 implementation commit: `eb56b41`.
