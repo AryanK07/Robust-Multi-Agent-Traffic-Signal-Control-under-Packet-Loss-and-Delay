@@ -1,0 +1,4 @@
+training:
+  episodes: 1
+  learning_rate: 0.001
+  framework: pytorch

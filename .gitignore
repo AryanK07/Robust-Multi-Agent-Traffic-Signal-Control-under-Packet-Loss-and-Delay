@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Local tooling and secrets
+.env
+.env.*
+.vscode/
+.idea/
+
+# Generated experiment outputs
+results/raw/
+results/processed/
+results/figures/
+results/tables/
+experiments/logs/
+*.log
+
+# SUMO generated files
+*.net.xml
+*.rou.xml
+*.sumocfg
+*.tripinfo.xml
+*.fcd.xml
+*.sqlite
+
+# OS files
+.DS_Store
+Thumbs.db

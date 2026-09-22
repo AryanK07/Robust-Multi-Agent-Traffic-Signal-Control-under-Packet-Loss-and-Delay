@@ -1,0 +1,5 @@
+network:
+  name: small_grid
+  simulator: sumo
+  sumo_binary: sumo
+  sumo_gui_binary: sumo-gui

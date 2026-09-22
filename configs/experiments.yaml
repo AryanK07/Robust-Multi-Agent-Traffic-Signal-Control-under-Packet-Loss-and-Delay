@@ -1,0 +1,3 @@
+experiments:
+  - name: phase0_setup
+    status: setup_only

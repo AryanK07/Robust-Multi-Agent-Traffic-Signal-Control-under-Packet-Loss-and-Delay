@@ -1,0 +1,9 @@
+project:
+  name: robust-multi-agent-traffic-signal-control
+  phase: 0
+
+experiment:
+  seed: 42
+
+paths:
+  results: results

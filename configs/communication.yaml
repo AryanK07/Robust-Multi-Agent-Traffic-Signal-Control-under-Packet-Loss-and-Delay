@@ -1,0 +1,4 @@
+communication:
+  enabled: false
+  packet_loss_probability: 0.0
+  delay_ms: 0
