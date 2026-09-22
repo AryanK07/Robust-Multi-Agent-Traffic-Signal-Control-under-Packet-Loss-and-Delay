@@ -31,6 +31,9 @@ experiments/logs/
 *.tripinfo.xml
 *.fcd.xml
 *.sqlite
+!sumo/network/*.net.xml
+!sumo/routes/*.rou.xml
+!sumo/simulation/*.sumocfg
 
 # OS files
 .DS_Store

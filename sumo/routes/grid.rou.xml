@@ -1,0 +1,16 @@
+<routes>
+    <vType id="passenger" vClass="passenger" accel="2.6" decel="4.5"
+           sigma="0.0" length="5.0" minGap="2.5" maxSpeed="13.9"/>
+
+    <route id="north_to_south" edges="A0A1 A1B1 B1B0"/>
+    <route id="south_to_north" edges="B0B1 B1A1 A1A0"/>
+    <route id="west_to_east" edges="A0B0 B0B1 B1A1"/>
+    <route id="east_to_west" edges="B0A0 A0A1 A1B1"/>
+
+    <vehicle id="vehicle_north_0" type="passenger" route="north_to_south" depart="0"/>
+    <vehicle id="vehicle_south_0" type="passenger" route="south_to_north" depart="2"/>
+    <vehicle id="vehicle_west_0" type="passenger" route="west_to_east" depart="4"/>
+    <vehicle id="vehicle_east_0" type="passenger" route="east_to_west" depart="6"/>
+    <vehicle id="vehicle_north_1" type="passenger" route="north_to_south" depart="8"/>
+    <vehicle id="vehicle_south_1" type="passenger" route="south_to_north" depart="10"/>
+</routes>

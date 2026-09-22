@@ -1,5 +1,11 @@
 network:
   name: small_grid
   simulator: sumo
+  config_file: sumo/simulation/grid.sumocfg
   sumo_binary: sumo
   sumo_gui_binary: sumo-gui
+  seed: 42
+  step_length: 1.0
+  grid_size: 2
+  grid_length: 100.0
+  junction_type: traffic_light

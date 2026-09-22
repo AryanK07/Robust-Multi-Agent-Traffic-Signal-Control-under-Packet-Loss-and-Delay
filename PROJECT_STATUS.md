@@ -2,30 +2,34 @@
 
 ## Current Phase
 
-Phase 0 — Project Setup
+Phase 1 — SUMO Environment
 
 ## Completed
 
-- Repository structure and Python package scaffold created.
-- Dependency and pytest configuration added.
-- YAML configuration templates added for project, network, communication,
-  training, evaluation, and experiment settings.
-- Initial test structure added.
-- Reproducibility and generated-file ignore rules added.
+- Deterministic 2x2 SUMO grid with four signalized junctions created.
+- Deterministic six-vehicle route demand and SUMO configuration added.
+- TraCI environment wrapper supports start, reset, step, close, simulation
+  time, traffic-light access, and programmatic phase selection.
+- Traffic-state extraction provides vehicle count, waiting time, queue length,
+  lane occupancy, and current phase.
+- Reusable metrics collector provides waiting-time, queue, vehicle, completed
+  trip, and simulation-duration summaries.
+- Phase 1 tests and a headless smoke-test script added.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 0.
+- None for Phase 1.
 
 ## Upcoming
 
-- Phase 1: implement and validate the programmatic SUMO environment.
+- Phase 2: validate single-agent RL logic without adding it to Phase 1.
 
 ## Tests
 
-Phase 0 setup tests validate the package metadata, required repository files,
-and YAML configuration templates.
+Tests validate configuration loading, required SUMO files, package metadata,
+YAML templates, and live SUMO start/step/signal-control/metrics/shutdown
+behavior when SUMO is available.
 
 ## Experiments
 
@@ -33,10 +37,10 @@ No experiments have been run.
 
 ## Known Issues
 
-- `sumo` and `sumo-gui` were not available on `PATH` during Phase 0 setup.
-- PyTorch is declared as an optional dependency for the later ML phase and has
-  not been installed during Phase 0.
+- The scenario is intentionally small and uses deterministic internal grid
+  routes; it is a functional foundation, not a realistic traffic benchmark.
+- PyTorch remains an optional later-phase dependency and is not used here.
 
 ## Latest Commit
 
-Phase 0 setup commit: `9c4367f`.
+Phase 1 commit: to be recorded after verification.

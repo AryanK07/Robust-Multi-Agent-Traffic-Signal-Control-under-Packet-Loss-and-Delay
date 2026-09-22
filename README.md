@@ -6,20 +6,21 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 0: Project Setup**. This phase provides
-the Python package scaffold, configuration templates, test setup, and
-reproducibility documentation. The SUMO environment and MARL implementation
-are intentionally not included yet.
+The repository is currently in **Phase 1: SUMO Environment**. Phase 1 provides
+a small deterministic SUMO scenario, a programmatic TraCI wrapper, traffic
+state extraction, signal control, and reusable basic metrics. Reinforcement
+learning, MARL, and communication impairment components are intentionally
+deferred to later phases.
 
 ## Requirements
 
 - Python 3.11 or newer (Python 3.14 was detected during the initial setup check)
 - Git
-- SUMO and `sumo-gui` for Phase 1 and later
+- SUMO 1.27.1 and `sumo-gui` for the Phase 1 scenario
+- TraCI and sumolib (provided by the SUMO Python tools)
 
-SUMO was not discoverable on the development machine during Phase 0 setup.
-Install SUMO separately and ensure both executables are available on `PATH`
-before beginning Phase 1.
+The Phase 1 development machine was verified with SUMO 1.27.1, Python 3.14.0,
+TraCI, `sumo`, `sumo-gui`, `netgenerate`, and `netconvert` available.
 
 ## Setup
 
@@ -42,10 +43,47 @@ py -m pip install -e ".[ml]"
 
 ## Tests
 
-Run the Phase 0 setup checks with:
+Run all tests with:
 
 ```powershell
 py -m pytest
+```
+
+The SUMO integration test is marked `sumo` and is skipped with an explicit
+reason when SUMO or TraCI is unavailable.
+
+## Phase 1 scenario
+
+The scenario is a deterministic 2x2 grid with four signalized junctions:
+
+```text
+A0 ---- B0
+|        |
+|        |
+A1 ---- B1
+```
+
+Each edge has one lane and is 100 m long. Six deterministic passenger
+vehicles use four short routes. Network generation is reproducible:
+
+```powershell
+py scripts\generate_network.py
+```
+
+Run the headless TraCI smoke test:
+
+```powershell
+py scripts\run_sumo_smoke.py
+```
+
+The smoke test starts SUMO, changes one traffic-light phase, advances 12
+steps, prints functional metrics, and closes SUMO. Its output is a functional
+check, not a traffic-performance result.
+
+To launch the same scenario in SUMO-GUI:
+
+```powershell
+sumo-gui -c sumo\simulation\grid.sumocfg --start --quit-on-end
 ```
 
 ## Repository layout
@@ -54,6 +92,8 @@ py -m pytest
 configs/       YAML configuration templates
 src/           Python package
 tests/         Automated tests
+scripts/       Network generation and smoke-test scripts
+sumo/         Network, routes, and SUMO configuration
 ```
 
 Experiment outputs are intentionally excluded from version control by default.

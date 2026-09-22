@@ -1,0 +1,19 @@
+<configuration>
+    <input>
+        <net-file value="../network/grid.net.xml"/>
+        <route-files value="../routes/grid.rou.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="40"/>
+        <step-length value="1"/>
+    </time>
+    <processing>
+        <time-to-teleport value="-1"/>
+        <collision.action value="none"/>
+    </processing>
+    <report>
+        <verbose value="false"/>
+        <no-step-log value="true"/>
+    </report>
+</configuration>
