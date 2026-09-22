@@ -61,4 +61,4 @@ No experiments have been run.
 
 ## Latest Commit
 
-Phase 3 commit: to be recorded after verification.
+Phase 3 implementation commit: `df00c60`.
