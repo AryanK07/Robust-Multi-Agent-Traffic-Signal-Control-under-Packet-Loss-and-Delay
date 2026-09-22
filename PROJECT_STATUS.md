@@ -39,4 +39,4 @@ No experiments have been run.
 
 ## Latest Commit
 
-See the latest Git commit in the repository history.
+Phase 0 setup commit: `9c4367f`.
