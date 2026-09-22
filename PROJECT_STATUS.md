@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 2 — Single-Agent RL
+Phase 3 — Multi-Agent RL
 
 ## Completed
 
@@ -21,23 +21,27 @@ Phase 2 — Single-Agent RL
 - Configurable delta queue/waiting-time reward added.
 - NumPy-only linear Q-learning agent with `.npz` save/load added.
 - Reproducible smoke training, CSV logging, JSON evaluation, and tests added.
+- Four-agent synchronized environment added for `A0`, `A1`, `B0`, and `B1`.
+- Independent Q-Learning learners and per-agent checkpoints added.
+- Joint action stepping advances SUMO exactly once and returns local rewards.
+- Phase 3 smoke training, evaluation, logging, and save/load verification added.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 2.
+- None for Phase 3.
 
 ## Upcoming
 
-- Phase 3: expand to multiple cooperating agents.
+- Phase 4: implement the reliable communication simulator.
 
 ## Tests
 
 Tests validate configuration loading, required SUMO files, package metadata,
 YAML templates, and live SUMO start/step/signal-control/metrics/shutdown
-behavior when SUMO is available, as well as Phase 2 observation/action
-validation, model construction, persistence, environment lifecycle, and
-episode termination.
+behavior when SUMO is available, Phase 2 observation/action validation and
+model persistence, and Phase 3 four-agent validation, synchronized stepping,
+independent learners, and checkpoint restoration.
 
 ## Experiments
 
@@ -51,7 +55,10 @@ No experiments have been run.
   installed for Python 3.14 compatibility.
 - The smoke training is a functional check only; no performance conclusion
   has been drawn.
+- Phase 3 uses local observations and local rewards; agents do not exchange
+  observations or learned information.
+- Packet loss and communication delay are not implemented until later phases.
 
 ## Latest Commit
 
-Phase 2 implementation commit: `46d61a3`.
+Phase 3 commit: to be recorded after verification.

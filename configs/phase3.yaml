@@ -1,0 +1,21 @@
+phase3:
+  agent_ids: [A0, A1, B0, B1]
+  max_steps_per_episode: 20
+  episodes: 2
+  evaluation_episodes: 1
+  seed: 42
+  learning_rate: 0.05
+  discount_factor: 0.95
+  epsilon_start: 1.0
+  epsilon_end: 0.1
+  epsilon_decay: 0.95
+  queue_reward_weight: 1.0
+  waiting_reward_weight: 0.1
+  checkpoint_directory: results/phase3/checkpoints
+  training_log: results/phase3/training.csv
+  evaluation_output: results/phase3/evaluation.json
+  communication:
+    packet_loss_probability: 0.0
+    delay_ms: 0
+    reliable: true
+    instantaneous: true

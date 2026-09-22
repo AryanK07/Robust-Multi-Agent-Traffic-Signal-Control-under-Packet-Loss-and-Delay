@@ -23,6 +23,7 @@ results/figures/
 results/tables/
 experiments/logs/
 results/phase2/
+results/phase3/
 checkpoints/
 *.log
 

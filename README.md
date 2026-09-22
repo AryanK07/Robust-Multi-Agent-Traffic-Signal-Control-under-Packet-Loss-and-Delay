@@ -6,11 +6,10 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 2: Single-Agent RL**. Phase 1 provides
-the deterministic SUMO scenario and simulator wrapper; Phase 2 adds one
-learning-controlled intersection using a small NumPy-only linear Q-learning
-baseline. MARL, communication, and communication-impairment components are
-intentionally deferred to later phases.
+The repository is currently in **Phase 3: Multi-Agent RL**. Phase 1 provides
+the deterministic SUMO scenario, Phase 2 provides a single-agent baseline, and
+Phase 3 adds four independent NumPy-only Q-learning agents. Communication
+impairments and message exchange are intentionally deferred to later phases.
 
 ## Requirements
 
@@ -111,6 +110,47 @@ py scripts\run_phase2_smoke_training.py
 It writes ignored functional-verification outputs under `results/phase2/`.
 The smoke run is not a research experiment and does not establish performance
 or superiority.
+
+## Phase 3 multi-agent baseline
+
+The four learning agents are `A0`, `A1`, `B0`, and `B1`, one per signalized
+intersection. The custom API is:
+
+```python
+observations = environment.reset()
+next_observations, rewards, terminated, info = environment.step({
+    "A0": 0,
+    "A1": 0,
+    "B0": 1,
+    "B1": 0,
+})
+```
+
+Each agent receives its own local normalized `float32[5]` observation:
+queue/halting count, waiting time, vehicle count, lane occupancy, and signal
+phase. Actions retain the Phase 2 semantics: `0` maintains the current phase
+and `1` selects the next green phase. The local reward for agent `i` is:
+
+```text
+r_i = queue_reward_weight * (previous_queue_i - current_queue_i)
+    + waiting_reward_weight * (previous_waiting_i - current_waiting_i)
+```
+
+Phase 3 uses Independent Q-Learning: four separate learners with independent
+parameters and local rewards. A joint action is applied to all four signals,
+then SUMO advances exactly once. The baseline has ideal communication
+conditions only: packet loss is 0%, delay is 0 ms, delivery is reliable and
+instantaneous, and no observations or learned information are exchanged.
+
+Run the functional multi-agent smoke pipeline:
+
+```powershell
+py scripts\run_phase3_smoke_training.py
+```
+
+It saves one ignored `.npz` checkpoint per agent, reloads all four checkpoints,
+evaluates with exploration disabled, and writes CSV/JSON functional-verification
+outputs under `results/phase3/`. These outputs are not research results.
 
 ## Repository layout
 
