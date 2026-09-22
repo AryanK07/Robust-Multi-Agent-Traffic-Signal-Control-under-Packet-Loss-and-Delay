@@ -54,4 +54,4 @@ No experiments have been run.
 
 ## Latest Commit
 
-Phase 2 commit: to be recorded after verification.
+Phase 2 implementation commit: `46d61a3`.
