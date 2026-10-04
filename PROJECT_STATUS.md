@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 3 — Multi-Agent RL
+Phase 4 — Communication Layer
 
 ## Completed
 
@@ -25,23 +25,29 @@ Phase 3 — Multi-Agent RL
 - Independent Q-Learning learners and per-agent checkpoints added.
 - Joint action stepping advances SUMO exactly once and returns local rewards.
 - Phase 3 smoke training, evaluation, logging, and save/load verification added.
+- Ideal communication channel added with typed messages and simulation timestamps.
+- Explicit cardinal neighbor topology added for the 2x2 grid.
+- Phase 3 environment exposes send/receive operations without changing its
+  observation, action, reward, or learning interfaces.
+- Phase 4 communication smoke test and SUMO time-preservation test added.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 3.
+- None for Phase 4.
 
 ## Upcoming
 
-- Phase 4: implement the reliable communication simulator.
+- Phase 5: implement configurable packet loss.
 
 ## Tests
 
 Tests validate configuration loading, required SUMO files, package metadata,
 YAML templates, and live SUMO start/step/signal-control/metrics/shutdown
 behavior when SUMO is available, Phase 2 observation/action validation and
-model persistence, and Phase 3 four-agent validation, synchronized stepping,
-independent learners, and checkpoint restoration.
+model persistence, Phase 3 four-agent validation, synchronized stepping,
+independent learners, and checkpoint restoration, plus Phase 4 message
+construction, topology validation, ideal delivery, and SUMO time preservation.
 
 ## Experiments
 
@@ -58,7 +64,10 @@ No experiments have been run.
 - Phase 3 uses local observations and local rewards; agents do not exchange
   observations or learned information.
 - Packet loss and communication delay are not implemented until later phases.
+- Phase 4 rejects nonzero packet-loss and delay settings rather than simulating
+  them prematurely.
+- Communication metadata is not included in the Phase 3 RL observation.
 
 ## Latest Commit
 
-Phase 3 implementation commit: `df00c60`.
+Phase 4 implementation commit: `e2c1643`.
