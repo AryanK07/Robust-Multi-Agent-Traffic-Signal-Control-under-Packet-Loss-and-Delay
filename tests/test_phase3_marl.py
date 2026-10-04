@@ -63,3 +63,26 @@ def test_joint_step_returns_four_agents_and_one_transition() -> None:
         assert terminated
     finally:
         environment.close()
+
+
+@pytest.mark.sumo
+@pytest.mark.skipif(not SUMO_AVAILABLE, reason="TraCI is required")
+def test_communication_does_not_advance_simulation_time() -> None:
+    from traffic_control.rl import MultiAgentEnvironmentConfig
+
+    environment = MultiAgentEnvironment(
+        MultiAgentEnvironmentConfig(
+            sumo_config_file=ROOT / "sumo/simulation/grid.sumocfg",
+            max_steps=1,
+        )
+    )
+    try:
+        environment.reset()
+        before = environment.simulation_time
+        environment.send_message("A0", "A1", {"queue_length": 2})
+        received = environment.receive_messages("A1")
+        assert environment.simulation_time == before
+        assert received[0].generation_timestamp == before
+        assert received[0].delivery_timestamp == before
+    finally:
+        environment.close()

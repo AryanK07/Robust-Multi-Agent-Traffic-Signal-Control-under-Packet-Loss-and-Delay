@@ -2,10 +2,11 @@
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 
+from traffic_control.communication import CommunicationChannel, CommunicationMessage
 from traffic_control.environment import SumoEnvironment, SumoEnvironmentConfig
 
 
@@ -28,6 +29,7 @@ class MultiAgentEnvironmentConfig:
     vehicle_normalization: float = 20.0
     queue_reward_weight: float = 1.0
     waiting_reward_weight: float = 0.1
+    communication_enabled: bool = True
 
 
 class MultiAgentEnvironment:
@@ -51,6 +53,10 @@ class MultiAgentEnvironment:
         )
         self._step_count = 0
         self._previous: dict[str, tuple[float, float]] = {}
+        self.communication = CommunicationChannel(
+            agent_ids=self.agent_ids,
+            enabled=config.communication_enabled,
+        )
 
     @property
     def agent_ids(self) -> tuple[str, ...]:
@@ -69,6 +75,7 @@ class MultiAgentEnvironment:
             )
         self._step_count = 0
         self._previous = {}
+        self.communication.clear()
         observations: dict[str, np.ndarray] = {}
         for agent_id in self.agent_ids:
             state = self._simulator.intersection_state(agent_id)
@@ -128,6 +135,24 @@ class MultiAgentEnvironment:
     def close(self) -> None:
         """Close SUMO cleanly."""
         self._simulator.close()
+
+    def send_message(
+        self,
+        sender_id: str,
+        receiver_id: str,
+        payload: Mapping[str, object],
+        timestamp: float | None = None,
+    ) -> CommunicationMessage:
+        """Send an ideal message without advancing the SUMO simulation."""
+        message_time = self.simulation_time if timestamp is None else timestamp
+        return self.communication.send(sender_id, receiver_id, payload, message_time)
+
+    def receive_messages(
+        self, receiver_id: str, current_time: float | None = None
+    ) -> tuple[CommunicationMessage, ...]:
+        """Receive queued messages without changing the SUMO simulation time."""
+        receive_time = self.simulation_time if current_time is None else current_time
+        return self.communication.receive(receiver_id, receive_time)
 
     @property
     def simulation_time(self) -> float:

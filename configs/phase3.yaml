@@ -15,6 +15,7 @@ phase3:
   training_log: results/phase3/training.csv
   evaluation_output: results/phase3/evaluation.json
   communication:
+    enabled: true
     packet_loss_probability: 0.0
     delay_ms: 0
     reliable: true

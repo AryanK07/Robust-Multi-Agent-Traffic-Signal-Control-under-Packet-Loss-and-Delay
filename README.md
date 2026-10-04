@@ -6,10 +6,11 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 3: Multi-Agent RL**. Phase 1 provides
-the deterministic SUMO scenario, Phase 2 provides a single-agent baseline, and
-Phase 3 adds four independent NumPy-only Q-learning agents. Communication
-impairments and message exchange are intentionally deferred to later phases.
+The repository is currently in **Phase 4: Communication Layer**. Phase 1
+provides the deterministic SUMO scenario, Phase 2 provides a single-agent
+baseline, Phase 3 adds four independent NumPy-only Q-learning agents, and
+Phase 4 adds an ideal inter-agent communication abstraction. Packet loss,
+delay, and robustness processing remain deferred to later phases.
 
 ## Requirements
 
@@ -152,11 +153,42 @@ It saves one ignored `.npz` checkpoint per agent, reloads all four checkpoints,
 evaluates with exploration disabled, and writes CSV/JSON functional-verification
 outputs under `results/phase3/`. These outputs are not research results.
 
+## Phase 4 ideal communication layer
+
+Phase 4 provides a SUMO-independent `CommunicationChannel` for the four agents.
+Messages are typed records containing a message ID, sender, receiver,
+simulation-time generation timestamp, structured mapping payload, and delivery
+timestamp once received. The channel uses the 2x2 grid's cardinal neighbors:
+
+```text
+A0 <-> B0
+|       |
+A1 <-> B1
+```
+
+Each send/receive operation is deterministic and does not advance SUMO time.
+Messages generated at simulation time `t` are available at `t`; messages to
+non-neighbors and unknown agents are rejected. The Phase 4 configuration is
+explicitly ideal (`enabled: true`, `packet_loss_probability: 0.0`, and
+`delay_ms: 0`). Nonzero loss or delay is rejected until its dedicated phase;
+packet loss, delay queues, and stale-information handling are not implemented
+here. Message age can be derived internally from simulation timestamps, but
+age/availability metadata is not added to the Phase 3 RL observation.
+
+Run the short communication smoke test:
+
+```powershell
+py scripts\run_phase4_communication_smoke.py
+```
+
+The output is functional verification only, not a communication or traffic
+performance result.
+
 ## Repository layout
 
 ```text
 configs/       YAML configuration templates
-src/           Python package
+src/           Python package, including communication primitives
 tests/         Automated tests
 scripts/       Network generation and smoke-test scripts
 sumo/         Network, routes, and SUMO configuration
