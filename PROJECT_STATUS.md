@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 4 — Communication Layer
+Phase 5 — Packet Loss Simulation
 
 ## Completed
 
@@ -30,15 +30,18 @@ Phase 4 — Communication Layer
 - Phase 3 environment exposes send/receive operations without changing its
   observation, action, reward, or learning interfaces.
 - Phase 4 communication smoke test and SUMO time-preservation test added.
+- Seeded stochastic packet-loss model added to the communication channel.
+- Bounded send/delivery/drop telemetry and observed-loss-rate reporting added.
+- Phase 5 packet-loss smoke test added; zero-delay behavior is preserved.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 4.
+- None for Phase 5.
 
 ## Upcoming
 
-- Phase 5: implement configurable packet loss.
+- Phase 6: implement configurable communication delay.
 
 ## Tests
 
@@ -47,7 +50,8 @@ YAML templates, and live SUMO start/step/signal-control/metrics/shutdown
 behavior when SUMO is available, Phase 2 observation/action validation and
 model persistence, Phase 3 four-agent validation, synchronized stepping,
 independent learners, and checkpoint restoration, plus Phase 4 message
-construction, topology validation, ideal delivery, and SUMO time preservation.
+construction, topology validation, ideal delivery, SUMO time preservation, and
+Phase 5 seeded packet-loss validation and telemetry.
 
 ## Experiments
 
@@ -63,11 +67,11 @@ No experiments have been run.
   has been drawn.
 - Phase 3 uses local observations and local rewards; agents do not exchange
   observations or learned information.
-- Packet loss and communication delay are not implemented until later phases.
-- Phase 4 rejects nonzero packet-loss and delay settings rather than simulating
-  them prematurely.
+- Communication delay remains unsupported and must be zero.
 - Communication metadata is not included in the Phase 3 RL observation.
+- Combined impairment, stale-information robustness, adaptive communication,
+  and robust training remain future phases.
 
 ## Latest Commit
 
-Phase 4 implementation commit: `e2c1643`.
+Phase 5 commit: to be recorded after verification.

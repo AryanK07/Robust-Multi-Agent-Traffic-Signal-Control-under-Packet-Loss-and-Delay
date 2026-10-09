@@ -6,11 +6,12 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 4: Communication Layer**. Phase 1
+The repository is currently in **Phase 5: Packet Loss Simulation**. Phase 1
 provides the deterministic SUMO scenario, Phase 2 provides a single-agent
 baseline, Phase 3 adds four independent NumPy-only Q-learning agents, and
-Phase 4 adds an ideal inter-agent communication abstraction. Packet loss,
-delay, and robustness processing remain deferred to later phases.
+Phase 4 adds an ideal inter-agent communication abstraction, and Phase 5 adds
+seeded packet-loss simulation. Delay and robustness processing remain deferred
+to later phases.
 
 ## Requirements
 
@@ -183,6 +184,31 @@ py scripts\run_phase4_communication_smoke.py
 
 The output is functional verification only, not a communication or traffic
 performance result.
+
+## Phase 5 packet loss
+
+The communication channel now supports configurable packet-loss probabilities
+from 0.0 through 1.0, with an isolated seeded pseudorandom generator. Valid
+messages are either delivered immediately or dropped; dropped messages never
+enter a receiver queue and are not retried. A successful message preserves its
+generation timestamp as its delivery timestamp. Delay remains exactly zero and
+nonzero `delay_ms` is rejected until Phase 6.
+
+Each channel exposes bounded telemetry for send attempts, deliveries, drops,
+configured probability, seed, and observed loss rate
+(`dropped_messages / send_attempts`, or `0.0` when there are no attempts).
+`reset_telemetry()` clears counters without resetting the RNG sequence. The
+Phase 3 RL observation, action, reward, and IQL update remain unchanged.
+
+Run the packet-loss functional smoke test:
+
+```powershell
+py scripts\run_phase5_packet_loss_smoke.py
+```
+
+The smoke output is a functional check, not a traffic-performance or research
+result. Combined packet loss and delay, stale-information robustness, adaptive
+communication, and robust training are not implemented.
 
 ## Repository layout
 

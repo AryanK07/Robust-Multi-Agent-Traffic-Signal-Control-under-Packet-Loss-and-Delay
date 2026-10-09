@@ -31,6 +31,9 @@ def test_ideal_channel_delivers_immediately_and_deterministically() -> None:
     assert [dict(message.payload) for message in messages] == [{"queue": 3}, {"queue": 4}]
     assert all(message.delivery_timestamp == 10.0 for message in messages)
     assert channel.receive("A1", 10.0) == ()
+    telemetry = channel.telemetry()
+    assert (telemetry.send_attempts, telemetry.delivered_messages, telemetry.dropped_messages) == (2, 2, 0)
+    assert telemetry.observed_loss_rate == 0.0
 
 
 def test_messages_are_available_only_at_or_after_generation_time() -> None:
@@ -73,18 +76,60 @@ def test_topology_is_configurable_and_validated() -> None:
         )
 
 
+def test_full_packet_loss_drops_every_message_and_records_event() -> None:
+    channel = CommunicationChannel(packet_loss_probability=1.0, seed=7)
+    message = channel.send("A0", "A1", {"queue": 1}, 2.0)
+
+    assert channel.receive("A1", 2.0) == ()
+    assert channel.last_event is not None
+    assert channel.last_event.message_id == message.message_id
+    assert channel.last_event.delivered is False
+    telemetry = channel.telemetry()
+    assert (telemetry.send_attempts, telemetry.delivered_messages, telemetry.dropped_messages) == (1, 0, 1)
+    assert telemetry.observed_loss_rate == 1.0
+
+
+def test_intermediate_packet_loss_is_reproducible_with_isolated_seed() -> None:
+    first = CommunicationChannel(packet_loss_probability=0.5, seed=42)
+    second = CommunicationChannel(packet_loss_probability=0.5, seed=42)
+    first_results = [first.send("A0", "A1", {"index": i}, 0.0) and first.last_event.delivered for i in range(20)]
+    second_results = [second.send("A0", "A1", {"index": i}, 0.0) and second.last_event.delivered for i in range(20)]
+
+    assert first_results == second_results
+    assert first.telemetry() == second.telemetry()
+
+
+def test_telemetry_reset_does_not_reset_rng_sequence() -> None:
+    channel = CommunicationChannel(packet_loss_probability=0.5, seed=42)
+    channel.send("A0", "A1", {}, 0.0)
+    first_event = channel.last_event
+    channel.reset_telemetry()
+    channel.send("A0", "A1", {}, 0.0)
+
+    fresh = CommunicationChannel(packet_loss_probability=0.5, seed=42)
+    fresh.send("A0", "A1", {}, 0.0)
+    fresh_first = fresh.last_event
+    fresh.send("A0", "A1", {}, 0.0)
+    fresh_second = fresh.last_event
+    assert channel.last_event is not None
+    assert first_event is not None
+    assert channel.last_event.delivered == fresh_second.delivered
+    assert fresh_first is not None
+    assert first_event.delivered == fresh_first.delivered
+    assert channel.telemetry().send_attempts == 1
+    assert channel.telemetry().dropped_messages + channel.telemetry().delivered_messages == 1
+
+
 @pytest.mark.parametrize(
     ("packet_loss_probability", "delay_ms"),
-    [(0.1, 0.0), (0.0, 1.0)],
+    [(-0.1, 0.0), (1.1, 0.0), (0.0, 1.0)],
 )
-def test_phase_four_rejects_deferred_impairments(
+def test_invalid_or_deferred_impairments_are_rejected(
     packet_loss_probability: float, delay_ms: float
 ) -> None:
-    with pytest.raises(NotImplementedError):
-        CommunicationChannel(
-            packet_loss_probability=packet_loss_probability,
-            delay_ms=delay_ms,
-        )
+    expected = NotImplementedError if delay_ms else ValueError
+    with pytest.raises(expected):
+        CommunicationChannel(packet_loss_probability=packet_loss_probability, delay_ms=delay_ms)
 
 
 def test_invalid_timestamps_and_payload_are_rejected() -> None:

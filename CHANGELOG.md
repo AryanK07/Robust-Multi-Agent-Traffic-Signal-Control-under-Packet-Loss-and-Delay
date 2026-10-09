@@ -14,3 +14,5 @@
   observations/rewards, independent checkpoints, and evaluation logging.
 - Phase 4 ideal communication channel with typed messages, explicit 2x2
   neighbors, deterministic zero-delay delivery, and Phase 3 integration hooks.
+- Phase 5 configurable seeded packet loss with delivery/drop telemetry and
+  zero-delay-only validation.

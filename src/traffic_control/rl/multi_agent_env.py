@@ -30,6 +30,8 @@ class MultiAgentEnvironmentConfig:
     queue_reward_weight: float = 1.0
     waiting_reward_weight: float = 0.1
     communication_enabled: bool = True
+    communication_packet_loss_probability: float = 0.0
+    communication_seed: int | None = None
 
 
 class MultiAgentEnvironment:
@@ -56,6 +58,8 @@ class MultiAgentEnvironment:
         self.communication = CommunicationChannel(
             agent_ids=self.agent_ids,
             enabled=config.communication_enabled,
+            packet_loss_probability=config.communication_packet_loss_probability,
+            seed=config.communication_seed,
         )
 
     @property
@@ -128,6 +132,7 @@ class MultiAgentEnvironment:
             "agent_ids": self.agent_ids,
             "simulation_time": self._simulator.simulation_time,
             "metrics": self._simulator.metrics(),
+            "communication": self.communication.telemetry(),
             "per_agent": per_agent,
         }
         return observations, rewards, terminated, info

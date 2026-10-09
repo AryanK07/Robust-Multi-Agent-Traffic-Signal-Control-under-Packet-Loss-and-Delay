@@ -30,6 +30,11 @@ def make_environment(config: dict, seed: int) -> MultiAgentEnvironment:
             max_steps=phase3["max_steps_per_episode"],
             queue_reward_weight=phase3["queue_reward_weight"],
             waiting_reward_weight=phase3["waiting_reward_weight"],
+            communication_enabled=phase3["communication"]["enabled"],
+            communication_packet_loss_probability=phase3["communication"][
+                "packet_loss_probability"
+            ],
+            communication_seed=phase3["communication"]["seed"],
         )
     )
 

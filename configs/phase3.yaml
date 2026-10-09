@@ -17,6 +17,7 @@ phase3:
   communication:
     enabled: true
     packet_loss_probability: 0.0
+    seed: 42
     delay_ms: 0
     reliable: true
     instantaneous: true
