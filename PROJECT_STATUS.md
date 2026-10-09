@@ -74,4 +74,4 @@ No experiments have been run.
 
 ## Latest Commit
 
-Phase 5 commit: to be recorded after verification.
+Phase 5 implementation commit: `a04c8e6`.
