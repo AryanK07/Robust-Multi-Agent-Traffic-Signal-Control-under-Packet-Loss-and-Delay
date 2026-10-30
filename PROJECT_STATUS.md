@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 6 — Communication Delay Simulation
+Phase 7 — Combined Packet Loss and Communication Delay Experiments
 
 ## Completed
 
@@ -37,15 +37,20 @@ Phase 6 — Communication Delay Simulation
   millisecond-to-second scheduling, pending queues, tie-breaking, and
   delivery telemetry.
 - Phase 6 delay and packet-loss compatibility smoke test added.
+- Configurable 5x5 Phase 7 condition matrix and five replicate seeds added.
+- Frozen-checkpoint experiment runner, immutable raw JSON results, and grouped
+  summaries added.
+- Causal-path audit documented: current Phase 3 policies do not consume
+  communication messages.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 6.
+- None for Phase 7 framework implementation.
 
 ## Upcoming
 
-- Phase 7: evaluate combined packet loss and delay.
+- Phase 8: implement approved stale-information robustness mechanism.
 
 ## Tests
 
@@ -55,11 +60,13 @@ behavior when SUMO is available, Phase 2 observation/action validation and
 model persistence, Phase 3 four-agent validation, synchronized stepping,
 independent learners, and checkpoint restoration, plus Phase 4 message
 construction, topology validation, ideal delivery, SUMO time preservation, and
-Phase 5 seeded packet-loss validation and telemetry.
+Phase 5 seeded packet-loss validation and telemetry, plus Phase 7 matrix
+generation, validation, serialization, and aggregation.
 
 ## Experiments
 
-No experiments have been run.
+No full research matrix has been run. The Phase 7 smoke is functional
+verification only.
 
 ## Known Issues
 
@@ -74,9 +81,12 @@ No experiments have been run.
 - Delay is currently deterministic fixed delay; variable/stochastic delay
   distributions are intentionally not implemented.
 - Communication metadata is not included in the Phase 3 RL observation.
-- Combined impairment, stale-information robustness, adaptive communication,
+- Phase 3 policies do not generate or consume communication messages during
+  action selection, so impairment cannot currently be attributed to traffic
+  performance.
+- Delay is fixed only; stochastic delay, robustness, adaptive communication,
   and robust training remain future phases.
 
 ## Latest Commit
 
-Phase 6 implementation is currently uncommitted.
+Phase 7 implementation is currently uncommitted.

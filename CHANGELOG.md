@@ -18,3 +18,5 @@
   zero-delay-only validation.
 - Phase 6 deterministic fixed communication delay driven by simulation
   timestamps, pending-message queues, and delay telemetry.
+- Phase 7 configurable combined packet-loss/delay matrix, frozen-checkpoint
+  runner, raw run storage, and summary aggregation.

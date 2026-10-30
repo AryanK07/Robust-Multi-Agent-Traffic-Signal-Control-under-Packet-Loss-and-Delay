@@ -240,6 +240,31 @@ This phase implements delay simulation only. Combined-condition research
 evaluation, stale-information handling, robustness mechanisms, and
 message-age-aware observations remain future work.
 
+## Phase 7 combined impairment experiments
+
+Phase 7 provides a configurable 5x5 matrix from
+`configs/phase7.yaml`: packet loss `[0, .05, .10, .20, .30]` crossed with
+fixed delay `[0, 100, 250, 500, 1000]` milliseconds. Five replicate seeds are
+configured, with RL, communication, and SUMO seeds recorded separately in each
+run. The runner reuses frozen Phase 3 checkpoints rather than retraining under
+each impairment condition:
+
+```powershell
+py scripts\run_phase7_combined_impairment_experiments.py
+```
+
+Run-level JSON files are stored under `results/phase7/raw/` and summaries under
+`results/phase7/summary.json`; existing raw files are never overwritten. Use
+`--condition loss_0p10__delay_250ms` or repeated `--seed` options to select a
+bounded subset. A frozen checkpoint set must exist under the configured Phase 3
+checkpoint directory.
+
+The current Phase 3 policy uses only local traffic observations and does not
+generate or consume communication messages during action selection. Therefore
+Phase 7 records communication telemetry and traffic metrics without claiming a
+causal traffic-performance effect from impairment. Message-age-aware inputs and
+robustness mechanisms require Phase 8 approval and implementation.
+
 ## Repository layout
 
 ```text
