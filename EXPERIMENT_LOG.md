@@ -17,3 +17,10 @@ The Phase 5 packet-loss smoke test is functional verification only, not a
 research experiment. It checks deterministic 0% delivery and reproducibility
 of an intermediate seeded packet-loss sequence. No traffic-performance or
 robustness conclusion is drawn.
+
+The Phase 6 communication-delay smoke test is functional verification only, not
+a research experiment. It checks an A0-to-A1 message generated at simulation
+time 10.0 with a fixed 250 ms delay, including unavailable-before-boundary,
+exact-boundary delivery, timestamp preservation, telemetry, and compatibility
+with complete packet loss. No traffic-performance or robustness conclusion is
+drawn. Combined packet-loss and delay evaluation remains Phase 7 work.

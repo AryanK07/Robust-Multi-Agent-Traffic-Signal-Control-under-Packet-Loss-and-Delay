@@ -32,6 +32,8 @@ class MultiAgentEnvironmentConfig:
     communication_enabled: bool = True
     communication_packet_loss_probability: float = 0.0
     communication_seed: int | None = None
+    communication_delay_ms: float = 0.0
+    communication_delay_model: str = "fixed"
 
 
 class MultiAgentEnvironment:
@@ -59,6 +61,8 @@ class MultiAgentEnvironment:
             agent_ids=self.agent_ids,
             enabled=config.communication_enabled,
             packet_loss_probability=config.communication_packet_loss_probability,
+            delay_ms=config.communication_delay_ms,
+            delay_model=config.communication_delay_model,
             seed=config.communication_seed,
         )
 

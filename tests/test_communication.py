@@ -122,13 +122,12 @@ def test_telemetry_reset_does_not_reset_rng_sequence() -> None:
 
 @pytest.mark.parametrize(
     ("packet_loss_probability", "delay_ms"),
-    [(-0.1, 0.0), (1.1, 0.0), (0.0, 1.0)],
+    [(-0.1, 0.0), (1.1, 0.0)],
 )
 def test_invalid_or_deferred_impairments_are_rejected(
     packet_loss_probability: float, delay_ms: float
 ) -> None:
-    expected = NotImplementedError if delay_ms else ValueError
-    with pytest.raises(expected):
+    with pytest.raises(ValueError):
         CommunicationChannel(packet_loss_probability=packet_loss_probability, delay_ms=delay_ms)
 
 
@@ -137,3 +136,84 @@ def test_invalid_timestamps_and_payload_are_rejected() -> None:
         CommunicationChannel().send("A0", "A1", {}, -1.0)
     with pytest.raises(TypeError):
         CommunicationMessage("message-1", "A0", "A1", 0.0, [])  # type: ignore[arg-type]
+
+
+def test_fixed_delay_uses_milliseconds_and_simulation_time() -> None:
+    channel = CommunicationChannel(delay_ms=250)
+    message = channel.send("A0", "A1", {"value": 1}, 10.0)
+
+    assert message.delivery_timestamp is None
+    assert channel.pending_count("A1") == 1
+    assert channel.receive("A1", 10.249) == ()
+    delivered = channel.receive("A1", 10.25)
+    assert len(delivered) == 1
+    assert delivered[0].delivery_timestamp == 10.25
+    assert delivered[0].generation_timestamp == 10.0
+    assert delivered[0].age_at(10.25) == pytest.approx(0.25)
+
+
+def test_multiple_pending_messages_are_ordered_by_delivery_then_send_order() -> None:
+    channel = CommunicationChannel(delay_ms=100)
+    later = channel.send("A0", "A1", {"index": "later"}, 2.0)
+    first = channel.send("A0", "A1", {"index": "first"}, 1.0)
+    tied = channel.send("A0", "A1", {"index": "tied"}, 1.0)
+
+    assert channel.receive("A1", 1.099) == ()
+    first_received = channel.receive("A1", 1.1)
+    assert [message.message_id for message in first_received] == [first.message_id, tied.message_id]
+    second_received = channel.receive("A1", 2.1)
+    assert [message.message_id for message in second_received] == [later.message_id]
+    assert channel.receive("A1", 2.1) == ()
+
+
+def test_multiple_receivers_have_independent_pending_queues() -> None:
+    channel = CommunicationChannel(delay_ms=250)
+    channel.send("A0", "A1", {"receiver": "A1"}, 10.0)
+    channel.send("A0", "B0", {"receiver": "B0"}, 10.0)
+
+    assert channel.receive("A1", 10.25)[0].receiver_id == "A1"
+    assert channel.receive("B0", 10.249) == ()
+    assert channel.receive("B0", 10.25)[0].receiver_id == "B0"
+
+
+def test_dropped_messages_are_not_scheduled_and_do_not_consume_delay_behavior() -> None:
+    channel = CommunicationChannel(packet_loss_probability=1.0, delay_ms=250, seed=42)
+    message = channel.send("A0", "A1", {}, 10.0)
+
+    assert message.delivery_timestamp is None
+    assert channel.pending_count() == 0
+    assert channel.receive("A1", 100.0) == ()
+    telemetry = channel.telemetry()
+    assert telemetry.successful_transmissions == 0
+    assert telemetry.delivered_messages == 0
+    assert telemetry.dropped_messages == 1
+
+
+def test_delay_and_packet_loss_are_reproducible_with_same_seed() -> None:
+    channels = [
+        CommunicationChannel(packet_loss_probability=0.5, delay_ms=250, seed=42),
+        CommunicationChannel(packet_loss_probability=0.5, delay_ms=250, seed=42),
+    ]
+    results = []
+    for channel in channels:
+        messages = [
+            channel.send("A0", "A1", {"index": index}, 0.0)
+            for index in range(20)
+        ]
+        results.append(
+            (
+                [channel.last_event.delivered for _ in [0]],
+                channel.telemetry(),
+                channel.receive("A1", 0.25),
+                messages,
+            )
+        )
+    assert results[0][1] == results[1][1]
+    assert [m.message_id for m in results[0][2]] == [m.message_id for m in results[1][2]]
+
+
+def test_invalid_delay_model_and_negative_delay_are_rejected() -> None:
+    with pytest.raises(ValueError):
+        CommunicationChannel(delay_ms=-1)
+    with pytest.raises(ValueError):
+        CommunicationChannel(delay_model="stochastic")

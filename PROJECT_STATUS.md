@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 5 — Packet Loss Simulation
+Phase 6 — Communication Delay Simulation
 
 ## Completed
 
@@ -33,15 +33,19 @@ Phase 5 — Packet Loss Simulation
 - Seeded stochastic packet-loss model added to the communication channel.
 - Bounded send/delivery/drop telemetry and observed-loss-rate reporting added.
 - Phase 5 packet-loss smoke test added; zero-delay behavior is preserved.
+- Fixed simulation-time communication delay added with deterministic
+  millisecond-to-second scheduling, pending queues, tie-breaking, and
+  delivery telemetry.
+- Phase 6 delay and packet-loss compatibility smoke test added.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 5.
+- None for Phase 6.
 
 ## Upcoming
 
-- Phase 6: implement configurable communication delay.
+- Phase 7: evaluate combined packet loss and delay.
 
 ## Tests
 
@@ -67,11 +71,12 @@ No experiments have been run.
   has been drawn.
 - Phase 3 uses local observations and local rewards; agents do not exchange
   observations or learned information.
-- Communication delay remains unsupported and must be zero.
+- Delay is currently deterministic fixed delay; variable/stochastic delay
+  distributions are intentionally not implemented.
 - Communication metadata is not included in the Phase 3 RL observation.
 - Combined impairment, stale-information robustness, adaptive communication,
   and robust training remain future phases.
 
 ## Latest Commit
 
-Phase 5 implementation commit: `a04c8e6`.
+Phase 6 implementation is currently uncommitted.

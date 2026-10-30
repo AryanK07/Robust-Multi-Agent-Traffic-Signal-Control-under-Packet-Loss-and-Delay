@@ -1,7 +1,8 @@
-"""Deterministic ideal communication channel for Phase 4."""
+"""Simulation-time communication channel with packet loss and fixed delay."""
 
 from collections import defaultdict
 from dataclasses import dataclass, replace
+import heapq
 from math import isfinite
 import random
 from typing import Callable, Mapping
@@ -19,6 +20,7 @@ class CommunicationEvent:
     receiver_id: str
     generation_timestamp: float
     delivered: bool
+    delivery_timestamp: float | None = None
 
 
 @dataclass(frozen=True)
@@ -26,10 +28,13 @@ class CommunicationTelemetry:
     """Bounded counters describing channel behavior."""
 
     send_attempts: int
+    successful_transmissions: int
     delivered_messages: int
     dropped_messages: int
     configured_packet_loss_probability: float
     packet_loss_seed: int | None
+    configured_delay_ms: float
+    pending_messages: int
 
     @property
     def observed_loss_rate(self) -> float:
@@ -40,12 +45,7 @@ class CommunicationTelemetry:
 
 
 class CommunicationChannel:
-    """Queue messages for explicit neighbors with configurable packet loss.
-
-    Delay remains unsupported and must be zero. Dropped messages are not queued;
-    the returned message is an attempted message identity, while telemetry and
-    ``last_event`` expose whether it was delivered.
-    """
+    """Queue messages for explicit neighbors using simulation timestamps."""
 
     def __init__(
         self,
@@ -55,6 +55,7 @@ class CommunicationChannel:
         enabled: bool = True,
         packet_loss_probability: float = 0.0,
         delay_ms: float = 0.0,
+        delay_model: str = "fixed",
         seed: int | None = None,
         event_sink: Callable[[CommunicationEvent], None] | None = None,
     ) -> None:
@@ -62,22 +63,22 @@ class CommunicationChannel:
             raise ValueError("packet_loss_probability must be between 0 and 1")
         if seed is not None and (not isinstance(seed, int) or seed < 0):
             raise ValueError("seed must be a non-negative integer or None")
-        if delay_ms < 0 or not isfinite(delay_ms):
+        if not isinstance(delay_ms, (int, float)) or not isfinite(delay_ms) or delay_ms < 0:
             raise ValueError("delay_ms must be a finite non-negative value")
-        if delay_ms != 0.0:
-            raise NotImplementedError(
-                "Communication delay is deferred to Phase 6"
-            )
+        if delay_model != "fixed":
+            raise ValueError("delay_model must be 'fixed'")
         self.enabled = enabled
         self.topology = NeighborTopology(agent_ids, neighbors)
         self.packet_loss_probability = packet_loss_probability
-        self.delay_ms = delay_ms
+        self.delay_ms = float(delay_ms)
+        self.delay_model = delay_model
         self.seed = seed
         self._rng = random.Random(seed)
         self._event_sink = event_sink
-        self._pending: dict[str, list[CommunicationMessage]] = defaultdict(list)
+        self._pending: dict[str, list[tuple[float, int, CommunicationMessage]]] = defaultdict(list)
         self._next_message_number = 0
         self._send_attempts = 0
+        self._successful_transmissions = 0
         self._delivered_messages = 0
         self._dropped_messages = 0
         self.last_event: CommunicationEvent | None = None
@@ -106,16 +107,23 @@ class CommunicationChannel:
         )
         self._next_message_number += 1
         self._send_attempts += 1
-        delivered = (
+        transmitted = (
             self.packet_loss_probability == 0.0
             or (
                 self.packet_loss_probability < 1.0
                 and self._rng.random() >= self.packet_loss_probability
             )
         )
-        if delivered:
-            self._pending[receiver_id].append(message)
-            self._delivered_messages += 1
+        delivery_timestamp = timestamp + self.delay_ms / 1000.0
+        if transmitted:
+            scheduled_message = replace(message, delivery_timestamp=delivery_timestamp)
+            heapq.heappush(
+                self._pending[receiver_id],
+                (delivery_timestamp, self._next_message_number, scheduled_message),
+            )
+            self._successful_transmissions += 1
+            if self.delay_ms == 0.0:
+                self._delivered_messages += 1
         else:
             self._dropped_messages += 1
         self.last_event = CommunicationEvent(
@@ -123,7 +131,8 @@ class CommunicationChannel:
             sender_id=sender_id,
             receiver_id=receiver_id,
             generation_timestamp=timestamp,
-            delivered=delivered,
+            delivered=transmitted,
+            delivery_timestamp=delivery_timestamp if transmitted else None,
         )
         if self._event_sink is not None:
             self._event_sink(self.last_event)
@@ -132,21 +141,21 @@ class CommunicationChannel:
     def receive(
         self, receiver_id: str, current_time: float
     ) -> tuple[CommunicationMessage, ...]:
-        """Return all messages available at ``current_time`` in send order."""
+        """Return all messages available at ``current_time`` in delivery order."""
         self._validate_timestamp(current_time)
         self._validate_agent(receiver_id)
         if not self.enabled:
             return ()
         pending = self._pending[receiver_id]
-        available = [message for message in pending if message.generation_timestamp <= current_time]
-        self._pending[receiver_id] = [
-            message for message in pending if message.generation_timestamp > current_time
-        ]
-        available.sort(key=lambda message: (message.generation_timestamp, message.message_id))
-        return tuple(
-            replace(message, delivery_timestamp=message.generation_timestamp)
+        available: list[CommunicationMessage] = []
+        while pending and pending[0][0] <= current_time:
+            _, _, message = heapq.heappop(pending)
+            available.append(message)
+        self._delivered_messages += sum(
+            message.delivery_timestamp != message.generation_timestamp
             for message in available
         )
+        return tuple(available)
 
     def clear(self) -> None:
         """Discard queued messages and reset message identity, not telemetry/RNG."""
@@ -156,6 +165,7 @@ class CommunicationChannel:
     def reset_telemetry(self) -> None:
         """Reset counters without resetting the seeded RNG sequence."""
         self._send_attempts = 0
+        self._successful_transmissions = 0
         self._delivered_messages = 0
         self._dropped_messages = 0
         self.last_event = None
@@ -164,10 +174,13 @@ class CommunicationChannel:
         """Return a snapshot of packet-loss counters and configuration."""
         return CommunicationTelemetry(
             send_attempts=self._send_attempts,
+            successful_transmissions=self._successful_transmissions,
             delivered_messages=self._delivered_messages,
             dropped_messages=self._dropped_messages,
             configured_packet_loss_probability=self.packet_loss_probability,
             packet_loss_seed=self.seed,
+            configured_delay_ms=self.delay_ms,
+            pending_messages=self.pending_count(),
         )
 
     def pending_count(self, receiver_id: str | None = None) -> int:

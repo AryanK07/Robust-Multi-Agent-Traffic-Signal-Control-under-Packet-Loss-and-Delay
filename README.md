@@ -6,12 +6,12 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 5: Packet Loss Simulation**. Phase 1
+The repository is currently in **Phase 6: Communication Delay Simulation**. Phase 1
 provides the deterministic SUMO scenario, Phase 2 provides a single-agent
 baseline, Phase 3 adds four independent NumPy-only Q-learning agents, and
 Phase 4 adds an ideal inter-agent communication abstraction, and Phase 5 adds
-seeded packet-loss simulation. Delay and robustness processing remain deferred
-to later phases.
+seeded packet-loss simulation, and Phase 6 adds fixed simulation-time
+communication delay. Robustness processing remains deferred to later phases.
 
 ## Requirements
 
@@ -194,8 +194,9 @@ enter a receiver queue and are not retried. A successful message preserves its
 generation timestamp as its delivery timestamp. Delay remains exactly zero and
 nonzero `delay_ms` is rejected until Phase 6.
 
-Each channel exposes bounded telemetry for send attempts, deliveries, drops,
-configured probability, seed, and observed loss rate
+Each channel exposes bounded telemetry for send attempts, successful
+transmissions, pending messages, deliveries, drops, configured probability and
+delay, seed, and observed loss rate
 (`dropped_messages / send_attempts`, or `0.0` when there are no attempts).
 `reset_telemetry()` clears counters without resetting the RNG sequence. The
 Phase 3 RL observation, action, reward, and IQL update remain unchanged.
@@ -209,6 +210,35 @@ py scripts\run_phase5_packet_loss_smoke.py
 The smoke output is a functional check, not a traffic-performance or research
 result. Combined packet loss and delay, stale-information robustness, adaptive
 communication, and robust training are not implemented.
+
+## Phase 6 communication delay
+
+The channel supports a deterministic `fixed` delay configured in milliseconds.
+Messages are scheduled at `generation_timestamp + delay_ms / 1000.0` and are
+released only when the receiving operation supplies a simulation timestamp at
+or after that delivery time. Pending messages remain in per-receiver priority
+queues, are ordered by delivery timestamp and send sequence, and never advance
+SUMO time. Packet loss is evaluated before scheduling, so dropped messages
+never enter a pending queue and are not retried.
+
+```yaml
+communication:
+  enabled: true
+  packet_loss_probability: 0.0
+  seed: 42
+  delay_model: fixed
+  delay_ms: 250
+```
+
+Run the Phase 6 functional smoke test:
+
+```powershell
+py scripts\run_phase6_communication_delay_smoke.py
+```
+
+This phase implements delay simulation only. Combined-condition research
+evaluation, stale-information handling, robustness mechanisms, and
+message-age-aware observations remain future work.
 
 ## Repository layout
 

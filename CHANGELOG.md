@@ -16,3 +16,5 @@
   neighbors, deterministic zero-delay delivery, and Phase 3 integration hooks.
 - Phase 5 configurable seeded packet loss with delivery/drop telemetry and
   zero-delay-only validation.
+- Phase 6 deterministic fixed communication delay driven by simulation
+  timestamps, pending-message queues, and delay telemetry.

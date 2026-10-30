@@ -2,4 +2,5 @@ communication:
   enabled: true
   packet_loss_probability: 0.0
   seed: 42
+  delay_model: fixed
   delay_ms: 0

@@ -35,6 +35,10 @@ def make_environment(config: dict, seed: int) -> MultiAgentEnvironment:
                 "packet_loss_probability"
             ],
             communication_seed=phase3["communication"]["seed"],
+            communication_delay_ms=phase3["communication"].get("delay_ms", 0.0),
+            communication_delay_model=phase3["communication"].get(
+                "delay_model", "fixed"
+            ),
         )
     )
 
