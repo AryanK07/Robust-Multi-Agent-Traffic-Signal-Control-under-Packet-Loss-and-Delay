@@ -96,4 +96,4 @@ outputs are functional verification only.
 
 ## Latest Commit
 
-Phase 8 implementation is currently uncommitted.
+Phase 8 implementation commit: `ea9c498`.
