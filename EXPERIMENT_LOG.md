@@ -46,3 +46,14 @@ simulation-time age, exponential freshness, stale status, and freshness-weighted
 neighbor features. The original five-feature Phase 3 policy and checkpoints are
 preserved. The Phase 8 smoke test is functional verification only; no robust
 training, superiority claim, or final performance experiment has been run.
+
+Phase 9 status: the robust-training framework uses the Phase 7 25-condition
+matrix with a balanced shuffled-cycle schedule. The ideal-trained
+communication-aware baseline is restricted to 0% loss and 0 ms delay; the
+robust-trained policy uses the impairment distribution and remains a separate
+fresh initialization. SeedSequence-derived episode streams separate learner,
+condition-schedule, packet-loss, and SUMO randomness. A two-episode-per-variant
+smoke run with master seed 42 completed as functional software verification
+only. No production robust training, convergence claim, superiority claim, or
+statistical evaluation has been performed. Phase 10 adaptive communication
+has not started.

@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 8 — Stale-Information-Aware Robustness
+Phase 9 — Robust Training Under Communication Impairments
 
 ## Completed
 
@@ -48,15 +48,21 @@ Phase 8 — Stale-Information-Aware Robustness
   threshold, typed traffic snapshot payloads, and incompatible checkpoint
   metadata validation added.
 - Phase 8 functional smoke test added.
+- Condition-randomized Phase 9 training utilities added using the Phase 7
+  25-condition matrix.
+- Separate ideal-trained and robust-trained communication-aware variants added
+  with balanced-cycle scheduling, isolated seed streams, episode metrics, and
+  checkpoint metadata.
+- Phase 9 smoke training added; it does not run a production campaign.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 8 implementation.
+- None for Phase 9 implementation.
 
 ## Upcoming
 
-- Phase 9: robust training across communication conditions.
+- Phase 10: adaptive communication.
 
 ## Tests
 
@@ -68,12 +74,12 @@ independent learners, and checkpoint restoration, plus Phase 4 message
 construction, topology validation, ideal delivery, SUMO time preservation, and
 Phase 5 seeded packet-loss validation and telemetry, plus Phase 7 matrix
 generation, validation, serialization, and aggregation, plus Phase 8 freshness, cache, checkpoint, and policy-interface
-tests.
+tests, and Phase 9 scheduler, seed, metadata, and configuration tests.
 
 ## Experiments
 
-No final research experiment has been run. Phase 7 pilot and Phase 8 smoke
-outputs are functional verification only.
+No final research experiment has been run. Phase 7 pilot, Phase 8 smoke, and
+Phase 9 smoke training are functional verification only.
 
 ## Known Issues
 
@@ -93,7 +99,9 @@ outputs are functional verification only.
   performance.
 - Delay is fixed only; stochastic delay, robustness, adaptive communication,
   and robust training remain future phases.
+- Phase 9 smoke training is not a robust-performance claim; final training and
+  statistical evaluation remain pending.
 
 ## Latest Commit
 
-Phase 8 implementation commit: `ea9c498`.
+Phase 9 implementation is currently uncommitted.

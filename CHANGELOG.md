@@ -22,3 +22,6 @@
   runner, raw run storage, and summary aggregation.
 - Phase 8 separate freshness-aware communication policy, latest-neighbor cache,
   simulation-time age decay, 23-feature observations, and checkpoint metadata.
+- Phase 9 condition-randomized robust-training pipeline with balanced-cycle
+  scheduling, isolated seed streams, episode metrics, and separate checkpoint
+  metadata.

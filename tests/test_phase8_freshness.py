@@ -18,10 +18,10 @@ from traffic_control.rl import (
 from traffic_control.config import load_phase8_config
 
 
-def payload(features: list[float]) -> dict[str, object]:
+def payload(features: list[float], sender_id: str = "A0") -> dict[str, object]:
     return {
         "schema_version": "traffic_observation_v1",
-        "sender_id": "A0",
+        "sender_id": sender_id,
         "features": features,
     }
 
@@ -61,7 +61,7 @@ def test_cache_observation_has_sentinels_and_decay_weighted_payload() -> None:
     no_message = cache.observation("A0", 0.0, FreshnessConfig())
     assert len(no_message) == 18
     assert no_message[:4] == (0.0, 1.0, 0.0, 1.0)
-    message = channel.send("A1", "A0", payload([0.5] * 5), 0.0)
+    message = channel.send("A1", "A0", payload([0.5] * 5, "A1"), 0.0)
     cache.update("A0", message)
     fresh = cache.observation("A0", 0.0, FreshnessConfig())
     old = cache.observation("A0", 1.0, FreshnessConfig())

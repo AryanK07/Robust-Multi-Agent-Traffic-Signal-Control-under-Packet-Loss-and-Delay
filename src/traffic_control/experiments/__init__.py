@@ -9,6 +9,15 @@ from .phase7 import (
     validate_phase7_config,
     write_raw_result,
 )
+from .phase9 import (
+    BalancedConditionSchedule,
+    Phase9TrainingConfig,
+    derive_episode_seeds,
+    load_phase9_metadata,
+    phase9_metadata,
+    save_phase9_checkpoint,
+    validate_phase9_config,
+)
 
 __all__ = [
     "Phase7Condition",
@@ -18,4 +27,11 @@ __all__ = [
     "load_phase7_config",
     "validate_phase7_config",
     "write_raw_result",
+    "BalancedConditionSchedule",
+    "Phase9TrainingConfig",
+    "derive_episode_seeds",
+    "load_phase9_metadata",
+    "phase9_metadata",
+    "save_phase9_checkpoint",
+    "validate_phase9_config",
 ]

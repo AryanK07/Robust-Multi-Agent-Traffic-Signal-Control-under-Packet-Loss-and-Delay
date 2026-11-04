@@ -1,0 +1,12 @@
+phase9:
+  episodes: 2
+  max_steps_per_episode: 2
+  training_seed: 42
+  condition_schedule_seed: 2029
+  packet_loss_seed: 3041
+  sumo_seed: 4053
+  output_directory: results/phase9
+  freshness:
+    freshness_decay_tau_ms: 500.0
+    max_message_age_ms: 2000.0
+    stale_message_threshold_ms: 1000.0

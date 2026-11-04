@@ -240,6 +240,37 @@ This phase implements delay simulation only. Combined-condition research
 evaluation, stale-information handling, robustness mechanisms, and
 message-age-aware observations remain future work.
 
+## Phase 9 robust training
+
+Phase 9 adds condition-randomized training for the Phase 8
+freshness-aware policy. The ideal-trained communication-aware baseline uses
+only 0% loss and 0 ms delay. The robust-trained variant uses the full Phase 7
+5x5 matrix (25 conditions) through a reproducibly shuffled balanced-cycle
+schedule: every condition appears once per complete cycle, with the selected
+condition fixed for an entire episode.
+
+The training configuration is in `configs/phase9.yaml`. Run the short
+functional verification smoke test:
+
+```powershell
+py scripts\run_phase9_robust_training_smoke.py
+```
+
+The trainer uses separate deterministic seed streams for learner
+initialization/exploration, condition scheduling, packet loss, and SUMO.
+Each episode creates a fresh environment, clears pending messages and
+receiver caches through the Phase 8 reset lifecycle, and preserves learned
+weights. Episode records include the selected condition, derived seeds,
+traffic metrics, communication telemetry, and status. Ideal and robust
+checkpoints use separate directories and metadata containing the policy
+variant, Phase 9 marker, 23-feature schema, topology order, freshness
+settings, training distribution, schedule, and exposure counts.
+
+Smoke training is software verification only, not evidence of convergence or
+traffic-control superiority. Final robust training and statistical evaluation
+remain pending. Adaptive communication, communication-budget optimization,
+and Phase 10 features are not implemented.
+
 ## Phase 7 combined impairment experiments
 
 Phase 7 provides a configurable 5x5 matrix from
