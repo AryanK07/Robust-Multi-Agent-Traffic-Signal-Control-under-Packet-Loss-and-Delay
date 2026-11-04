@@ -104,4 +104,4 @@ Phase 9 smoke training are functional verification only.
 
 ## Latest Commit
 
-Phase 9 implementation is currently uncommitted.
+Phase 9 implementation commit: `9d89121`.
