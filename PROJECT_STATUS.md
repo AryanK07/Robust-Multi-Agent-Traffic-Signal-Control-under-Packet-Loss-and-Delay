@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 7 — Combined Packet Loss and Communication Delay Experiments
+Phase 8 — Stale-Information-Aware Robustness
 
 ## Completed
 
@@ -42,15 +42,21 @@ Phase 7 — Combined Packet Loss and Communication Delay Experiments
   summaries added.
 - Causal-path audit documented: current Phase 3 policies do not consume
   communication messages.
+- Separate freshness-aware communication policy and environment variant added
+  with 23-dimensional observations.
+- Simulation-time latest-neighbor cache, exponential freshness decay, stale
+  threshold, typed traffic snapshot payloads, and incompatible checkpoint
+  metadata validation added.
+- Phase 8 functional smoke test added.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 7 framework implementation.
+- None for Phase 8 implementation.
 
 ## Upcoming
 
-- Phase 8: implement approved stale-information robustness mechanism.
+- Phase 9: robust training across communication conditions.
 
 ## Tests
 
@@ -61,12 +67,13 @@ model persistence, Phase 3 four-agent validation, synchronized stepping,
 independent learners, and checkpoint restoration, plus Phase 4 message
 construction, topology validation, ideal delivery, SUMO time preservation, and
 Phase 5 seeded packet-loss validation and telemetry, plus Phase 7 matrix
-generation, validation, serialization, and aggregation.
+generation, validation, serialization, and aggregation, plus Phase 8 freshness, cache, checkpoint, and policy-interface
+tests.
 
 ## Experiments
 
-No full research matrix has been run. The Phase 7 smoke is functional
-verification only.
+No final research experiment has been run. Phase 7 pilot and Phase 8 smoke
+outputs are functional verification only.
 
 ## Known Issues
 
@@ -89,4 +96,4 @@ verification only.
 
 ## Latest Commit
 
-Phase 7 implementation commit: `629ec2d`.
+Phase 8 implementation is currently uncommitted.

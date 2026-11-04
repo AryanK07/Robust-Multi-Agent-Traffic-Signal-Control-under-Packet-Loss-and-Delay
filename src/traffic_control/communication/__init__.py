@@ -2,6 +2,12 @@
 
 from .channel import CommunicationChannel, CommunicationEvent, CommunicationTelemetry
 from .message import CommunicationMessage
+from .freshness import (
+    FEATURE_SCHEMA_VERSION,
+    FreshnessConfig,
+    NeighborInformationCache,
+    TrafficSnapshot,
+)
 from .topology import AGENT_IDS, DEFAULT_NEIGHBORS, NeighborTopology
 
 __all__ = [
@@ -11,5 +17,9 @@ __all__ = [
     "CommunicationEvent",
     "CommunicationMessage",
     "CommunicationTelemetry",
+    "FEATURE_SCHEMA_VERSION",
+    "FreshnessConfig",
+    "NeighborInformationCache",
+    "TrafficSnapshot",
     "NeighborTopology",
 ]

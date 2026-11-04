@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from typing import Any
+import json
 
 import numpy as np
 
@@ -98,3 +99,90 @@ class LinearQAgent:
                 f"Observation must have shape {(self.observation_size,)}, got {array.shape}"
             )
         return array
+
+
+class CommunicationAwareLinearQAgent(LinearQAgent):
+    """Linear IQL agent with explicit Phase 8 checkpoint metadata."""
+
+    policy_variant = "freshness_aware_iql"
+    feature_schema_version = "local_plus_neighbor_freshness_v1"
+
+    def __init__(
+        self,
+        observation_size: int = 23,
+        action_size: int = 2,
+        learning_rate: float = 0.05,
+        discount_factor: float = 0.95,
+        seed: int = 42,
+        *,
+        neighbor_ids: tuple[str, ...] = (),
+        freshness_decay_tau_ms: float = 500.0,
+        max_message_age_ms: float = 2000.0,
+        stale_message_threshold_ms: float = 1000.0,
+    ) -> None:
+        super().__init__(observation_size, action_size, learning_rate, discount_factor, seed)
+        if observation_size != 23:
+            raise ValueError("Communication-aware observations must have dimension 23")
+        if not neighbor_ids:
+            raise ValueError("neighbor_ids metadata must not be empty")
+        self.neighbor_ids = tuple(neighbor_ids)
+        self.freshness_decay_tau_ms = float(freshness_decay_tau_ms)
+        self.max_message_age_ms = float(max_message_age_ms)
+        self.stale_message_threshold_ms = float(stale_message_threshold_ms)
+        from traffic_control.communication.freshness import FreshnessConfig
+
+        FreshnessConfig(
+            self.freshness_decay_tau_ms,
+            self.max_message_age_ms,
+            self.stale_message_threshold_ms,
+        )
+
+    def save(self, path: str | Path) -> None:
+        model_path = Path(path)
+        model_path.parent.mkdir(parents=True, exist_ok=True)
+        np.savez(
+            model_path,
+            weights=self.weights,
+            bias=self.bias,
+            observation_size=self.observation_size,
+            action_size=self.action_size,
+            learning_rate=self.learning_rate,
+            discount_factor=self.discount_factor,
+            policy_variant=self.policy_variant,
+            feature_schema_version=self.feature_schema_version,
+            neighbor_ids=json.dumps(self.neighbor_ids),
+            freshness_decay_tau_ms=self.freshness_decay_tau_ms,
+            max_message_age_ms=self.max_message_age_ms,
+            stale_message_threshold_ms=self.stale_message_threshold_ms,
+        )
+
+    @classmethod
+    def load(
+        cls,
+        path: str | Path,
+        seed: int = 42,
+        *,
+        expected_neighbor_ids: tuple[str, ...] | None = None,
+    ) -> "CommunicationAwareLinearQAgent":
+        with np.load(path, allow_pickle=False) as data:
+            variant = str(data["policy_variant"])
+            schema = str(data["feature_schema_version"])
+            if variant != cls.policy_variant or schema != cls.feature_schema_version:
+                raise ValueError("Incompatible communication-aware checkpoint metadata")
+            neighbor_ids = tuple(json.loads(str(data["neighbor_ids"])))
+            if expected_neighbor_ids is not None and neighbor_ids != tuple(expected_neighbor_ids):
+                raise ValueError("Checkpoint neighbor ordering is incompatible")
+            agent = cls(
+                int(data["observation_size"]),
+                int(data["action_size"]),
+                float(data["learning_rate"]),
+                float(data["discount_factor"]),
+                seed,
+                neighbor_ids=neighbor_ids,
+                freshness_decay_tau_ms=float(data["freshness_decay_tau_ms"]),
+                max_message_age_ms=float(data["max_message_age_ms"]),
+                stale_message_threshold_ms=float(data["stale_message_threshold_ms"]),
+            )
+            agent.weights = data["weights"].copy()
+            agent.bias = data["bias"].copy()
+        return agent

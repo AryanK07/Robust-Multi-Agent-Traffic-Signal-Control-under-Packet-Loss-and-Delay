@@ -39,3 +39,10 @@ A bounded one-condition frozen-checkpoint pilot was executed for 10% loss and
 250 ms delay using seed 42. It is functional framework validation, not a final
 benchmark or research conclusion; its raw output is kept under the ignored
 Phase 7 results directory.
+
+Phase 8 status: a separate freshness-aware communication policy now consumes
+neighbor traffic snapshots. Its 23-feature observation includes availability,
+simulation-time age, exponential freshness, stale status, and freshness-weighted
+neighbor features. The original five-feature Phase 3 policy and checkpoints are
+preserved. The Phase 8 smoke test is functional verification only; no robust
+training, superiority claim, or final performance experiment has been run.

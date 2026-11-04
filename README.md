@@ -6,7 +6,7 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 6: Communication Delay Simulation**. Phase 1
+The repository is currently in **Phase 8: Stale-Information-Aware Robustness**. Phase 1
 provides the deterministic SUMO scenario, Phase 2 provides a single-agent
 baseline, Phase 3 adds four independent NumPy-only Q-learning agents, and
 Phase 4 adds an ideal inter-agent communication abstraction, and Phase 5 adds
@@ -263,7 +263,48 @@ The current Phase 3 policy uses only local traffic observations and does not
 generate or consume communication messages during action selection. Therefore
 Phase 7 records communication telemetry and traffic metrics without claiming a
 causal traffic-performance effect from impairment. Message-age-aware inputs and
-robustness mechanisms require Phase 8 approval and implementation.
+robustness mechanisms are addressed by the separate Phase 8 policy variant.
+
+## Phase 8 freshness-aware communication policy
+
+Phase 7 established that the original Phase 3 IQL policy has no causal
+dependency on communication. Phase 8 therefore adds a separate
+`freshness_aware_iql` variant without changing the five-feature local-only
+baseline, its action/reward interface, or its checkpoints.
+
+Each agent sends its normalized five-feature local traffic observation to the
+configured cardinal neighbors in deterministic topology order. A receiver
+keeps only the latest valid message for each neighbor. Dropped or pending
+messages do not update the cache, and out-of-order messages cannot replace
+newer information. Message age is simulation-time based:
+
+```text
+message_age_ms = (current_simulation_time - generation_timestamp) * 1000
+freshness_weight = exp(-message_age_ms / freshness_decay_tau_ms)
+```
+
+The communication-aware observation has 23 `float32` features: five local
+features followed by one nine-feature block per neighbor in topology order:
+availability, normalized age, freshness weight, stale indicator, and the five
+neighbor features weighted by freshness. An unavailable neighbor uses finite
+sentinel values and contributes no traffic payload.
+
+The Phase 8 configuration is in `configs/phase8.yaml`. Communication-aware
+checkpoints use separate files and store policy variant, schema version,
+neighbor ordering, observation size, and freshness parameters. They are
+rejected when metadata is incompatible; Phase 3 checkpoints are never loaded
+as communication-aware checkpoints.
+
+Run the short functional verification:
+
+```powershell
+py scripts\run_phase8_freshness_aware_smoke.py
+```
+
+This verifies the delayed message boundary, packet-loss retention behavior,
+age decay, the 23-dimensional observation, and both policy variants. It is
+software verification only, not a performance result. Phase 9 robust training,
+adaptive communication, and final comparative experiments are not implemented.
 
 ## Repository layout
 

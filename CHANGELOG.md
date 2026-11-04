@@ -20,3 +20,5 @@
   timestamps, pending-message queues, and delay telemetry.
 - Phase 7 configurable combined packet-loss/delay matrix, frozen-checkpoint
   runner, raw run storage, and summary aggregation.
+- Phase 8 separate freshness-aware communication policy, latest-neighbor cache,
+  simulation-time age decay, 23-feature observations, and checkpoint metadata.

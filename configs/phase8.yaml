@@ -1,0 +1,16 @@
+phase8:
+  policy:
+    variant: freshness_aware_iql
+    observation_size: 23
+    checkpoint_directory: results/phase8/checkpoints
+  communication:
+    enabled: true
+    packet_loss_probability: 0.0
+    packet_loss_seed: 42
+    delay_model: fixed
+    delay_ms: 250
+  freshness:
+    enabled: true
+    freshness_decay_tau_ms: 500.0
+    max_message_age_ms: 2000.0
+    stale_message_threshold_ms: 1000.0
