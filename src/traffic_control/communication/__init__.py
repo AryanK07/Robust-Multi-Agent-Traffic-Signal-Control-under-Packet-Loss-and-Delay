@@ -8,6 +8,7 @@ from .freshness import (
     NeighborInformationCache,
     TrafficSnapshot,
 )
+from .scheduler import CommunicationScheduler, SchedulerTelemetry, TransmissionDecision
 from .topology import AGENT_IDS, DEFAULT_NEIGHBORS, NeighborTopology
 
 __all__ = [
@@ -21,5 +22,8 @@ __all__ = [
     "FreshnessConfig",
     "NeighborInformationCache",
     "TrafficSnapshot",
+    "CommunicationScheduler",
+    "SchedulerTelemetry",
+    "TransmissionDecision",
     "NeighborTopology",
 ]

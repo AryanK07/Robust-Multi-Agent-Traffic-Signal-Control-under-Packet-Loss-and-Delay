@@ -57,3 +57,13 @@ smoke run with master seed 42 completed as functional software verification
 only. No production robust training, convergence claim, superiority claim, or
 statistical evaluation has been performed. Phase 10 adaptive communication
 has not started.
+
+Phase 10 status: deterministic rule-based always, periodic, and adaptive
+event-triggered transmission scheduling is implemented separately from the
+policy, channel, and freshness cache. The scheduler compares normalized
+five-feature snapshots against the last transmission attempt and uses a
+simulation-time heartbeat. Acknowledgements are not available, so attempted
+transmissions update scheduler reference state even if packet loss drops them.
+The Phase 10 smoke test is functional verification only; no communication
+efficiency or traffic-performance conclusion has been drawn. Phase 11 and
+Phase 12 have not started.

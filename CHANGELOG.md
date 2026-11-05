@@ -25,3 +25,5 @@
 - Phase 9 condition-randomized robust-training pipeline with balanced-cycle
   scheduling, isolated seed streams, episode metrics, and separate checkpoint
   metadata.
+- Phase 10 deterministic always/periodic/adaptive transmission scheduler with
+  heartbeat, trigger, suppression, and communication-reduction telemetry.

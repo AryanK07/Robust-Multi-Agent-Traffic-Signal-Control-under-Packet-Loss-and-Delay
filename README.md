@@ -268,8 +268,45 @@ settings, training distribution, schedule, and exposure counts.
 
 Smoke training is software verification only, not evidence of convergence or
 traffic-control superiority. Final robust training and statistical evaluation
-remain pending. Adaptive communication, communication-budget optimization,
-and Phase 10 features are not implemented.
+remain pending. Adaptive communication is implemented in Phase 10, while
+communication-budget experiments remain pending.
+
+## Phase 10 adaptive communication
+
+Phase 10 adds deterministic, rule-based transmission scheduling without
+changing any policy observation schema, reward, action space, Q-learning
+update, or checkpoint. The backward-compatible `always` strategy transmits
+every snapshot. `periodic` transmits on the first snapshot and after a
+simulation-time interval. `adaptive` transmits on the first snapshot, when
+
+```text
+mean(abs(current_normalized_observation - last_transmitted_observation))
+    >= change_threshold
+```
+
+or when the maximum silence heartbeat interval elapses. The comparison is
+always against the last transmission attempt, not the previous observation.
+Intervals are simulation-time based and take effect at the next environment
+decision step; no real-time waiting or independent SUMO stepping is used.
+
+Configuration is in `configs/phase10.yaml`. Scheduler telemetry reports
+opportunities, scheduled and suppressed agent transmissions, trigger reasons,
+and communication reduction. Channel telemetry remains responsible for actual
+send attempts, drops, delivery, and pending messages. Because the channel has
+no acknowledgements, a dropped attempt still updates the scheduler reference
+state; a later heartbeat can refresh the receiver cache. Suppressed sends
+leave the last-known cache entry intact, so its Phase 8 age increases and
+freshness weight decreases.
+
+Run the short functional verification:
+
+```powershell
+py scripts\run_phase10_adaptive_communication_smoke.py
+```
+
+This is software verification only, not evidence that adaptive communication
+improves traffic performance. Full paired comparisons remain pending; Phase 11
+and Phase 12 have not started.
 
 ## Phase 7 combined impairment experiments
 
@@ -334,8 +371,8 @@ py scripts\run_phase8_freshness_aware_smoke.py
 
 This verifies the delayed message boundary, packet-loss retention behavior,
 age decay, the 23-dimensional observation, and both policy variants. It is
-software verification only, not a performance result. Phase 9 robust training,
-adaptive communication, and final comparative experiments are not implemented.
+software verification only, not a performance result. Phase 9 robust training
+and final comparative experiments remain pending.
 
 ## Repository layout
 

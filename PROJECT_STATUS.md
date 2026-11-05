@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 9 — Robust Training Under Communication Impairments
+Phase 10 — Adaptive Inter-Agent Communication
 
 ## Completed
 
@@ -54,15 +54,19 @@ Phase 9 — Robust Training Under Communication Impairments
   with balanced-cycle scheduling, isolated seed streams, episode metrics, and
   checkpoint metadata.
 - Phase 9 smoke training added; it does not run a production campaign.
+- Rule-based always, periodic, and adaptive event-triggered communication
+  scheduler added with heartbeat, trigger, suppression, and reduction
+  telemetry.
+- Phase 10 scheduler configuration, tests, and smoke verification added.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 9 implementation.
+- None for Phase 10 implementation.
 
 ## Upcoming
 
-- Phase 10: adaptive communication.
+- Phase 11: final experiments and evaluation.
 
 ## Tests
 
@@ -74,12 +78,13 @@ independent learners, and checkpoint restoration, plus Phase 4 message
 construction, topology validation, ideal delivery, SUMO time preservation, and
 Phase 5 seeded packet-loss validation and telemetry, plus Phase 7 matrix
 generation, validation, serialization, and aggregation, plus Phase 8 freshness, cache, checkpoint, and policy-interface
-tests, and Phase 9 scheduler, seed, metadata, and configuration tests.
+tests, Phase 9 scheduler/seed/metadata/configuration tests, and Phase 10
+scheduling/telemetry tests.
 
 ## Experiments
 
 No final research experiment has been run. Phase 7 pilot, Phase 8 smoke, and
-Phase 9 smoke training are functional verification only.
+Phase 9 smoke training and Phase 10 smoke are functional verification only.
 
 ## Known Issues
 
@@ -101,7 +106,9 @@ Phase 9 smoke training are functional verification only.
   and robust training remain future phases.
 - Phase 9 smoke training is not a robust-performance claim; final training and
   statistical evaluation remain pending.
+- Adaptive communication is deterministic and rule-based; no learned
+  communication policy or communication reward has been introduced.
 
 ## Latest Commit
 
-Phase 9 implementation commit: `9d89121`.
+Phase 10 implementation is currently uncommitted.

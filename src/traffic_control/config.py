@@ -64,3 +64,12 @@ def load_phase8_config(path: str | Path) -> dict[str, Any]:
         float(freshness["stale_message_threshold_ms"]),
     )
     return phase8
+
+
+def load_phase10_config(path: str | Path) -> dict[str, Any]:
+    """Load and validate Phase 10 scheduler settings."""
+    config = load_yaml(path)
+    from traffic_control.experiments import validate_phase10_config
+
+    validate_phase10_config(config)
+    return config["phase10"]

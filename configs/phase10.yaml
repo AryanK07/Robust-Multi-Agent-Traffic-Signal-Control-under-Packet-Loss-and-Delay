@@ -1,0 +1,15 @@
+phase10:
+  communication:
+    strategy: always
+    packet_loss_probability: 0.0
+    delay_model: fixed
+    delay_ms: 0
+  adaptive:
+    change_threshold: 0.10
+    max_silence_ms: 1000
+  periodic:
+    interval_ms: 1000
+  freshness:
+    freshness_decay_tau_ms: 500.0
+    max_message_age_ms: 2000.0
+    stale_message_threshold_ms: 1000.0

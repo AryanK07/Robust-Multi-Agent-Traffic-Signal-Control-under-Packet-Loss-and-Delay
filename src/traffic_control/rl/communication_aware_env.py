@@ -5,7 +5,7 @@ from typing import Any
 
 import numpy as np
 
-from traffic_control.communication import CommunicationMessage
+from traffic_control.communication import CommunicationMessage, CommunicationScheduler
 from traffic_control.communication.freshness import (
     FreshnessConfig,
     LOCAL_FEATURE_COUNT,
@@ -22,6 +22,10 @@ class CommunicationAwareEnvironmentConfig(MultiAgentEnvironmentConfig):
     """Phase 8 settings while preserving the Phase 3 environment defaults."""
 
     freshness: FreshnessConfig = FreshnessConfig()
+    communication_strategy: str = "always"
+    periodic_interval_ms: float = 1000.0
+    adaptive_change_threshold: float = 0.10
+    adaptive_max_silence_ms: float = 1000.0
 
 
 class CommunicationAwareMultiAgentEnvironment(MultiAgentEnvironment):
@@ -34,10 +38,18 @@ class CommunicationAwareMultiAgentEnvironment(MultiAgentEnvironment):
         super().__init__(config)
         self.config = config
         self._cache = NeighborInformationCache(self.communication.topology)
+        self._scheduler = CommunicationScheduler(
+            self.agent_ids,
+            strategy=config.communication_strategy,
+            periodic_interval_ms=config.periodic_interval_ms,
+            change_threshold=config.adaptive_change_threshold,
+            max_silence_ms=config.adaptive_max_silence_ms,
+        )
 
     def reset(self) -> dict[str, np.ndarray]:
         observations = super().reset()
         self._cache.clear()
+        self._scheduler.reset()
         return self._communicate_and_observe(observations)
 
     def step(
@@ -47,6 +59,7 @@ class CommunicationAwareMultiAgentEnvironment(MultiAgentEnvironment):
         aware_observations = self._communicate_and_observe(observations)
         info["communication_aware"] = True
         info["message_cache"] = self.cache_snapshot()
+        info["communication_scheduler"] = self._scheduler.telemetry()
         return aware_observations, rewards, terminated, info
 
     def communication_observation(self, agent_id: str) -> np.ndarray:
@@ -88,13 +101,17 @@ class CommunicationAwareMultiAgentEnvironment(MultiAgentEnvironment):
             for agent_id in self.agent_ids
         }
         for sender_id in self.agent_ids:
-            for receiver_id in self.communication.topology.for_agent(sender_id):
-                self.communication.send(
-                    sender_id,
-                    receiver_id,
-                    snapshots[sender_id].to_payload(),
-                    current_time,
-                )
+            decision = self._scheduler.should_transmit(
+                sender_id, local_observations[sender_id], current_time
+            )
+            if decision.transmit:
+                for receiver_id in self.communication.topology.for_agent(sender_id):
+                    self.communication.send(
+                        sender_id,
+                        receiver_id,
+                        snapshots[sender_id].to_payload(),
+                        current_time,
+                    )
         self._receive_available(current_time)
         return {
             agent_id: self.communication_observation(agent_id)

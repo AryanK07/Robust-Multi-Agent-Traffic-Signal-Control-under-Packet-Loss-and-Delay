@@ -18,6 +18,7 @@ from .phase9 import (
     save_phase9_checkpoint,
     validate_phase9_config,
 )
+from .phase10 import Phase10Config, communication_reduction, validate_phase10_config
 
 __all__ = [
     "Phase7Condition",
@@ -34,4 +35,7 @@ __all__ = [
     "phase9_metadata",
     "save_phase9_checkpoint",
     "validate_phase9_config",
+    "Phase10Config",
+    "communication_reduction",
+    "validate_phase10_config",
 ]
