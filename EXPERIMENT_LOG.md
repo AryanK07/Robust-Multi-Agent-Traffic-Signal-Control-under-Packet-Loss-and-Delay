@@ -1,5 +1,43 @@
 # Experiment Log
 
+## Follow-up v2 development pilot — 2026-11-13
+
+- Experiment ID: `followup_v2/development_001`; source commit
+  `eada4cdc26ac7ca07791b4e48e1f1d7ab2ad3209`.
+- Configuration: `configs/followup_v2.yaml`, resolved pilot overrides;
+  master seeds 20261/20262, separate train/evaluation streams, original four
+  junctions, 20 seeded departures over 30 seconds, 120-second episodes.
+- Training: five variants, four episodes each, learning rate 0.01, discount
+  0.95, epsilon 0.2. Robust exposure is a seeded incomplete nine-condition
+  cycle over losses 0/0.1/0.2 and delays 0/250/500 ms.
+- Evaluation: frozen weights, epsilon zero, matched demand; conditions
+  (0,0), (0.1,250 ms), held-out (0.3,1000 ms). Five strategies reuse the full
+  robust checkpoint. Ten checkpoint sets, 40 training episodes and 50
+  evaluations completed with no execution failures.
+- Metrics: tripinfo accumulated per-vehicle waiting to horizon, completion,
+  unfinished/uninserted demand, travel, queue, reward and communication cost.
+- All training episodes completed 20/20 trips; all frozen evaluations were
+  censored. Full ideal/robust waiting means were 47.7575/61.1775 seconds and
+  completion fractions 50%/37.5%. These are development observations, not
+  comparable to the original waiting proxy or proof of a general ranking.
+- Full robust communication attempts averaged 9600 always, 960 periodic,
+  206 state-change adaptive, 1797.67 periodic pull, and 564.67 action-sensitive.
+  Traffic metrics matched across strategies within each seed-condition;
+  the action-sensitive method did not dominate the simpler adaptive control.
+- Limitations: two independent master seeds, four training episodes,
+  incomplete robust exposure, censored traffic outcomes, three evaluation
+  cells and no collected component-ablation campaign. No convergence,
+  equivalence, superiority or novelty claim. Parameters were not retuned.
+- Validation: 93 tests passed and compilation passed; 90 tripinfo records,
+  40 checkpoint hashes, exact evaluation coverage, seed pairing, source
+  identity and counter consistency verified. Resume preserved all 421
+  campaign manifest/raw/artifact files; original 870 files remain unchanged.
+- Full results, paired uncertainty, selected generated artifacts and ranked
+  next actions: [development report](docs/FOLLOWUP_DEVELOPMENT_RESULTS.md).
+  Raw data remain local in `results/followup_v2/development_001/`.
+
+## Historical development log
+
 Earlier entries below retain the history of individual development phases.
 The original Phase 11 campaign is preserved locally; its independent audit is
 documented in `docs/PHASE11_AUDIT.md`. Historical statements about unstarted

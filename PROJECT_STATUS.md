@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 11 — Authorized follow-up v2 implementation in progress.
+Phase 11 — Follow-up v2 implemented; bounded development pilot completed.
 
 Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
@@ -11,7 +11,10 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 - Follow-up v2 tripinfo metrics, immutable campaign storage, action-margin
   communication, time-resolved environment and constrained signal transitions.
 - Matched fresh-training/evaluation runner, seeded demand, explicit held-out
-  impairments and executable component ablations. Pilot collection is pending.
+  impairments and executable component ablations.
+- Frozen pilot: 10 checkpoint sets, 40 training episodes, 50 evaluations and
+  no execution failures. All evaluations left trips unfinished; see
+  [the measured report](docs/FOLLOWUP_DEVELOPMENT_RESULTS.md).
 
 - Deterministic 2x2 SUMO grid with four signalized junctions created.
 - Deterministic six-vehicle route demand and SUMO configuration added.
@@ -74,23 +77,18 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
 ## In Progress
 
-- Follow-up metric/storage foundations and action-sensitive environment are
-  implemented. Distinct 100/250/500/1000 ms effects on policy message age,
-  two-leg request delays, loss, feature ablations, and signal constraints have
-  targeted regression coverage. The versioned training/evaluation pilot is next.
-
-- The versioned runner and fixed development-pilot configuration now support
-  fresh matched checkpoints, per-episode tripinfo, held-out impairments,
-  ablations, and paired seed analysis. Collection follows source commit.
-
-- The original Phase 11 campaign is complete and preserved, but the audit
-  identified measurement and design limitations that prevent treating the
-  full research acceptance criteria as satisfied.
+- Scientific validation remains incomplete. The four-episode pilot does not
+  establish adequate greedy traffic control, convergence or a communication
+  performance advantage. The software extension is implemented and tested.
+- The original Phase 11 campaign and unfavorable follow-up outcomes are
+  preserved. Neither is relabeled as a successful final research evaluation.
 
 ## Upcoming
 
-- Implement the user-approved correction and action-sensitive IQL scope in
-  `docs/FOLLOWUP_PROTOCOL.md`; validate with a bounded development pilot.
+- Predeclare a controlled training-budget study on development data, with
+  greedy-policy validation and full robust-condition cycles.
+- Then evaluate communication controls/ablations on competent checkpoints
+  and freeze a separate confirmatory design before collecting final results.
 - Phase 12 remains deferred; no paper drafting has started.
 
 ## Tests
@@ -119,6 +117,17 @@ that the correction changes channel telemetry only.
 
 ## Experiments
 
+Follow-up pilot at `eada4cd`: 40 training episodes and 50 frozen evaluations,
+zero execution failures; all 50 evaluations censored. All 90 tripinfo files
+reproduced stored metrics, 40 checkpoint hashes matched, and completed-run
+resume preserved all 421 manifest/raw/artifact files. Action-sensitive
+communication averaged 564.67 attempts versus 1797.67 periodic pull and 9600
+always-transmit; state-change adaptive used 206. Traffic outcomes were
+identical across strategies and inadequate. These are development findings,
+not evidence of superiority. Full data remain local under
+`results/followup_v2/development_001/`; selected generated summaries are in
+`docs/results/` and interpreted in `docs/FOLLOWUP_DEVELOPMENT_RESULTS.md`.
+
 The original Phase 11 directory contains exactly 755 required successful
 evaluation records and zero failed records, with 15 production checkpoint
 sets and 25 training records per set. Checkpoint hashes, 151 summaries, and
@@ -129,6 +138,27 @@ not a replacement final campaign. Earlier pilots/smokes remain functional
 verification only.
 
 ## Known Issues
+
+### Current follow-up limitations
+
+- All four-episode greedy policies leave unfinished trips. Training-budget
+  adequacy and policy convergence require controlled development validation.
+- Only two master seeds and three impairment cells were collected; full
+  component ablations and the larger v2 matrix have not been run.
+- Conservative action bounds can over-request; measured savings do not prove
+  useful traffic control or superiority over the simpler adaptive scheduler.
+- Local observations omit the internal minimum-green timer. Fixed delays,
+  small demand/network, censoring, and limited independent seeds constrain
+  inference. No final novelty or publication-readiness claim is supported.
+- Complete raw outputs/checkpoints are local and ignored by Git; separate
+  off-machine research archiving remains necessary.
+
+### Original Phase 11 limitations (preserved historical record)
+
+The v2 pipeline addresses metric definition, time resolution, scheduler
+settings, matched exploration, provenance and signal-transition constraints.
+The following observations describe the preserved original campaign and
+legacy path, not unresolved equivalently named v2 defects.
 
 - The original waiting field averages consecutive-wait snapshots, not total
   waiting per vehicle. No metric definition was silently changed.
@@ -158,7 +188,8 @@ verification only.
 
 ## Latest Commit
 
-Pre-audit HEAD and verified remote: `4161f42c13e0a1c89f8ce307579befcbbb530378`.
-Phase 11 implementation: `bbfe2c2`. Original records name `9b8b212`.
-The audit and telemetry correction are recorded in the commit containing
-this status update; use `git log -1` for its resolved hash.
+Original Phase 11: `4161f42`; audit/counter correction: `959745d`.
+Versioned metrics/storage: `a5c0b6e`; action-sensitive environment: `209f426`.
+Follow-up runner and frozen pilot source: `eada4cd`.
+The measured pilot documentation is recorded in the commit containing this
+status update; use `git log -1` for that documentation commit's resolved hash.

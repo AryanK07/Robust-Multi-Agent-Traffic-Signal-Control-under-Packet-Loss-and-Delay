@@ -1,0 +1,169 @@
+{
+  "design": {
+    "demand_seconds": 30,
+    "discount_factor": 0.95,
+    "environment": {
+      "change_threshold": 0.1,
+      "communication_interval": 0.1,
+      "decision_interval": 1.0,
+      "heartbeat_ms": 5000,
+      "horizon_seconds": 120,
+      "minimum_green": 5.0,
+      "periodic_interval_ms": 1000,
+      "request_cooldown_ms": 1000,
+      "simulation_step": 0.05,
+      "yellow_seconds": 3.0
+    },
+    "epsilon": 0.2,
+    "evaluation_conditions": [
+      [
+        0,
+        0
+      ],
+      [
+        0.1,
+        250
+      ],
+      [
+        0.3,
+        1000
+      ]
+    ],
+    "freshness": {
+      "freshness_decay_tau_ms": 500,
+      "max_message_age_ms": 2000,
+      "stale_message_threshold_ms": 1000
+    },
+    "held_out_conditions": [
+      [
+        0.3,
+        1000
+      ]
+    ],
+    "learning_rate": 0.01,
+    "master_seeds": [
+      20261,
+      20262
+    ],
+    "purpose": "development_pilot",
+    "schema": "followup_v2",
+    "strategies": [
+      "always",
+      "periodic",
+      "adaptive",
+      "periodic_pull",
+      "action_sensitive"
+    ],
+    "training_conditions": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        250
+      ],
+      [
+        0,
+        500
+      ],
+      [
+        0.1,
+        0
+      ],
+      [
+        0.1,
+        250
+      ],
+      [
+        0.1,
+        500
+      ],
+      [
+        0.2,
+        0
+      ],
+      [
+        0.2,
+        250
+      ],
+      [
+        0.2,
+        500
+      ]
+    ],
+    "training_episodes": 4,
+    "variants": {
+      "full_ideal": {
+        "features": "full",
+        "training": "ideal"
+      },
+      "full_robust": {
+        "features": "full",
+        "training": "robust"
+      },
+      "local": {
+        "features": "local",
+        "training": "ideal"
+      },
+      "plain_ideal": {
+        "features": "plain",
+        "training": "ideal"
+      },
+      "plain_robust": {
+        "features": "plain",
+        "training": "robust"
+      }
+    },
+    "vehicle_period": 6,
+    "workers": 2
+  },
+  "git_commit": "eada4cdc26ac7ca07791b4e48e1f1d7ab2ad3209",
+  "metric_schema": "tripinfo_v2",
+  "packages": {
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1"
+  },
+  "python": "3.14.0",
+  "reward": "negative_local_queue_integral_v2",
+  "schema": "campaign_v2",
+  "source_sha256": {
+    "configs/followup_v2.yaml": "b17bbe823dbc07bbc06f9fced40957212e5725e6fc2726e6489aef53de76fce5",
+    "scripts/run_followup.py": "91a658125869d2606c6c4e73e65b331d27b41aa9efef45798cedd453e76516e7",
+    "src/traffic_control/__init__.py": "edddb134ed5cd8e5886cb6337ec1bd65222aa4cad3385a6b6aa3847dcc9fa801",
+    "src/traffic_control/communication/__init__.py": "fc12ce77fbf46b6d4d5353f91d19ee96d1d950bf75d1b9dbb6e2d2cae200cd7c",
+    "src/traffic_control/communication/action_margin.py": "beb8a697792e79bea19fb37d034dfc58d476bb9a282754b1b8f3f69e995de261",
+    "src/traffic_control/communication/channel.py": "c5233f6e9c2eec4affd83af4d841a5f5d0f19678665660dc4c9b35c2a3b4c8ce",
+    "src/traffic_control/communication/freshness.py": "cef6ac6163057177b8c7c581f93bb364b1d32981442f5b78c2e5ff39370a0613",
+    "src/traffic_control/communication/message.py": "5f690af1b1d81d84e6d71300e964cb72d3bfe702b1f271256bf413905b110ccc",
+    "src/traffic_control/communication/scheduler.py": "db51c7f46aa5261a42a83e65c137dba57111fec7988f8d2b74f149081a50c95c",
+    "src/traffic_control/communication/topology.py": "6988ef5f6dd9cf915d604f9741a136828bd1d824783d7791244ac19924d0d43a",
+    "src/traffic_control/config.py": "e40fadf3da1800d750ebd4bcca77eac6e52c1b14aeeb0a36de3732ac2835ec40",
+    "src/traffic_control/environment/__init__.py": "d0b1e8f924310e4664ac9d3122212354053c71ba443d77085d61b091720d2d3b",
+    "src/traffic_control/environment/metrics.py": "bbd3fd08be232d6e0c4d2d3b5e502984d0f03c0d633dec66cc1d5ed22ff3a3bd",
+    "src/traffic_control/environment/safe_signals.py": "250e69795d34ce998d1e80ca3cd01ba5069ec617dbc8f13eb3437b3ff0bd951d",
+    "src/traffic_control/environment/signal_controller.py": "86aad8ff3ea5e66cebefa99b66a6684c340b7d83d4bc224f2d04e312c1bd5dc5",
+    "src/traffic_control/environment/sumo_env.py": "2bed3c5922becf118778b1a5d8aab872732fed49b5f22f1d90be1ca377b308b7",
+    "src/traffic_control/environment/traffic_state.py": "95c66939e29416acee6d26995337235be004bdcc2737d04958ea7d92f48e8525",
+    "src/traffic_control/environment/trip_metrics.py": "80506682f10f5868f6b256216273b7a800c1c51faafd575ccf5ac2907d4889e7",
+    "src/traffic_control/experiments/__init__.py": "390df00f25c48264ba4830fdd4cb84df85370b7e7570a4ea844afdff0bcec3de",
+    "src/traffic_control/experiments/artifacts.py": "d6f754d4cfcfea71cca41104399230d8189a36f591e98807b98a6784b7648396",
+    "src/traffic_control/experiments/followup.py": "d888181505efa3c814a6466cb962572fe711f531f42d68bd11f3541d91c216aa",
+    "src/traffic_control/experiments/followup_analysis.py": "a987826212b52659eaea95bca5d54c34af31f378539403259eded4c7ab7416f9",
+    "src/traffic_control/experiments/followup_design.py": "6850aa197dc7d0ac0ee41be7e8d61b45b4f7fb2380e20f0a7baa09c2d7a5a2f1",
+    "src/traffic_control/experiments/phase10.py": "ea0551de1b1ff9ae34e722f0c1d02cf4f1c076fe16951f2eed5b83850f37606d",
+    "src/traffic_control/experiments/phase11.py": "ff41557b3e7c9a7fd961d94bf632195309c554cd16d05d77d688b7ed4d658b98",
+    "src/traffic_control/experiments/phase7.py": "cb85498dbd8afe3f5e78ecafd808adda73590f8638a677bc1edc89dfc0294c55",
+    "src/traffic_control/experiments/phase9.py": "dc04aa2deab47d3f41180bbb50422b132e98edda49f113ad1c3c3c02586ab26e",
+    "src/traffic_control/rl/__init__.py": "92d9e482cc7bd5120343f593beddf426da6c08ff17c86bd1a8a26fccdff29054",
+    "src/traffic_control/rl/communication_aware_env.py": "26a370db51f230e44582f3491d0a9827c637bc1866b48cd4e48e72f0b18f89a0",
+    "src/traffic_control/rl/followup_env.py": "1babe762c0ed4757c724d658a2da0ff6834f61554dafa3a45e9e45ff849a1fb5",
+    "src/traffic_control/rl/multi_agent_env.py": "47fcdabe2a7863957b683145ac0253016118a97d2cdbffd79dda43ed5e6a6d23",
+    "src/traffic_control/rl/q_learning.py": "31d57381aa8b454af2c5a6ffc98ebd2d48c6d9a5cab82ad6d5c6b634c4bb153a",
+    "src/traffic_control/rl/single_agent_env.py": "4aabf635595d47d196272c062d7b2486fda44eb4ed9bbf6db673e6f15d83ac92",
+    "sumo/network/grid.net.xml": "9c5600c3015ccfad40c8def18c080c2642025a31271477a6ae9ef9711b939b6c"
+  },
+  "sumo": "Eclipse SUMO sumo 1.27.1"
+}

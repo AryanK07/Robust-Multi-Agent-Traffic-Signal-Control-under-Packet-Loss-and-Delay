@@ -6,8 +6,8 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is in **Phase 11: audited; authorized follow-up v2 in
-development**. Phase 12 has not started. The original 755 evaluation records and
+The repository is in **Phase 11: audited; follow-up v2 implemented and its
+development pilot completed**. Phase 12 has not started. The original 755 evaluation records and
 15 production checkpoint sets are present locally and were independently
 checked. See the [Phase 11 audit](docs/PHASE11_AUDIT.md) for verified findings,
 limitations, validation, and the recommendation to conduct a focused follow-up
@@ -36,9 +36,19 @@ python scripts/run_followup.py --mode pilot --output results/followup_v2/develop
 python scripts/run_followup.py --mode analyze --output results/followup_v2/development_001
 ```
 
-The bounded development pilot uses fresh checkpoints and separate outputs;
-original Phase 11 files are protected. Current follow-up results are documented
-in `EXPERIMENT_LOG.md`. Phase 12 remains unstarted.
+The bounded pilot completed 40 training episodes and 50 frozen evaluations
+without execution failures. All 50 evaluations left trips unfinished, so the
+four-episode policies do not establish adequate traffic control. Communication
+suppression works, but no traffic benefit or superiority is claimed. See the
+[measured pilot report](docs/FOLLOWUP_DEVELOPMENT_RESULTS.md) for every baseline,
+communication costs, uncertainty, validation and next steps. Original Phase 11
+files remain unchanged. A controlled training-budget study is required before
+a final research campaign; Phase 12 remains unstarted.
+
+The completed pilot records source commit `eada4cd`. Its output directory cannot
+be reused under a different source/configuration identity. To reproduce it,
+use that committed source with a clean working tree and a new output directory.
+Analysis of an existing campaign uses its saved manifest.
 
 ## Requirements
 

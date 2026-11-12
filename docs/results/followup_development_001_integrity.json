@@ -1,0 +1,16 @@
+{
+  "source_commit": "eada4cdc26ac7ca07791b4e48e1f1d7ab2ad3209",
+  "training_sets": 10,
+  "training_episodes": 40,
+  "evaluations": 50,
+  "failed_attempts": 0,
+  "tripinfo_recomputations": 90,
+  "checkpoint_hashes_verified": 40,
+  "original_files_unchanged": 870,
+  "censored_training_episodes": 0,
+  "censored_evaluations": 50,
+  "paired_demand_verified": true,
+  "communication_accounting_verified": true,
+  "source_files_verified": 34,
+  "raw_files_hashed": 421
+}

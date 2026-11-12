@@ -130,6 +130,10 @@ budgeted separately. `--retry-failed` only retries failed logical runs and
 preserves their earlier records. Any changed design/source requires a new
 output directory. A source manifest is recorded before training.
 
+The frozen pilot was subsequently collected at commit `eada4cd`; see the
+[development results](FOLLOWUP_DEVELOPMENT_RESULTS.md). Its unsuccessful traffic
+outcomes are preserved. This protocol was not retuned after those outcomes.
+
 ## Literature positioning (checked 2026-11-13)
 
 Selective communication itself is established. IC3Net learns communication

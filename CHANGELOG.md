@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+### Follow-up v2 development evaluation
+
+- Executed the predeclared pilot at `eada4cd`: 10 checkpoint sets, 40 training
+  episodes and 50 frozen evaluations, with zero execution failures.
+- Recorded unfavorable outcomes: every evaluation had unfinished trips;
+  message suppression alone does not establish successful traffic control.
+- Published the measured report and selected generated summary/manifest/
+  integrity artifacts; retained full raw data separately and preserved all
+  870 original Phase 11 files. Verified completed-run resume without changes.
+- Deferred Phase 12 pending controlled training-budget validation and a
+  separately frozen final evaluation; made no novelty or superiority claim.
+
 ### Follow-up v2 foundations
 
 - Added a versioned train/evaluate/analyze runner with matched seeds and
