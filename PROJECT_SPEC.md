@@ -1996,3 +1996,12 @@ should be explicitly reviewed before implementation.
 ---
 
 ## End of PROJECT_SPEC.md
+
+## Authorized follow-up clarification — 2026-11-13
+
+Following the independent Phase 11 audit, the user authorized corrections and
+selected action-sensitive communication within existing linear IQL. The
+[versioned follow-up protocol](docs/FOLLOWUP_PROTOCOL.md) defines corrected
+trip-level metrics, causal timing, preservation requirements and the focused
+extension. This addendum retains the title, RQs/H1–H6, small network and IQL;
+it does not claim novelty or replace the original experimental record.

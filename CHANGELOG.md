@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Follow-up v2 foundations
+
+- Added authoritative tripinfo-based per-vehicle waiting metrics with explicit
+  unfinished/uninserted demand and completed-trip travel time.
+- Added configuration/source/checkpoint-addressed campaign manifests and
+  immutable retry attempts that count each successful logical run once.
+- Made legacy audit read-only and blocked mutation of original Phase 11 paths.
+- Recorded the user's authorized correction and action-sensitive IQL scope in
+  `docs/FOLLOWUP_PROTOCOL.md` and the specification addendum.
+
 ### Fixed
 
 - Communication-aware environment step telemetry now snapshots channel

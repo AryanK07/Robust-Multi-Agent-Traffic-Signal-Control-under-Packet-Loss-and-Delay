@@ -61,6 +61,12 @@ def _git_commit() -> str:
     ).stdout.strip()
 
 
+def _protect_original_campaign(directory: Path) -> None:
+    original = (ROOT / "results/phase11").resolve()
+    if directory.resolve().is_relative_to(original):
+        raise ValueError("Original Phase 11 artifacts are read-only; use the versioned follow-up runner")
+
+
 def _make_phase9_training_config(
     phase11: Phase11Config, seed: int, variant: str, output: Path
 ) -> Phase9TrainingConfig:
@@ -80,6 +86,7 @@ def train_checkpoints(
     phase11: Phase11Config, phase7_config, *, selected_seed: int | None = None
 ) -> dict[str, Any]:
     """Train one frozen checkpoint set per policy and master seed."""
+    _protect_original_campaign(ROOT / phase11.checkpoint_directory)
     seeds = (selected_seed,) if selected_seed is not None else phase11.master_seeds
     freshness = FreshnessConfig(
         phase11.freshness_decay_tau_ms,
@@ -375,6 +382,7 @@ def run_campaign(
     retry_failed: bool = False,
 ) -> dict[str, int]:
     """Run selected resumable batch and preserve every failure."""
+    _protect_original_campaign(ROOT / phase11.evaluation_output_directory)
     all_specs = generate_phase11_runs(phase7_config, phase11)
     specs = tuple(
         spec for spec in all_specs
@@ -414,6 +422,7 @@ def run_campaign(
 
 def analyze(phase11: Phase11Config) -> dict[str, Any]:
     """Generate machine-readable summaries, paired comparisons, and figures."""
+    _protect_original_campaign(ROOT / phase11.evaluation_output_directory)
     output = ROOT / phase11.evaluation_output_directory
     results = list(load_valid_raw_results(output / "raw").values())
     summaries = aggregate_phase11_results(results)
@@ -601,6 +610,16 @@ def main() -> None:
     )
     phase7 = load_phase7_config(ROOT / "configs/phase7.yaml")
     output = ROOT / phase11.evaluation_output_directory
+    if args.mode == "audit":
+        print(json.dumps({
+            "required_runs": len(generate_phase11_runs(phase7, phase11)),
+            "checkpoint_directory": str(ROOT / phase11.checkpoint_directory),
+            "output_directory": str(output),
+            "phase": 11,
+            "read_only": True,
+        }, indent=2))
+        return
+    _protect_original_campaign(output)
     output.mkdir(parents=True, exist_ok=True)
     (output / "config.yaml").write_text(
         (ROOT / "configs/phase11.yaml").read_text(encoding="utf-8"), encoding="utf-8"
@@ -622,14 +641,5 @@ def main() -> None:
         ))
     if args.mode in {"analyze", "all"}:
         print(json.dumps(analyze(phase11), indent=2))
-    if args.mode == "audit":
-        print(json.dumps({
-            "required_runs": len(generate_phase11_runs(phase7, phase11)),
-            "checkpoint_directory": str(ROOT / phase11.checkpoint_directory),
-            "output_directory": str(output),
-            "phase": 11,
-        }, indent=2))
-
-
 if __name__ == "__main__":
     main()

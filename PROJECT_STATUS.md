@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 11 — Independent audit complete; follow-up protocol pending.
+Phase 11 — Authorized follow-up v2 implementation in progress.
 
 Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
@@ -75,9 +75,8 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
 ## Upcoming
 
-- Review a focused follow-up protocol addressing traffic metric definition,
-  decision/delay resolution, baseline controls, and missing ablations and
-  held-out conditions. Protocol changes require human approval.
+- Implement the user-approved correction and action-sensitive IQL scope in
+  `docs/FOLLOWUP_PROTOCOL.md`; validate with a bounded development pilot.
 - Phase 12 remains deferred; no paper drafting has started.
 
 ## Tests
