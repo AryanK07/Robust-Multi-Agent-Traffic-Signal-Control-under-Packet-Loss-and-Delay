@@ -67,3 +67,32 @@ transmissions update scheduler reference state even if packet loss drops them.
 The Phase 10 smoke test is functional verification only; no communication
 efficiency or traffic-performance conclusion has been drawn. Phase 11 and
 Phase 12 have not started.
+
+Phase 11 final evaluation:
+
+- Design: 2 communication-aware policies x 3 strategies x 25 Phase 7
+  conditions x 5 master seeds, plus 5 local-only reference episodes.
+- Training: fresh frozen checkpoints, 25 episodes per seed and policy; ideal
+  communication-aware training used 0% loss/0 ms delay, robust training used
+  one balanced 25-condition cycle, and local-only training disabled
+  communication.
+- Evaluation: deterministic actions, matched traffic-demand seeds, separate
+  packet-loss streams, fixed 20-step episodes, and no policy updates.
+- Coverage: 755 required, 755 successful, 0 failed, 0 pending.
+- Primary metric: average vehicle waiting time. Secondary metrics include
+  total waiting, queue lengths, completed trips, reward, send attempts,
+  delivery/drop telemetry, message age, stale proportion, pending messages,
+  scheduler opportunities, suppression, and reduction.
+- Statistical method: descriptive mean, standard deviation, median, and
+  95% normal-approximation intervals. Paired comparisons aggregate across
+  conditions per frozen master-seed checkpoint; five seeds limit inference.
+- Measured outcome: ideal-trained communication-aware mean waiting time was
+  0.0942 s across conditions and strategies; robust-trained was 0.1530 s.
+  Periodic and adaptive each made 160 sends per episode with zero suppression
+  and zero communication reduction under the frozen 1000 ms settings, so
+  their traffic metrics matched always transmission in this campaign.
+- Interpretation: the result is mixed and specific to the small deterministic
+  SUMO scenario and 25-episode training budget. It does not establish
+  robustness superiority or adaptive communication benefit.
+- Raw records and generated analysis are preserved locally under
+  `results/phase11/` and are ignored by Git. Phase 12 has not started.

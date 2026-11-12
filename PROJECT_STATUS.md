@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 10 — Adaptive Inter-Agent Communication
+Phase 11 — Final Experiments and Statistical Evaluation
 
 ## Completed
 
@@ -58,15 +58,20 @@ Phase 10 — Adaptive Inter-Agent Communication
   scheduler added with heartbeat, trigger, suppression, and reduction
   telemetry.
 - Phase 10 scheduler configuration, tests, and smoke verification added.
+- Phase 11 final evaluation runner, frozen checkpoint audit, resumable raw
+  results, statistical summaries, paired comparisons, and figures added.
+- Production checkpoints trained for 25 episodes per seed for all three policy
+  variants across five master seeds.
+- Complete 755-run evaluation campaign completed successfully.
 - GitHub remote verified as `origin`.
 
 ## In Progress
 
-- None for Phase 10 implementation.
+- Phase 11 implementation and campaign complete; Phase 12 is not started.
 
 ## Upcoming
 
-- Phase 11: final experiments and evaluation.
+- Phase 12: research-paper preparation (not started).
 
 ## Tests
 
@@ -85,6 +90,8 @@ scheduling/telemetry tests.
 
 No final research experiment has been run. Phase 7 pilot, Phase 8 smoke, and
 Phase 9 smoke training and Phase 10 smoke are functional verification only.
+Phase 11 completed 755/755 evaluation episodes with zero failed runs. Full
+automated tests and Phase 11 tests pass.
 
 ## Known Issues
 
@@ -108,7 +115,13 @@ Phase 9 smoke training and Phase 10 smoke are functional verification only.
   statistical evaluation remain pending.
 - Adaptive communication is deterministic and rule-based; no learned
   communication policy or communication reward has been introduced.
+- With the frozen 1000 ms periodic interval and adaptive heartbeat, no
+  message suppression occurred in the final campaign; adaptive communication
+  did not reduce communication volume in this design.
+- The 25-episode robust-trained policy was not better than ideal-trained on
+  the measured waiting-time aggregate; this is not evidence against longer or
+  differently designed training.
 
 ## Latest Commit
 
-Phase 10 implementation is currently uncommitted.
+Phase 11 implementation commit: `bbfe2c2`.

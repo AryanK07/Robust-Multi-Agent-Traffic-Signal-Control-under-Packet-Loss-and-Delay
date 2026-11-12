@@ -305,8 +305,42 @@ py scripts\run_phase10_adaptive_communication_smoke.py
 ```
 
 This is software verification only, not evidence that adaptive communication
-improves traffic performance. Full paired comparisons remain pending; Phase 11
-and Phase 12 have not started.
+improves traffic performance. The Phase 11 campaign is documented below;
+Phase 12 has not started.
+
+## Phase 11 final evaluation
+
+The Phase 11 campaign is configuration-driven by
+`configs/phase11.yaml` and uses the Phase 7 5x5 matrix, three communication
+strategies for both communication-aware policies, five master-seed replicates,
+and the local-only reference. This produces 755 frozen-checkpoint evaluation
+episodes. The runner is resumable and refuses to overwrite raw records:
+
+```powershell
+py scripts\run_phase11_final_experiments.py --mode audit
+py scripts\run_phase11_final_experiments.py --mode train
+py scripts\run_phase11_final_experiments.py --mode evaluate
+py scripts\run_phase11_final_experiments.py --mode analyze
+```
+
+Production checkpoints are trained for 25 episodes per seed and are kept
+outside version control under `results/phase11/checkpoints`. Raw episode
+records, summaries, statistical reports, and generated figures are under
+`results/phase11/`. The primary metric is average vehicle waiting time;
+secondary traffic and communication telemetry are recorded when available.
+Paired comparisons aggregate conditions per frozen training seed before
+descriptive inference; five seeds provide limited statistical power.
+
+Measured Phase 11 outcome: all 755 required episodes completed successfully.
+Under the frozen 1000 ms periodic interval and 1000 ms adaptive heartbeat,
+periodic and adaptive scheduling produced 160 send attempts per episode and
+0% measured communication reduction relative to always transmission. Their
+traffic metrics therefore matched always transmission in this campaign. The
+robust-trained policy was not superior to the ideal-trained policy under the
+25-episode training budget; across all conditions and strategies its mean
+waiting time was 0.1530 s versus 0.0942 s for ideal-trained. These are
+measured results for this small deterministic SUMO scenario, not general
+claims about robustness or adaptive communication.
 
 ## Phase 7 combined impairment experiments
 
@@ -371,8 +405,8 @@ py scripts\run_phase8_freshness_aware_smoke.py
 
 This verifies the delayed message boundary, packet-loss retention behavior,
 age decay, the 23-dimensional observation, and both policy variants. It is
-software verification only, not a performance result. Phase 9 robust training
-and final comparative experiments remain pending.
+software verification only, not a performance result; final comparative
+results are documented in the Phase 11 section.
 
 ## Repository layout
 

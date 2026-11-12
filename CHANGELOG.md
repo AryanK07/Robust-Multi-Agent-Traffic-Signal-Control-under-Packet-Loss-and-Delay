@@ -27,3 +27,7 @@
   metadata.
 - Phase 10 deterministic always/periodic/adaptive transmission scheduler with
   heartbeat, trigger, suppression, and communication-reduction telemetry.
+- Phase 11 reproducible final-evaluation runner, frozen checkpoint audit,
+  resumable raw results, statistical summaries, paired comparisons, and plots.
+- Phase 11 campaign completed 755/755 required evaluation episodes without
+  failures; measured outcomes are documented without superiority claims.
