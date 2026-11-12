@@ -1,8 +1,9 @@
 # Experiment Log
 
-No experiments have been run. This file will record configurations, seeds,
-Git commits, measured metrics, observations, and limitations for each
-subsequent experiment.
+Earlier entries below retain the history of individual development phases.
+The original Phase 11 campaign is preserved locally; its independent audit is
+documented in `docs/PHASE11_AUDIT.md`. Historical statements about unstarted
+phases are not the current status.
 
 The Phase 3 smoke-training run is functional verification only, not a research
 experiment. It uses seed 42, two training episodes, one evaluation episode,
@@ -96,3 +97,37 @@ Phase 11 final evaluation:
   robustness superiority or adaptive communication benefit.
 - Raw records and generated analysis are preserved locally under
   `results/phase11/` and are ignored by Git. Phase 12 has not started.
+
+Phase 11 independent audit — 2026-11-12:
+
+- Audit ID: `phase11_audit_v1`; source at inspection:
+  `4161f42c13e0a1c89f8ce307579befcbbb530378`.
+- Original records all name `9b8b212d482e447583ef6df7daa9467a2b6e478c`, which
+  predates the Phase 11 runner. This provenance gap is recorded, not repaired
+  by rewriting historical metadata.
+- Read-only analysis verified all 755 required records, 15 production
+  checkpoint sets, 25 training records per set, 151 summaries, and six stored
+  comparisons. Recomputed original waiting-field means: ideal 0.0942471910,
+  robust 0.1530476904. This field is not accumulated waiting per vehicle.
+- Five original frozen evaluations reproduced all fields except the expected
+  current Git hash. Five diagnostic traces checked message influence, policy
+  immutability, metric semantics, and channel-counter timing. A separate
+  reset diagnostic found channel counters persist across environment resets;
+  the original campaign creates fresh environments and is unaffected by that
+  lifecycle issue.
+- Corrected only the post-step channel telemetry snapshot. Three new tests
+  failed before the correction and passed afterward. Full suite: 68 passed.
+- Five corrected replays are isolated in
+  `results/phase11_audit_v1/corrected_replays/`, each with original run ID,
+  source-file SHA-256, timestamp, and modified-working-tree provenance.
+  Communication-aware send counts changed from 160 to 168; all traffic
+  outputs and scheduler reductions matched. The local-only control was
+  unchanged. No checkpoint was retrained.
+- Configurations, selected seeds/conditions, detailed trace measurements,
+  differences, and all 870 original artifact hashes are recorded in the
+  audit directory. SUMO emitted emergency-braking/red-light-stop warnings
+  during some replays; those episodes completed, but the warnings reinforce
+  the signal-transition limitation documented in the audit.
+- This was bounded software validation, not a new final campaign or a
+  successful robustness experiment. Original artifacts remain byte-identical.
+  Follow-up protocol changes require review; Phase 12 has not started.

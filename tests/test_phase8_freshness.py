@@ -138,3 +138,44 @@ def test_communication_aware_environment_sends_once_and_preserves_joint_step() -
         assert len(info["message_cache"]["A0"]) == 2
     finally:
         environment.close()
+
+
+@pytest.mark.sumo
+@pytest.mark.skipif(
+    importlib.util.find_spec("traci") is None, reason="TraCI is required"
+)
+@pytest.mark.parametrize("delay_ms,loss", [(0.0, 0.0), (250.0, 0.0), (250.0, 1.0)])
+def test_step_reports_channel_counters_after_communication(
+    delay_ms: float, loss: float
+) -> None:
+    """Channel and scheduler telemetry must describe the same completed step."""
+    environment = CommunicationAwareMultiAgentEnvironment(
+        CommunicationAwareEnvironmentConfig(
+            sumo_config_file=Path("sumo/simulation/grid.sumocfg"),
+            max_steps=2,
+            communication_delay_ms=delay_ms,
+            communication_packet_loss_probability=loss,
+            communication_seed=42,
+        )
+    )
+    try:
+        environment.reset()
+        for step in (1, 2):
+            _, _, terminated, info = environment.step(
+                {agent_id: 0 for agent_id in AGENT_IDS}
+            )
+            telemetry = info["communication"]
+            assert telemetry == environment.communication.telemetry()
+            assert telemetry.send_attempts == 8 * (step + 1)
+            assert telemetry.send_attempts == (
+                2 * info["communication_scheduler"].scheduled_transmissions
+            )
+            assert telemetry.send_attempts == (
+                telemetry.successful_transmissions + telemetry.dropped_messages
+            )
+            assert telemetry.successful_transmissions == (
+                telemetry.delivered_messages + telemetry.pending_messages
+            )
+            assert terminated == (step == 2)
+    finally:
+        environment.close()

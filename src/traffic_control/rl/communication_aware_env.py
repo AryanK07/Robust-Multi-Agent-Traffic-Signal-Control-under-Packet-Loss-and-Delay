@@ -57,6 +57,8 @@ class CommunicationAwareMultiAgentEnvironment(MultiAgentEnvironment):
     ) -> tuple[dict[str, np.ndarray], dict[str, float], bool, dict[str, Any]]:
         observations, rewards, terminated, info = super().step(actions)
         aware_observations = self._communicate_and_observe(observations)
+        # The base step snapshots the channel before this communication round.
+        info["communication"] = self.communication.telemetry()
         info["communication_aware"] = True
         info["message_cache"] = self.cache_snapshot()
         info["communication_scheduler"] = self._scheduler.telemetry()

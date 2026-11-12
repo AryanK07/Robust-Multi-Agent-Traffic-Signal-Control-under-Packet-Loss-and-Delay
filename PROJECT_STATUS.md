@@ -2,7 +2,9 @@
 
 ## Current Phase
 
-Phase 11 — Final Experiments and Statistical Evaluation
+Phase 11 — Independent audit complete; follow-up protocol pending.
+
+Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
 ## Completed
 
@@ -67,11 +69,16 @@ Phase 11 — Final Experiments and Statistical Evaluation
 
 ## In Progress
 
-- Phase 11 implementation and campaign complete; Phase 12 is not started.
+- The original Phase 11 campaign is complete and preserved, but the audit
+  identified measurement and design limitations that prevent treating the
+  full research acceptance criteria as satisfied.
 
 ## Upcoming
 
-- Phase 12: research-paper preparation (not started).
+- Review a focused follow-up protocol addressing traffic metric definition,
+  decision/delay resolution, baseline controls, and missing ablations and
+  held-out conditions. Protocol changes require human approval.
+- Phase 12 remains deferred; no paper drafting has started.
 
 ## Tests
 
@@ -86,42 +93,54 @@ generation, validation, serialization, and aggregation, plus Phase 8 freshness, 
 tests, Phase 9 scheduler/seed/metadata/configuration tests, and Phase 10
 scheduling/telemetry tests.
 
+Independent audit execution: original suite 65 passed; post-correction suite
+68 passed, including three new channel/scheduler timing regression cases.
+Compilation and Phase 4–10 smoke checks passed. Five original and five
+separate corrected 20-step replays validated frozen evaluation and confirmed
+that the correction changes channel telemetry only.
+
 ## Experiments
 
-No final research experiment has been run. Phase 7 pilot, Phase 8 smoke, and
-Phase 9 smoke training and Phase 10 smoke are functional verification only.
-Phase 11 completed 755/755 evaluation episodes with zero failed runs. Full
-automated tests and Phase 11 tests pass.
+The original Phase 11 directory contains exactly 755 required successful
+evaluation records and zero failed records, with 15 production checkpoint
+sets and 25 training records per set. Checkpoint hashes, 151 summaries, and
+six stored statistical comparisons were independently verified. All 870
+original artifact files remain unchanged. Audit evidence and corrected
+bounded validation are separate under `results/phase11_audit_v1/`; this is
+not a replacement final campaign. Earlier pilots/smokes remain functional
+verification only.
 
 ## Known Issues
 
-- The scenario is intentionally small and uses deterministic internal grid
-  routes; it is a functional foundation, not a realistic traffic benchmark.
-- The Phase 2 baseline uses NumPy-only linear Q-learning; no ML framework was
-  installed for Python 3.14 compatibility.
-- The smoke training is a functional check only; no performance conclusion
-  has been drawn.
-- Phase 3 uses local observations and local rewards; agents do not exchange
-  observations or learned information.
-- Delay is currently deterministic fixed delay; variable/stochastic delay
-  distributions are intentionally not implemented.
-- Communication metadata is not included in the Phase 3 RL observation.
-- Phase 3 policies do not generate or consume communication messages during
-  action selection, so impairment cannot currently be attributed to traffic
-  performance.
-- Delay is fixed only; stochastic delay, robustness, adaptive communication,
-  and robust training remain future phases.
-- Phase 9 smoke training is not a robust-performance claim; final training and
-  statistical evaluation remain pending.
-- Adaptive communication is deterministic and rule-based; no learned
-  communication policy or communication reward has been introduced.
-- With the frozen 1000 ms periodic interval and adaptive heartbeat, no
-  message suppression occurred in the final campaign; adaptive communication
-  did not reduce communication volume in this design.
-- The 25-episode robust-trained policy was not better than ideal-trained on
-  the measured waiting-time aggregate; this is not evidence against longer or
-  differently designed training.
+- The original waiting field averages consecutive-wait snapshots, not total
+  waiting per vehicle. No metric definition was silently changed.
+- All original episodes last 20 seconds and complete zero trips. Six fixed
+  vehicle departures do not constitute a realistic demand benchmark; SUMO's
+  default speed variation still depends on its seed.
+- The 100–1000 ms positive delays collapse to one decision-time class under
+  one-second decisions. Delay remains fixed, not stochastic.
+- One-second periodic/heartbeat settings necessarily suppress no sends.
+  The original 160-send field was a stale snapshot; actual completed episode
+  operations include 168 sends. The reporting defect is now corrected.
+- Both communication-aware policies contain the freshness mechanism;
+  component ablations, a non-freshness communication baseline, and held-out
+  impairment evaluation are absent. The local-only baseline uses a different
+  exploration schedule.
+- Five paired training seeds and 25 short training episodes limit inference.
+  Original robust waiting-proxy mean exceeds ideal, but paired uncertainty
+  crosses zero; no superiority or convergence is established.
+- Original result Git hashes predate the Phase 11 runner. Full configuration,
+  training provenance, dependency locking, and resume/retry safeguards need
+  improvement before a new campaign.
+- Channel counters persist across reused-environment resets; original Phase
+  11 uses fresh environments. Signal actions bypass yellow/minimum-green
+  transitions; replay emitted emergency-stop warnings.
+- All raw results/checkpoints are local and ignored by Git; a separate
+  research archive backup remains necessary.
 
 ## Latest Commit
 
-Phase 11 implementation commit: `bbfe2c2`.
+Pre-audit HEAD and verified remote: `4161f42c13e0a1c89f8ce307579befcbbb530378`.
+Phase 11 implementation: `bbfe2c2`. Original records name `9b8b212`.
+The audit and telemetry correction are recorded in the commit containing
+this status update; use `git log -1` for its resolved hash.

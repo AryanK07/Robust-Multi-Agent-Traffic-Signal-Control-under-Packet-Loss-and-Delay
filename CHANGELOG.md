@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Communication-aware environment step telemetry now snapshots channel
+  counters after its send/receive round, matching scheduler and cache timing.
+  Three regression cases cover immediate delivery, delay, and complete loss.
+  Original Phase 11 outputs and checkpoints were preserved.
+
+### Audited
+
+- Independently verified the 755-record design, all 15 production checkpoint
+  hashes, 151 summaries, and six stored comparisons. Recorded metric,
+  timing, provenance, baseline, and statistical limitations in
+  `docs/PHASE11_AUDIT.md`; Phase 12 remains unstarted.
+- Validated five original replays and five separately stored corrected
+  replays; all 870 original artifact file hashes remained unchanged.
+
 ### Added
 
 - Phase 0 Python project configuration and package scaffold.

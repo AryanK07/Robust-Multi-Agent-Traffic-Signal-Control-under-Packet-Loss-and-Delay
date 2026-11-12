@@ -6,12 +6,19 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is currently in **Phase 8: Stale-Information-Aware Robustness**. Phase 1
-provides the deterministic SUMO scenario, Phase 2 provides a single-agent
-baseline, Phase 3 adds four independent NumPy-only Q-learning agents, and
-Phase 4 adds an ideal inter-agent communication abstraction, and Phase 5 adds
-seeded packet-loss simulation, and Phase 6 adds fixed simulation-time
-communication delay. Robustness processing remains deferred to later phases.
+The repository is in **Phase 11: independent audit completed; follow-up protocol
+pending**. Phase 12 has not started. The original 755 evaluation records and
+15 production checkpoint sets are present locally and were independently
+checked. See the [Phase 11 audit](docs/PHASE11_AUDIT.md) for verified findings,
+limitations, validation, and the recommendation to conduct a focused follow-up
+before treating Phase 11 as scientifically complete.
+
+The audit corrected a communication-counter snapshot defect. Original results
+remain unchanged; bounded correction checks are stored separately under
+`results/phase11_audit_v1/`. The original waiting-time field is a snapshot-based
+proxy, not mean accumulated waiting per vehicle. Earlier phase sections below
+describe development history; their statements about deferred features should
+be read in that historical context.
 
 ## Requirements
 
@@ -341,6 +348,16 @@ robust-trained policy was not superior to the ideal-trained policy under the
 waiting time was 0.1530 s versus 0.0942 s for ideal-trained. These are
 measured results for this small deterministic SUMO scenario, not general
 claims about robustness or adaptive communication.
+
+Audit qualification: 160 is the original pre-communication counter snapshot.
+The environment actually made 168 sends including reset and the terminal
+observation round. The correction now reports those completed operations;
+zero suppression remains valid. All original episodes ended at 20 seconds
+with zero completed trips. The audit reproduces the original waiting-field
+numbers but does not interpret them as per-vehicle trip waiting time. Do not
+resume, analyze, or train into the original directory when running corrected
+or revised experiments. Even the original runner's `--mode audit` rewrites
+its output `config.yaml`; use read-only inspection for the preserved campaign.
 
 ## Phase 7 combined impairment experiments
 
