@@ -8,6 +8,11 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
 ## Completed
 
+- Follow-up v2 tripinfo metrics, immutable campaign storage, action-margin
+  communication, time-resolved environment and constrained signal transitions.
+- Matched fresh-training/evaluation runner, seeded demand, explicit held-out
+  impairments and executable component ablations. Pilot collection is pending.
+
 - Deterministic 2x2 SUMO grid with four signalized junctions created.
 - Deterministic six-vehicle route demand and SUMO configuration added.
 - TraCI environment wrapper supports start, reset, step, close, simulation
@@ -74,6 +79,10 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
   two-leg request delays, loss, feature ablations, and signal constraints have
   targeted regression coverage. The versioned training/evaluation pilot is next.
 
+- The versioned runner and fixed development-pilot configuration now support
+  fresh matched checkpoints, per-episode tripinfo, held-out impairments,
+  ablations, and paired seed analysis. Collection follows source commit.
+
 - The original Phase 11 campaign is complete and preserved, but the audit
   identified measurement and design limitations that prevent treating the
   full research acceptance criteria as satisfied.
@@ -85,6 +94,11 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 - Phase 12 remains deferred; no paper drafting has started.
 
 ## Tests
+
+Follow-up implementation validation: 93 tests passed; compilation passed.
+An end-to-end temporary training smoke completed 20/20 trips in 120 seconds
+of simulation. Subscription optimization preserved its waiting and reward
+outputs exactly. These are functional checks, not comparative research results.
 
 Tests validate configuration loading, required SUMO files, package metadata,
 YAML templates, and live SUMO start/step/signal-control/metrics/shutdown

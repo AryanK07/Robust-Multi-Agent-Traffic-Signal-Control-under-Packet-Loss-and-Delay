@@ -8,12 +8,14 @@ from pathlib import Path
 from typing import Mapping
 
 import numpy as np
+import traci.constants as tc
 
 from traffic_control.communication import CommunicationChannel, CommunicationScheduler, FreshnessConfig
 from traffic_control.communication.action_margin import action_margin_certificate
 from traffic_control.communication.freshness import NeighborInformationCache, TrafficSnapshot
 from traffic_control.environment import SumoEnvironment, SumoEnvironmentConfig
 from traffic_control.environment.safe_signals import SafeSignalTransitions
+from traffic_control.environment.traffic_state import IntersectionTrafficState
 from .multi_agent_env import AGENT_IDS
 from .q_learning import LinearQAgent
 
@@ -80,7 +82,8 @@ class FollowupEnvironment:
             raise ValueError("incompatible follow-up policy dimensions")
         self.simulator = SumoEnvironment(SumoEnvironmentConfig(
             config_file=config.sumo_config_file, seed=config.seed,
-            step_length=config.simulation_step, tripinfo_output=config.tripinfo_output))
+            step_length=config.simulation_step, tripinfo_output=config.tripinfo_output,
+            collect_legacy_metrics=False))
         self.channel = CommunicationChannel(packet_loss_probability=config.packet_loss,
                                             delay_ms=config.delay_ms, seed=config.packet_loss_seed)
         self.cache = NeighborInformationCache(self.channel.topology)
@@ -96,6 +99,7 @@ class FollowupEnvironment:
         self._ticks = 0
         self._local = {}
         self._states = {}
+        self._queue_total = self._queue_samples = self._max_queue = 0
 
     def reset(self):
         self.simulator.reset()
@@ -108,7 +112,15 @@ class FollowupEnvironment:
         self.age_samples.clear()
         self.missing_samples.clear()
         self._ticks = 0
-        self.signals = SafeSignalTransitions(self.simulator._require_started(), AGENT_IDS,
+        self._queue_total = self._queue_samples = self._max_queue = 0
+        connection = self.simulator._require_started()
+        self._lanes = {agent: tuple(dict.fromkeys(connection.trafficlight.getControlledLanes(agent)))
+                       for agent in AGENT_IDS}
+        self._all_lanes = tuple(connection.lane.getIDList())
+        for lane in self._all_lanes:
+            connection.lane.subscribe(lane, (tc.LAST_STEP_VEHICLE_NUMBER, tc.VAR_WAITING_TIME,
+                                             tc.LAST_STEP_VEHICLE_HALTING_NUMBER, tc.LAST_STEP_OCCUPANCY))
+        self.signals = SafeSignalTransitions(connection, AGENT_IDS,
                                             self.config.minimum_green, self.config.yellow_seconds)
         self._read_local()
         self._communicate(True)
@@ -119,7 +131,18 @@ class FollowupEnvironment:
         return self.simulator.simulation_time
 
     def _read_local(self):
-        self._states = self.simulator.state.all_intersections()
+        connection = self.simulator._require_started()
+        self._lane_states = {lane: connection.lane.getSubscriptionResults(lane) for lane in self._all_lanes}
+        self._states = {}
+        for agent in AGENT_IDS:
+            lanes = [self._lane_states[lane] for lane in self._lanes[agent]]
+            green, _, deadline = self.signals.state[agent]
+            self._states[agent] = IntersectionTrafficState(
+                agent, sum(v[tc.LAST_STEP_VEHICLE_NUMBER] for v in lanes),
+                sum(v[tc.VAR_WAITING_TIME] for v in lanes),
+                sum(v[tc.LAST_STEP_VEHICLE_HALTING_NUMBER] for v in lanes),
+                float(np.mean([v[tc.LAST_STEP_OCCUPANCY] for v in lanes])),
+                green if deadline is None else green + 1)
         self._local = {agent: np.clip(np.asarray([
             state.queue_length / 10, state.waiting_time / 100,
             state.vehicle_count / 20, state.lane_occupancy / 100, state.phase / 3,
@@ -241,6 +264,10 @@ class FollowupEnvironment:
             self._ticks += 1
             self.signals.advance(self.time)
             self._read_local()
+            queue = sum(values[tc.LAST_STEP_VEHICLE_HALTING_NUMBER] for values in self._lane_states.values())
+            self._queue_total += queue
+            self._queue_samples += 1
+            self._max_queue = max(self._max_queue, queue)
             for agent in AGENT_IDS:
                 reward[agent] -= self._states[agent].queue_length * self.config.simulation_step
             terminal = self.time + 1e-9 >= self.config.horizon_seconds
@@ -263,8 +290,8 @@ class FollowupEnvironment:
             "mean_message_age_ms": float(np.mean(self.age_samples)) if self.age_samples else None,
             "missing_message_fraction": float(np.mean(self.missing_samples)) if self.missing_samples else None,
             "stale_message_fraction": float(np.mean(np.asarray(self.age_samples) >= self.config.freshness.stale_message_threshold_ms)) if self.age_samples else None,
-            "mean_queue_length": self.simulator.metrics().mean_queue_length,
-            "max_queue_length": self.simulator.metrics().max_queue_length,
+            "mean_queue_length": self._queue_total / self._queue_samples if self._queue_samples else 0.,
+            "max_queue_length": self._max_queue,
             "signal_switches": self.signals.switches,
         }
 

@@ -4,6 +4,13 @@
 
 ### Follow-up v2 foundations
 
+- Added a versioned train/evaluate/analyze runner with matched seeds and
+  exploration, explicit held-out conditions, balanced robust exposure,
+  new demand, immutable training logs/checkpoints, and paired seed analysis.
+- Added frozen development-pilot and larger exploratory configurations; the
+  pilot is defined before collection and is not a final research campaign.
+- Used TraCI lane subscriptions for unchanged 50 ms state/queue sampling.
+
 - Added receiver-local linear action-margin certificates, counted lossy/delayed
   request-response communication, and a matching periodic-pull control.
 - Added time-resolved communication, minimum-green/yellow transitions,

@@ -6,8 +6,8 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is in **Phase 11: independent audit completed; follow-up protocol
-pending**. Phase 12 has not started. The original 755 evaluation records and
+The repository is in **Phase 11: audited; authorized follow-up v2 in
+development**. Phase 12 has not started. The original 755 evaluation records and
 15 production checkpoint sets are present locally and were independently
 checked. See the [Phase 11 audit](docs/PHASE11_AUDIT.md) for verified findings,
 limitations, validation, and the recommendation to conduct a focused follow-up
@@ -19,6 +19,26 @@ remain unchanged; bounded correction checks are stored separately under
 proxy, not mean accumulated waiting per vehicle. Earlier phase sections below
 describe development history; their statements about deferred features should
 be read in that historical context.
+
+## Authorized Phase 11 follow-up
+
+The [v2 protocol](docs/FOLLOWUP_PROTOCOL.md) implements corrected trip-level
+metrics, time-resolved communication, constrained signal transitions, matched
+linear-IQL baselines and component ablations. Its action-sensitive extension
+uses a receiver-local action-margin test; both requests and responses incur
+the configured communication impairment and cost. This is a research candidate,
+not a claim of established novelty or superiority.
+
+```powershell
+python scripts/run_followup.py --mode audit
+# Run only after committing the reviewed source/configuration:
+python scripts/run_followup.py --mode pilot --output results/followup_v2/development_001
+python scripts/run_followup.py --mode analyze --output results/followup_v2/development_001
+```
+
+The bounded development pilot uses fresh checkpoints and separate outputs;
+original Phase 11 files are protected. Current follow-up results are documented
+in `EXPERIMENT_LOG.md`. Phase 12 remains unstarted.
 
 ## Requirements
 

@@ -89,6 +89,47 @@ a later confirmatory campaign. Analysis pairs by master seed and evaluation
 scenario, averages repeated conditions within seed, and reports uncertainty
 without treating identical scheduling runs as independent replications.
 
+### Pilot frozen before collection
+
+`configs/followup_v2.yaml` fixes two development seeds (20261, 20262), four
+training episodes, five variants (local, plain ideal/robust, full ideal/robust),
+20 seeded vehicles departing over 30 s, and a 120 s horizon. The resulting
+10 checkpoint sets require 40 training episodes and 50 frozen evaluations.
+At most two independent SUMO worker processes run concurrently, each with
+isolated TraCI state, seeds, checkpoints and output paths.
+Evaluation cells are (0,0), (0.1,250 ms), and held-out (0.3,1000 ms). The full
+robust checkpoint is reused for all five communication strategies. The other
+variants use always-transmit. All methods use learning rate 0.01, discount
+0.95 and constant training epsilon 0.2; evaluation epsilon is zero.
+
+Robust training cycles through the nine combinations of losses {0,0.1,0.2}
+and delays {0,250,500} ms. Four pilot episodes are an incomplete first shuffled
+cycle, explicitly recorded, not proof of adequate exposure. All component
+ablations and the complete 25-cell evaluation are executable in the larger
+exploratory design but are not silently included in this bounded pilot.
+Its default 25-episode budget remains a development starting point, not a
+validated final training budget. One evaluation stream per master seed limits
+statistical inference, particularly with only two development seeds.
+
+The same traffic seeds and generated demand are paired across variants. Loss
+uses a separate sequential seeded RNG; strategies consume different numbers
+of draws, so equal seeds do not imply equal per-packet outcomes. All requests,
+responses, drops, pending packets, cache ages and suppression reasons are
+recorded. Negative savings and incomplete trips must remain visible.
+
+Lane subscriptions return the same SUMO state variables at each 50 ms tick;
+they reduce repeated remote calls without changing reward/queue sampling.
+Tripinfo supplies authoritative vehicle waiting/travel metrics after closure.
+
+Run a read-only design audit with `python scripts/run_followup.py --mode audit`.
+After committing the source, run the bounded pilot with
+`python scripts/run_followup.py --mode pilot --output results/followup_v2/development_001`.
+Use `--mode analyze` on the same output to regenerate processed summaries.
+`--mode run` executes the larger exploratory configuration and should be
+budgeted separately. `--retry-failed` only retries failed logical runs and
+preserves their earlier records. Any changed design/source requires a new
+output directory. A source manifest is recorded before training.
+
 ## Literature positioning (checked 2026-11-13)
 
 Selective communication itself is established. IC3Net learns communication

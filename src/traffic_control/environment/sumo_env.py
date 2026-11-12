@@ -22,6 +22,7 @@ class SumoEnvironmentConfig:
     seed: int = 42
     step_length: float = 1.0
     tripinfo_output: Path | None = None
+    collect_legacy_metrics: bool = True
 
 
 class SumoEnvironment:
@@ -72,7 +73,8 @@ class SumoEnvironment:
     def step(self) -> None:
         """Advance SUMO by one configured simulation step."""
         self._require_started().simulationStep()
-        self._metrics.update(self._require_started(), self.config.step_length)
+        if self.config.collect_legacy_metrics:
+            self._metrics.update(self._require_started(), self.config.step_length)
 
     def close(self) -> None:
         """Close the TraCI connection and SUMO process cleanly."""
