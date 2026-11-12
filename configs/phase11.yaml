@@ -1,0 +1,17 @@
+phase11:
+  name: phase11_final_evaluation
+  # Fixed before the final campaign; five independent master-seed replicates.
+  master_seeds: [42, 123, 456, 789, 1011]
+  # A complete 25-condition cycle is used by robust training.
+  training_episodes: 25
+  max_steps_per_episode: 20
+  checkpoint_directory: results/phase11/checkpoints
+  evaluation_output_directory: results/phase11
+  scheduler:
+    periodic_interval_ms: 1000
+    adaptive_change_threshold: 0.10
+    adaptive_max_silence_ms: 1000
+  freshness:
+    freshness_decay_tau_ms: 500.0
+    max_message_age_ms: 2000.0
+    stale_message_threshold_ms: 1000.0

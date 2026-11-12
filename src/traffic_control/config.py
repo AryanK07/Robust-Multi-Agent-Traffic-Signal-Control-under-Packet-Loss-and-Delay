@@ -73,3 +73,12 @@ def load_phase10_config(path: str | Path) -> dict[str, Any]:
 
     validate_phase10_config(config)
     return config["phase10"]
+
+
+def load_phase11_config(path: str | Path) -> dict[str, Any]:
+    """Load and validate Phase 11 final-evaluation settings."""
+    config = load_yaml(path)
+    from traffic_control.experiments import validate_phase11_config
+
+    validate_phase11_config(config)
+    return config["phase11"]

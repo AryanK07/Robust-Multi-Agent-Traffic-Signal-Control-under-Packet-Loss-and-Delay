@@ -19,6 +19,20 @@ from .phase9 import (
     validate_phase9_config,
 )
 from .phase10 import Phase10Config, communication_reduction, validate_phase10_config
+from .phase11 import (
+    COMMUNICATION_POLICIES,
+    COMMUNICATION_STRATEGIES,
+    Phase11Config,
+    aggregate_phase11_results,
+    checkpoint_sha256,
+    derive_evaluation_seeds,
+    generate_phase11_runs,
+    load_valid_raw_results,
+    paired_differences,
+    run_id,
+    validate_phase11_config,
+    write_raw_result as write_phase11_raw_result,
+)
 
 __all__ = [
     "Phase7Condition",
@@ -38,4 +52,16 @@ __all__ = [
     "Phase10Config",
     "communication_reduction",
     "validate_phase10_config",
+    "COMMUNICATION_POLICIES",
+    "COMMUNICATION_STRATEGIES",
+    "Phase11Config",
+    "aggregate_phase11_results",
+    "checkpoint_sha256",
+    "derive_evaluation_seeds",
+    "generate_phase11_runs",
+    "load_valid_raw_results",
+    "paired_differences",
+    "run_id",
+    "validate_phase11_config",
+    "write_phase11_raw_result",
 ]
