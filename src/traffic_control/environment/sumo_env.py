@@ -21,6 +21,7 @@ class SumoEnvironmentConfig:
     sumo_gui_binary: str = "sumo-gui"
     seed: int = 42
     step_length: float = 1.0
+    tripinfo_output: Path | None = None
 
 
 class SumoEnvironment:
@@ -50,6 +51,13 @@ class SumoEnvironment:
             str(self.config.step_length),
             "--quit-on-end",
         ]
+        if self.config.tripinfo_output is not None:
+            path = self.config.tripinfo_output
+            if path.exists():
+                raise FileExistsError(f"Refusing to replace tripinfo: {path}")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            command.extend(["--tripinfo-output", str(path),
+                            "--tripinfo-output.write-unfinished", "true"])
         traci.start(command, label=self._label)
         self._connection = traci.getConnection(self._label)
         self._signals = SignalController(self._connection)

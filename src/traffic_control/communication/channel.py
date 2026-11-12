@@ -114,7 +114,8 @@ class CommunicationChannel:
                 and self._rng.random() >= self.packet_loss_probability
             )
         )
-        delivery_timestamp = timestamp + self.delay_ms / 1000.0
+        # Normalize binary floating arithmetic at subsecond boundaries.
+        delivery_timestamp = round(timestamp + self.delay_ms / 1000.0, 9)
         if transmitted:
             scheduled_message = replace(message, delivery_timestamp=delivery_timestamp)
             heapq.heappush(
@@ -169,6 +170,12 @@ class CommunicationChannel:
         self._delivered_messages = 0
         self._dropped_messages = 0
         self.last_event = None
+
+    def reset_episode(self) -> None:
+        """Start a reproducible independent episode with empty queues/counters."""
+        self.clear()
+        self.reset_telemetry()
+        self._rng = random.Random(self.seed)
 
     def telemetry(self) -> CommunicationTelemetry:
         """Return a snapshot of packet-loss counters and configuration."""

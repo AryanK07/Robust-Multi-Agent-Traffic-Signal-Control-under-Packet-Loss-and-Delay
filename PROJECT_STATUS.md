@@ -69,6 +69,11 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
 ## In Progress
 
+- Follow-up metric/storage foundations and action-sensitive environment are
+  implemented. Distinct 100/250/500/1000 ms effects on policy message age,
+  two-leg request delays, loss, feature ablations, and signal constraints have
+  targeted regression coverage. The versioned training/evaluation pilot is next.
+
 - The original Phase 11 campaign is complete and preserved, but the audit
   identified measurement and design limitations that prevent treating the
   full research acceptance criteria as satisfied.

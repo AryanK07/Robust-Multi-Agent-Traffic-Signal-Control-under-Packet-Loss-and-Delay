@@ -4,6 +4,13 @@
 
 ### Follow-up v2 foundations
 
+- Added receiver-local linear action-margin certificates, counted lossy/delayed
+  request-response communication, and a matching periodic-pull control.
+- Added time-resolved communication, minimum-green/yellow transitions,
+  integrated queue rewards, and six communication feature configurations plus
+  local-only mode in a separate follow-up environment.
+- Fixed channel episode-reset counters/RNG and subsecond arithmetic boundaries.
+
 - Added authoritative tripinfo-based per-vehicle waiting metrics with explicit
   unfinished/uninserted demand and completed-trip travel time.
 - Added configuration/source/checkpoint-addressed campaign manifests and

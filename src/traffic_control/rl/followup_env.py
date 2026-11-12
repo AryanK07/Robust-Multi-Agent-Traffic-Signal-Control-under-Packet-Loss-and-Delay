@@ -1,0 +1,272 @@
+"""Versioned, time-resolved small-network environment for follow-up research."""
+
+from collections import Counter
+from dataclasses import dataclass, field
+import json
+from math import isfinite
+from pathlib import Path
+from typing import Mapping
+
+import numpy as np
+
+from traffic_control.communication import CommunicationChannel, CommunicationScheduler, FreshnessConfig
+from traffic_control.communication.action_margin import action_margin_certificate
+from traffic_control.communication.freshness import NeighborInformationCache, TrafficSnapshot
+from traffic_control.environment import SumoEnvironment, SumoEnvironmentConfig
+from traffic_control.environment.safe_signals import SafeSignalTransitions
+from .multi_agent_env import AGENT_IDS
+from .q_learning import LinearQAgent
+
+
+FEATURE_MODES = ("local", "plain", "full", "no_age", "no_availability", "no_decay", "no_stale")
+STRATEGIES = ("always", "periodic", "adaptive", "periodic_pull", "action_sensitive")
+
+
+@dataclass(frozen=True)
+class FollowupEnvironmentConfig:
+    sumo_config_file: Path
+    tripinfo_output: Path
+    horizon_seconds: float = 120.0
+    simulation_step: float = 0.05
+    communication_interval: float = 0.1
+    decision_interval: float = 1.0
+    minimum_green: float = 5.0
+    yellow_seconds: float = 3.0
+    seed: int = 42
+    packet_loss_seed: int = 43
+    packet_loss: float = 0.0
+    delay_ms: float = 0.0
+    feature_mode: str = "full"
+    strategy: str = "always"
+    periodic_interval_ms: float = 1000.0
+    change_threshold: float = 0.1
+    heartbeat_ms: float = 5000.0
+    request_cooldown_ms: float = 1000.0
+    freshness: FreshnessConfig = field(default_factory=FreshnessConfig)
+
+    def __post_init__(self):
+        durations = (self.simulation_step, self.communication_interval,
+                     self.decision_interval, self.horizon_seconds,
+                     self.minimum_green, self.yellow_seconds, self.request_cooldown_ms)
+        if any(not isfinite(value) or value <= 0 for value in durations):
+            raise ValueError("time intervals must be positive and finite")
+        for value in durations[1:6]:
+            if not np.isclose(value / self.simulation_step, round(value / self.simulation_step)):
+                raise ValueError("intervals must be multiples of simulation_step")
+        if not np.isclose(self.horizon_seconds / self.decision_interval,
+                          round(self.horizon_seconds / self.decision_interval)):
+            raise ValueError("horizon must contain whole decisions")
+        if self.feature_mode not in FEATURE_MODES or self.strategy not in STRATEGIES:
+            raise ValueError("unsupported feature mode or strategy")
+        if self.feature_mode == "local" and self.strategy != "always":
+            raise ValueError("local-only mode has no communication strategy")
+
+
+class FollowupEnvironment:
+    """Receive between action decisions; count request and response costs.
+
+    Gate inputs belong solely to each receiver: its own policy, local state
+    and delivered cache. The sender samples its own state only after a request
+    is delivered. Nonzero delay therefore applies to both legs.
+    """
+
+    def __init__(self, config: FollowupEnvironmentConfig, policies: Mapping[str, LinearQAgent]):
+        self.config = config
+        self.policies = policies
+        if set(policies) != set(AGENT_IDS):
+            raise ValueError("one policy per intersection is required")
+        size = 5 if config.feature_mode == "local" else 23
+        if any(p.observation_size != size or p.action_size != 2 for p in policies.values()):
+            raise ValueError("incompatible follow-up policy dimensions")
+        self.simulator = SumoEnvironment(SumoEnvironmentConfig(
+            config_file=config.sumo_config_file, seed=config.seed,
+            step_length=config.simulation_step, tripinfo_output=config.tripinfo_output))
+        self.channel = CommunicationChannel(packet_loss_probability=config.packet_loss,
+                                            delay_ms=config.delay_ms, seed=config.packet_loss_seed)
+        self.cache = NeighborInformationCache(self.channel.topology)
+        self.scheduler = CommunicationScheduler(AGENT_IDS,
+            strategy=config.strategy if config.strategy in ("always", "periodic", "adaptive") else "always",
+            periodic_interval_ms=config.periodic_interval_ms,
+            change_threshold=config.change_threshold, max_silence_ms=config.heartbeat_ms)
+        self._last_request = {}
+        self.counts = Counter()
+        self.payload_bytes = 0
+        self.age_samples = []
+        self.missing_samples = []
+        self._ticks = 0
+        self._local = {}
+        self._states = {}
+
+    def reset(self):
+        self.simulator.reset()
+        self.channel.reset_episode()
+        self.cache.clear()
+        self.scheduler.reset()
+        self._last_request.clear()
+        self.counts.clear()
+        self.payload_bytes = 0
+        self.age_samples.clear()
+        self.missing_samples.clear()
+        self._ticks = 0
+        self.signals = SafeSignalTransitions(self.simulator._require_started(), AGENT_IDS,
+                                            self.config.minimum_green, self.config.yellow_seconds)
+        self._read_local()
+        self._communicate(True)
+        return self.observations()
+
+    @property
+    def time(self):
+        return self.simulator.simulation_time
+
+    def _read_local(self):
+        self._states = self.simulator.state.all_intersections()
+        self._local = {agent: np.clip(np.asarray([
+            state.queue_length / 10, state.waiting_time / 100,
+            state.vehicle_count / 20, state.lane_occupancy / 100, state.phase / 3,
+        ], dtype=np.float32), 0, 1) for agent, state in self._states.items()}
+
+    def observation(self, agent):
+        if self.config.feature_mode == "local":
+            return self._local[agent].copy()
+        blocks = np.asarray(self.cache.observation(agent, self.time, self.config.freshness), dtype=float)
+        for index, neighbor in enumerate(self.channel.topology.for_agent(agent)):
+            start = index * 9
+            mode = self.config.feature_mode
+            if mode in ("plain", "no_decay"):
+                state = self.cache.get(agent, neighbor)
+                blocks[start+4:start+9] = state.features if state else np.zeros(5)
+            if mode == "plain":
+                blocks[start:start+4] = 0
+            elif mode == "no_age":
+                blocks[start+1] = 0
+            elif mode == "no_availability":
+                blocks[start] = 0
+            elif mode == "no_decay":
+                blocks[start+2] = 0
+            elif mode == "no_stale":
+                blocks[start+3] = 0
+        return np.asarray([*self._local[agent], *blocks], dtype=np.float32)
+
+    def observations(self):
+        return {agent: self.observation(agent) for agent in AGENT_IDS}
+
+    def _bounds(self, obs):
+        lower, upper = obs.astype(float).copy(), obs.astype(float).copy()
+        lower[5:], upper[5:] = 0, 1
+        fixed = {"plain": (0, 1, 2, 3), "no_age": (1,), "no_availability": (0,),
+                 "no_decay": (2,), "no_stale": (3,)}.get(self.config.feature_mode, ())
+        for start in (5, 14):
+            for offset in fixed:
+                lower[start+offset] = upper[start+offset] = 0
+        return lower, upper
+
+    def _send(self, sender, receiver, payload, kind):
+        self.channel.send(sender, receiver, payload, self.time)
+        self.counts[f"{kind}_attempts"] += 1
+        self.payload_bytes += len(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode())
+
+    def _snapshot(self, sender, receiver, kind="snapshot"):
+        payload = dict(TrafficSnapshot(sender, tuple(map(float, self._local[sender])), self.time).to_payload())
+        payload["kind"] = "snapshot"
+        self._send(sender, receiver, payload, kind)
+
+    def _drain(self):
+        # A request can generate one response, never another request. Two
+        # passes remove topology-order bias for zero-delay round trips.
+        for _ in range(2):
+            for receiver in AGENT_IDS:
+                for message in self.channel.receive(receiver, self.time):
+                    if message.payload.get("kind") == "request":
+                        self._snapshot(receiver, message.sender_id, "response")
+                    else:
+                        self.cache.update(receiver, message)
+
+    def _communicate(self, opportunity):
+        if self.config.feature_mode == "local":
+            return
+        self._drain()
+        if opportunity:
+            if self.config.strategy in ("action_sensitive", "periodic_pull"):
+                self._request_round()
+            else:
+                for sender in AGENT_IDS:
+                    decision = self.scheduler.should_transmit(sender, self._local[sender], self.time)
+                    self.counts[f"push_{decision.trigger_reason}"] += 1
+                    if decision.transmit:
+                        for receiver in self.channel.topology.for_agent(sender):
+                            self._snapshot(sender, receiver)
+            self._drain()
+
+    def _request_round(self):
+        for receiver in AGENT_IDS:
+            obs = self.observation(receiver)
+            policy = self.policies[receiver]
+            decision = action_margin_certificate(obs, policy.weights, policy.bias, *self._bounds(obs))
+            self.counts["invariant_checks" if decision.invariant else "uncertain_checks"] += 1
+            for index, sender in enumerate(self.channel.topology.for_agent(receiver)):
+                key = (receiver, sender)
+                last = self._last_request.get(key)
+                elapsed = (self.time - last) * 1000 if last is not None else float("inf")
+                if elapsed + 1e-6 < self.config.request_cooldown_ms:
+                    self.counts["request_cooldown"] += 1
+                    continue
+                reason = None
+                if last is None:
+                    reason = "first"
+                elif elapsed + 1e-6 >= self.config.heartbeat_ms:
+                    reason = "heartbeat"
+                elif self.config.strategy == "periodic_pull":
+                    reason = "periodic"
+                elif not decision.invariant and decision.neighbor_risks[index] > 0:
+                    reason = "margin"
+                if reason:
+                    self._send(receiver, sender, {"kind": "request"}, "request")
+                    self.counts[f"request_{reason}"] += 1
+                    self._last_request[key] = self.time
+                else:
+                    self.counts["request_suppressed"] += 1
+
+    def step(self, actions):
+        if set(actions) != set(AGENT_IDS) or any(action not in (0, 1) for action in actions.values()):
+            raise ValueError("one binary action per intersection is required")
+        if self.time + 1e-9 >= self.config.horizon_seconds:
+            raise RuntimeError("episode has ended")
+        for agent, action in actions.items():
+            self.signals.request(agent, action, self.time)
+        reward = dict.fromkeys(AGENT_IDS, 0.0)
+        ticks = round(self.config.decision_interval / self.config.simulation_step)
+        period = round(self.config.communication_interval / self.config.simulation_step)
+        for _ in range(ticks):
+            self.simulator.step()
+            self._ticks += 1
+            self.signals.advance(self.time)
+            self._read_local()
+            for agent in AGENT_IDS:
+                reward[agent] -= self._states[agent].queue_length * self.config.simulation_step
+            terminal = self.time + 1e-9 >= self.config.horizon_seconds
+            self._communicate(self._ticks % period == 0 and not terminal)
+        for receiver in AGENT_IDS:
+            for sender in self.channel.topology.for_agent(receiver):
+                state = self.cache.get(receiver, sender)
+                self.missing_samples.append(state is None)
+                if state:
+                    self.age_samples.append(self.config.freshness.age_ms(state.generation_timestamp, self.time))
+        return self.observations(), reward, terminal, self.telemetry()
+
+    def telemetry(self):
+        channel = self.channel.telemetry()
+        return {
+            "simulation_time": self.time,
+            "communication": dict(channel.__dict__),
+            "trigger_counts": dict(self.counts),
+            "payload_bytes": self.payload_bytes,
+            "mean_message_age_ms": float(np.mean(self.age_samples)) if self.age_samples else None,
+            "missing_message_fraction": float(np.mean(self.missing_samples)) if self.missing_samples else None,
+            "stale_message_fraction": float(np.mean(np.asarray(self.age_samples) >= self.config.freshness.stale_message_threshold_ms)) if self.age_samples else None,
+            "mean_queue_length": self.simulator.metrics().mean_queue_length,
+            "max_queue_length": self.simulator.metrics().max_queue_length,
+            "signal_switches": self.signals.switches,
+        }
+
+    def close(self):
+        self.simulator.close()

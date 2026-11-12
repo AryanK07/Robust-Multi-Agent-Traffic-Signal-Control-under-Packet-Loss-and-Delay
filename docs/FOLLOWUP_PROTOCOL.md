@@ -40,6 +40,40 @@ training budget, exploration schedule, reward and signal constraints. Always,
 periodic, state-change and action-sensitive strategies use the same frozen
 checkpoint for communication-cost comparisons.
 
+### Implemented gate and its limits
+
+For greedy action a and the other action b, let c = W[a] - W[b], current
+margin m = Q[a](x) - Q[b](x), and fixed-local / uncertain-neighbor box [l,u].
+The minimum possible margin is exactly
+`m + sum(min(c * (l-x), c * (u-x)))`. Request suppression is certified when
+this is strictly positive, or when the margin cannot vary at all. Both
+neighbor blocks vary jointly; separate one-neighbor tests would miss combined
+flips. Unknown active coordinates span [0,1]; disabled ablation coordinates
+remain zero. This is deliberately conservative and makes no unverified
+traffic-rate-of-change assumption. It may request unnecessarily.
+
+Every receiver uses only its own policy and delivered cache. Influential
+neighbors are requested when the joint certificate fails, with a 1 s
+per-link cooldown and 5 s heartbeat. Requests and responses incur the same
+configured loss/delay independently. `periodic_pull` uses the same request
+protocol/cooldown without the margin gate, isolating gating from push/pull
+overhead. Payload-byte counts cover serialized JSON payloads, not physical
+wire overhead. Terminal snapshots are suppressed; legitimate responses to
+earlier requests may still be sent at the horizon.
+
+Feature modes are `local`, `plain` (neighbor payload without metadata/decay),
+`full`, `no_age`, `no_availability`, `no_decay` (raw payload, zero freshness
+coordinate), and `no_stale`. Single-coordinate ablations test encoder
+components: for example, `no_age` retains freshness/stale clues and must not
+be described as removing every source of age information.
+
+The follow-up reward is negative local queue integrated over simulation
+ticks, replacing the endpoint-sensitive delta reward only in v2. All v2
+baselines share it. Minimum green is 5 s and yellow 3 s. There is no all-red
+clearance in the original two-green network; these simulator constraints are
+not a real-world safety certification. Time-resolved communication and the
+new reward/horizon require new checkpoints, not reuse of the original ones.
+
 Timing will separate 50 ms simulation ticks, 100 ms communication opportunities
 and one-second action decisions. This permits fresh-generation timestamps to
 distinguish the specified subsecond delays at decision times. Signal changes

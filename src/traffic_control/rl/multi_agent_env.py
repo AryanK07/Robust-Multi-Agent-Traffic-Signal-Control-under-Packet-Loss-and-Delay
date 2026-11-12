@@ -83,7 +83,7 @@ class MultiAgentEnvironment:
             )
         self._step_count = 0
         self._previous = {}
-        self.communication.clear()
+        self.communication.reset_episode()
         observations: dict[str, np.ndarray] = {}
         for agent_id in self.agent_ids:
             state = self._simulator.intersection_state(agent_id)
