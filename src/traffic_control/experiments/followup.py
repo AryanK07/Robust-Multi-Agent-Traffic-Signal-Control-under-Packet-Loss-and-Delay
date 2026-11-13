@@ -33,7 +33,8 @@ def source_manifest(design: dict) -> dict:
     if status.strip():
         raise ValueError("Commit the reviewed source/configuration before running a campaign")
     files = [*ROOT.glob('src/**/*.py'), *ROOT.glob('scripts/*.py'),
-             *ROOT.glob('configs/*.yaml'), ROOT / 'sumo/network/grid.net.xml']
+             *ROOT.glob('configs/*.yaml'), ROOT / 'sumo/network/grid.net.xml',
+             ROOT / 'pyproject.toml', *ROOT.glob('requirements-research-lock.txt')]
     return {
         "schema": "campaign_v2",
         "design": design,

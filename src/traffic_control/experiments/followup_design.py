@@ -18,7 +18,9 @@ def load_design(path: Path, pilot: bool = False) -> dict:
         selected = overrides.pop("variants")
         design.update(overrides)
         design["variants"] = {name: design["variants"][name] for name in selected}
-    design["purpose"] = "development_pilot" if pilot else "exploratory_followup"
+    design["purpose"] = "development_pilot" if pilot else design.get('purpose', 'exploratory_followup')
+    if design['purpose'] not in ('development_pilot','exploratory_followup','reserved_seed_final'):
+        raise ValueError('unsupported campaign purpose')
     if type(design['workers']) is not int or design['workers'] not in (1, 2, 3, 4):
         raise ValueError('workers must be between 1 and 4 for the bounded local runner')
     seeds = design["master_seeds"]

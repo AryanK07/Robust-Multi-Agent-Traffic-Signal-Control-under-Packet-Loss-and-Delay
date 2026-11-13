@@ -4,6 +4,11 @@
 
 ### Phase 11 completion work
 
+- Both finite metadata calibration settings passed every development
+  completion cell; selected scale 0.1 using the predeclared rule.
+- Froze the reserved-seed 45-checkpoint / 1505-evaluation campaign and
+  captured runtime dependency versions before collection.
+
 - Preserved the completion-termination study and predeclared a finite
   metadata-scale calibration, with explicit unsuccessful-selection handling.
 - Added reusable read-only campaign verification of metrics, source,

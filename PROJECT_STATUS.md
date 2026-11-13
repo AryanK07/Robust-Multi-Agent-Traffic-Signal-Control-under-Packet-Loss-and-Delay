@@ -88,6 +88,9 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
   It completed another 896 episodes; full models still failed the criterion.
   A finite metadata-scale calibration and reserved-seed analysis plan are
   predeclared, retaining all negative development observations.
+  Both metadata calibration settings subsequently passed all eight final
+  development cells; scale 0.1 was selected by the predeclared rule.
+  The reserved-seed campaign is frozen in `docs/PHASE11_RESERVED_PROTOCOL.md`.
 
 - Scientific validation remains incomplete. The four-episode pilot does not
   establish adequate greedy traffic control, convergence or a communication

@@ -73,7 +73,7 @@ def analyze_followup(store, design):
                   expected_evaluations=len(evaluation_specs(design)), successful_evaluations=len(rows),
                   failed_attempts=sum(r['status'] == 'failed' for r in raw),
                   summaries=summaries, paired_comparisons=comparisons,
-                  warning='Development/exploratory results; inspect censoring and paired uncertainty. No final superiority claim.')
+                  warning='Inspect censoring and paired seed uncertainty. Campaign purpose is explicit; no automatic superiority or equivalence claim.')
     output = store.directory / 'processed'
     output.mkdir(exist_ok=True)
     (output / 'summary.json').write_text(json.dumps(result, indent=2, allow_nan=False), encoding='utf-8')

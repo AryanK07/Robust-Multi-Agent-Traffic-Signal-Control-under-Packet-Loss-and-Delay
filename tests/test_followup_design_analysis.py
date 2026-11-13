@@ -73,3 +73,18 @@ def test_training_validation_is_balanced_and_separate():
         for budget in design['validation_budgets']:
             from collections import Counter
             assert set(Counter(map(tuple, schedule[:budget])).values()) == {budget // 9}
+
+
+def test_reserved_final_design_has_exact_coverage_and_untouched_seeds():
+    design = load_design(Path('configs/phase11_reserved_final.yaml'))
+    assert design['purpose'] == 'reserved_seed_final'
+    assert design['master_seeds'] == [41001,41002,41003,41004,41005]
+    assert len(design['variants']) * len(design['master_seeds']) == 45
+    assert design['training_episodes'] == 81
+    specs = evaluation_specs(design)
+    assert len(specs) == 1505
+    assert len({(s['packet_loss'],s['delay_ms']) for s in specs}) == 25
+    assert design['environment']['metadata_scale'] == .1
+    assert len(design['held_out_conditions']) == 9
+    assert all(s['packet_loss'] < .3 and s['delay_ms'] < 1000
+               for s in ({'packet_loss':p,'delay_ms':d} for p,d in training_schedule(design,41001,'full_robust')))

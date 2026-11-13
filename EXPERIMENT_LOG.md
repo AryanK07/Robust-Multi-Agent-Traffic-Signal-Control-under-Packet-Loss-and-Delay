@@ -1,5 +1,17 @@
 # Experiment Log
 
+## Finite metadata calibration — 2026-11-13
+
+- IDs `metadata_calibration_01` and `metadata_calibration_001`, source
+  `57d2b94`, scales 0.1 and 0.01 respectively. Seeds 31001/31002; two full
+  variants; unchanged phase-relative/termination settings and 81 episodes.
+- Each setting completed 324 training, 24 validation and 12 exploratory
+  evaluation episodes without execution failure. Both completed 100% of
+  trips in all eight episode-81 validation cells. Both settings are retained.
+- The predeclared largest-passing-scale rule selects 0.1. No reserved seed
+  informed this selection. The final configuration and analysis are frozen
+  in `docs/PHASE11_RESERVED_PROTOCOL.md` before collection.
+
 ## Completion-terminated training validation — 2026-11-13
 
 - ID `training_validation_004`, source `ac0cf6f`, configuration
