@@ -106,6 +106,7 @@ class FollowupEnvironment:
         self._local = {}
         self._states = {}
         self._queue_total = self._queue_samples = self._max_queue = 0
+        self._delivery_delay_sum = self._delivery_count = 0
 
     def reset(self):
         self.simulator.reset()
@@ -119,6 +120,7 @@ class FollowupEnvironment:
         self.missing_samples.clear()
         self._ticks = 0
         self._queue_total = self._queue_samples = self._max_queue = 0
+        self._delivery_delay_sum = self._delivery_count = 0
         connection = self.simulator._require_started()
         self._lanes = {agent: tuple(dict.fromkeys(connection.trafficlight.getControlledLanes(agent)))
                        for agent in AGENT_IDS}
@@ -231,6 +233,8 @@ class FollowupEnvironment:
         for _ in range(2):
             for receiver in AGENT_IDS:
                 for message in self.channel.receive(receiver, self.time):
+                    self._delivery_delay_sum += (self.time-message.generation_timestamp)*1000
+                    self._delivery_count += 1
                     if message.payload.get("kind") == "request":
                         self._snapshot(receiver, message.sender_id, "response")
                     else:
@@ -320,6 +324,8 @@ class FollowupEnvironment:
             "trigger_counts": dict(self.counts),
             "payload_bytes": self.payload_bytes,
             "mean_message_age_ms": float(np.mean(self.age_samples)) if self.age_samples else None,
+            "max_message_age_ms": float(max(self.age_samples)) if self.age_samples else None,
+            "mean_delivered_delay_ms": self._delivery_delay_sum/self._delivery_count if self._delivery_count else None,
             "missing_message_fraction": float(np.mean(self.missing_samples)) if self.missing_samples else None,
             "stale_message_fraction": float(np.mean(np.asarray(self.age_samples) >= self.config.freshness.stale_message_threshold_ms)) if self.age_samples else None,
             "mean_queue_length": self._queue_total / self._queue_samples if self._queue_samples else 0.,
