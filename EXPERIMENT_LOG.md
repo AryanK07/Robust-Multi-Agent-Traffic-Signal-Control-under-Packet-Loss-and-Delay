@@ -1,5 +1,15 @@
 # Experiment Log
 
+## Completion-terminated training validation — 2026-11-13
+
+- ID `training_validation_004`, source `ac0cf6f`, configuration
+  `configs/training_validation_v4.yaml`; same development seeds and budgets.
+- Completed 810 training, 60 validation, 26 exploratory evaluation episodes;
+  zero execution failures. Local/plain variants reached the episode-81
+  validation criterion; full variants did not. All outcomes are retained.
+- A finite two-setting metadata calibration is predeclared separately in
+  `docs/METADATA_CALIBRATION_PROTOCOL.md`; no reserved test seeds were used.
+
 ## Phase-relative training validation — 2026-11-13
 
 - ID `training_validation_003`, source `094b1f1`, configuration

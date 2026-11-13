@@ -4,6 +4,11 @@
 
 ### Phase 11 completion work
 
+- Preserved the completion-termination study and predeclared a finite
+  metadata-scale calibration, with explicit unsuccessful-selection handling.
+- Added reusable read-only campaign verification of metrics, source,
+  checkpoints, seed domains, pairing, schedules and communication counts.
+
 - Completed the phase-relative development study; retained its failed
   usability outcome and predeclared a training-termination comparison.
 - Added seed-level exact sign-flip statistics with Holm correction and

@@ -32,6 +32,7 @@ class FollowupEnvironmentConfig:
     tripinfo_output: Path
     backend: str = "traci"
     observation_schema: str = FEATURE_SCHEMA_VERSION
+    metadata_scale: float = 1.0
     horizon_seconds: float = 120.0
     simulation_step: float = 0.05
     communication_interval: float = 0.1
@@ -51,6 +52,8 @@ class FollowupEnvironmentConfig:
     freshness: FreshnessConfig = field(default_factory=FreshnessConfig)
 
     def __post_init__(self):
+        if not isfinite(self.metadata_scale) or not 0 < self.metadata_scale <= 1:
+            raise ValueError('metadata_scale must lie in (0,1]')
         if self.observation_schema not in (FEATURE_SCHEMA_VERSION, PHASE_FEATURE_SCHEMA):
             raise ValueError('unsupported observation schema')
         durations = (self.simulation_step, self.communication_interval,
@@ -201,6 +204,7 @@ class FollowupEnvironment:
                 blocks[start+2] = 0
             elif mode == "no_stale":
                 blocks[start+3] = 0
+            blocks[start:start+4] *= self.config.metadata_scale
         return np.asarray([*self._local[agent], *blocks], dtype=np.float32)
 
     def observations(self):
@@ -209,6 +213,8 @@ class FollowupEnvironment:
     def _bounds(self, obs):
         lower, upper = obs.astype(float).copy(), obs.astype(float).copy()
         lower[5:], upper[5:] = 0, 1
+        for start in (5, 14):
+            upper[start:start+4] = float(np.float32(self.config.metadata_scale))
         fixed = {"plain": (0, 1, 2, 3), "no_age": (1,), "no_availability": (0,),
                  "no_decay": (2,), "no_stale": (3,)}.get(self.config.feature_mode, ())
         for start in (5, 14):

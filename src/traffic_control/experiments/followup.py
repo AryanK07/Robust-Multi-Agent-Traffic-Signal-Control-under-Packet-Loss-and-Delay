@@ -170,6 +170,7 @@ def train_one(store: CampaignStore, design: dict, variant: str, master: int) -> 
             "training_episodes": len(records), "condition_schedule": schedule,
             "learner_seed": seed, "freshness": design['freshness'],
             "observation_schema": design['environment'].get('observation_schema', 'traffic_observation_v1'),
+            "metadata_scale": design['environment'].get('metadata_scale', 1.0),
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         }
         write_json_exclusive(directory / 'metadata.json', payload)
@@ -187,6 +188,7 @@ def evaluate_one(store: CampaignStore, design: dict, spec: dict, checkpoint: dic
     try:
         checkpoint_dir = store.directory / checkpoint['checkpoint_directory']
         if (checkpoint['feature_mode'] != design['variants'][spec['variant']]['features'] or
+            checkpoint.get('metadata_scale', 1.0) != design['environment'].get('metadata_scale', 1.0) or
             checkpoint.get('observation_schema', 'traffic_observation_v1') !=
                 design['environment'].get('observation_schema', 'traffic_observation_v1')):
             raise ValueError('checkpoint observation semantics differ from evaluation')

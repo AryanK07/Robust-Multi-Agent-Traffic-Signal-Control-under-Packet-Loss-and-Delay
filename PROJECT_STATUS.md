@@ -85,6 +85,9 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
   It also completed 896 episodes without execution failures; local control
   improved but full-model feasibility remained inadequate. A separate
   traffic-completion training comparison is now predeclared.
+  It completed another 896 episodes; full models still failed the criterion.
+  A finite metadata-scale calibration and reserved-seed analysis plan are
+  predeclared, retaining all negative development observations.
 
 - Scientific validation remains incomplete. The four-episode pilot does not
   establish adequate greedy traffic control, convergence or a communication
