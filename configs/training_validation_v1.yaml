@@ -1,0 +1,106 @@
+followup:
+  schema: followup_v2
+  workers: 2
+  master_seeds:
+  - 31001
+  - 31002
+  training_episodes: 81
+  learning_rate: 0.01
+  discount_factor: 0.95
+  epsilon: 0.2
+  demand_seconds: 30
+  vehicle_period: 6
+  environment:
+    horizon_seconds: 120
+    simulation_step: 0.05
+    communication_interval: 0.1
+    decision_interval: 1.0
+    minimum_green: 5.0
+    yellow_seconds: 3.0
+    periodic_interval_ms: 1000
+    change_threshold: 0.1
+    heartbeat_ms: 5000
+    request_cooldown_ms: 1000
+    backend: libsumo
+  freshness:
+    freshness_decay_tau_ms: 500
+    max_message_age_ms: 2000
+    stale_message_threshold_ms: 1000
+  training_conditions:
+  - - 0
+    - 0
+  - - 0
+    - 250
+  - - 0
+    - 500
+  - - 0.1
+    - 0
+  - - 0.1
+    - 250
+  - - 0.1
+    - 500
+  - - 0.2
+    - 0
+  - - 0.2
+    - 250
+  - - 0.2
+    - 500
+  evaluation_conditions:
+  - - 0
+    - 0
+  - - 0.1
+    - 250
+  - - 0.3
+    - 1000
+  held_out_conditions:
+  - - 0.3
+    - 1000
+  strategies:
+  - always
+  variants:
+    local:
+      features: local
+      training: ideal
+    plain_ideal:
+      features: plain
+      training: ideal
+    plain_robust:
+      features: plain
+      training: robust
+    full_ideal:
+      features: full
+      training: ideal
+    full_robust:
+      features: full
+      training: robust
+  pilot:
+    master_seeds:
+    - 20261
+    - 20262
+    training_episodes: 4
+    demand_seconds: 30
+    variants:
+    - local
+    - plain_ideal
+    - plain_robust
+    - full_ideal
+    - full_robust
+    evaluation_conditions:
+    - - 0
+      - 0
+    - - 0.1
+      - 250
+    - - 0.3
+      - 1000
+    held_out_conditions:
+    - - 0.3
+      - 1000
+  validation_budgets:
+  - 9
+  - 27
+  - 81
+  validation_conditions:
+  - - 0
+    - 0
+  - - 0.1
+    - 250

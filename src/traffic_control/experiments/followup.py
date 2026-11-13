@@ -32,15 +32,17 @@ def source_manifest(design: dict) -> dict:
     status = subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True)
     if status.strip():
         raise ValueError("Commit the reviewed source/configuration before running a campaign")
-    files = [*ROOT.glob('src/**/*.py'), ROOT / 'scripts/run_followup.py',
-             ROOT / 'configs/followup_v2.yaml', ROOT / 'sumo/network/grid.net.xml']
+    files = [*ROOT.glob('src/**/*.py'), *ROOT.glob('scripts/*.py'),
+             *ROOT.glob('configs/*.yaml'), ROOT / 'sumo/network/grid.net.xml']
     return {
         "schema": "campaign_v2",
         "design": design,
         "git_commit": subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         "source_sha256": {p.relative_to(ROOT).as_posix(): file_hash(p) for p in sorted(files)},
         "python": platform.python_version(),
-        "packages": {name: version(name) for name in ('numpy', 'scipy', 'PyYAML', 'matplotlib')},
+        "packages": {name: version(name) for name in ('numpy', 'scipy', 'PyYAML', 'matplotlib') +
+                     (('libsumo', 'traci', 'sumolib', 'sumo-data')
+                      if design['environment'].get('backend') == 'libsumo' else ())},
         "sumo": subprocess.check_output(['sumo', '--version'], text=True).splitlines()[0],
         "metric_schema": "tripinfo_v2",
         "reward": "negative_local_queue_integral_v2",
@@ -128,6 +130,24 @@ def train_one(store: CampaignStore, design: dict, variant: str, master: int) -> 
                               loss, delay, 'always', directory / f'episode_{index:04d}', True)
             write_json_exclusive(directory / f'episode_{index:04d}.json', record)
             records.append(record)
+            if index in design.get('validation_budgets', []):
+                stage = directory / f'validation_{index:04d}'
+                for agent, learner in learners.items():
+                    learner.save(stage / 'checkpoints' / f'{agent}.npz')
+                validation = []
+                for cell, (v_loss, v_delay) in enumerate(design['validation_conditions']):
+                    # Load separate policies so epsilon-zero calls cannot advance
+                    # the continuing training learner's exploration RNG.
+                    frozen = {a: LinearQAgent.load(stage / 'checkpoints' / f'{a}.npz') for a in AGENT_IDS}
+                    result = _episode(design, variant, frozen,
+                                      episode_seeds(master, 'validation', 0),
+                                      v_loss, v_delay, 'always', stage / f'cell_{cell:02d}', False)
+                    validation.append(result)
+                write_json_exclusive(stage / 'metrics.json', {
+                    'training_episodes': index, 'results': validation,
+                    'checkpoint_sha256': {a: file_hash(stage / 'checkpoints' / f'{a}.npz') for a in AGENT_IDS}})
+                print(f"validation {variant} seed={master} episodes={index}: "
+                      f"completion={[r['completion_fraction'] for r in validation]}", flush=True)
         checkpoints = directory / 'checkpoints'
         for agent, learner in learners.items():
             learner.save(checkpoints / f'{agent}.npz')

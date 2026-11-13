@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Phase 11 completion work
+
+- Added a pinned optional SUMO in-process backend with a complete-trajectory
+  equivalence test, preserving the existing default backend.
+- Predeclared 9/27/81-episode training validation on new development seeds;
+  frozen validation copies preserve the continuing training RNG stream.
+
 ### Follow-up v2 development evaluation
 
 - Executed the predeclared pilot at `eada4cd`: 10 checkpoint sets, 40 training

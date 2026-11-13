@@ -77,6 +77,9 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
 ## In Progress
 
+- User authorized completing Phase 11 prerequisites. A predeclared balanced
+  training-budget study is prepared in `docs/TRAINING_VALIDATION_PROTOCOL.md`.
+
 - Scientific validation remains incomplete. The four-episode pilot does not
   establish adequate greedy traffic control, convergence or a communication
   performance advantage. The software extension is implemented and tested.

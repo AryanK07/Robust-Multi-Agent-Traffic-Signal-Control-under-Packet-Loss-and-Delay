@@ -26,6 +26,10 @@ def load_design(path: Path, pilot: bool = False) -> dict:
         raise ValueError("master seeds must be distinct nonnegative integers")
     if type(design["training_episodes"]) is not int or design["training_episodes"] <= 0:
         raise ValueError("training_episodes must be positive")
+    budgets = design.get('validation_budgets', [])
+    if budgets and (budgets != sorted(set(budgets)) or
+                    any(type(n) is not int or n <= 0 or n > design['training_episodes'] for n in budgets)):
+        raise ValueError('validation budgets must be distinct ascending training checkpoints')
     if not 0 <= design["epsilon"] <= 1:
         raise ValueError("epsilon must lie in [0,1]")
     if not 0 < design["learning_rate"] <= 1 or not 0 <= design["discount_factor"] <= 1:
@@ -35,7 +39,7 @@ def load_design(path: Path, pilot: bool = False) -> dict:
     held_out = {tuple(c) for c in design["held_out_conditions"]}
     if not training or not evaluation or training & held_out or not held_out <= evaluation:
         raise ValueError("held-out conditions must be evaluated and excluded from training")
-    for loss, delay in training | evaluation:
+    for loss, delay in training | evaluation | {tuple(c) for c in design.get('validation_conditions', [])}:
         if not np.isfinite([loss, delay]).all() or not 0 <= loss <= 1 or delay < 0:
             raise ValueError("invalid impairment condition")
     if design["demand_seconds"] >= design["environment"]["horizon_seconds"]:
@@ -52,7 +56,7 @@ def load_design(path: Path, pilot: bool = False) -> dict:
 
 def episode_seeds(master: int, role: str, episode: int) -> dict[str, int]:
     """Same traffic/exploration mapping for every variant, separate train/test."""
-    domain = {"training": 101, "evaluation": 202}[role]
+    domain = {"training": 101, "evaluation": 202, "validation": 303}[role]
     values = np.random.SeedSequence([master, domain, episode]).generate_state(4)
     return {key: int(value % 2_147_483_647) for key, value in
             zip(("learner", "traffic", "packet_loss", "schedule"), values)}

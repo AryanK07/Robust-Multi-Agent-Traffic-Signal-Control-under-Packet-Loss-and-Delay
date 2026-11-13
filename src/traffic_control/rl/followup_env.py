@@ -28,6 +28,7 @@ STRATEGIES = ("always", "periodic", "adaptive", "periodic_pull", "action_sensiti
 class FollowupEnvironmentConfig:
     sumo_config_file: Path
     tripinfo_output: Path
+    backend: str = "traci"
     horizon_seconds: float = 120.0
     simulation_step: float = 0.05
     communication_interval: float = 0.1
@@ -83,7 +84,7 @@ class FollowupEnvironment:
         self.simulator = SumoEnvironment(SumoEnvironmentConfig(
             config_file=config.sumo_config_file, seed=config.seed,
             step_length=config.simulation_step, tripinfo_output=config.tripinfo_output,
-            collect_legacy_metrics=False))
+            collect_legacy_metrics=False, backend=config.backend))
         self.channel = CommunicationChannel(packet_loss_probability=config.packet_loss,
                                             delay_ms=config.delay_ms, seed=config.packet_loss_seed)
         self.cache = NeighborInformationCache(self.channel.topology)

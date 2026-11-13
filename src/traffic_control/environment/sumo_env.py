@@ -23,6 +23,11 @@ class SumoEnvironmentConfig:
     step_length: float = 1.0
     tripinfo_output: Path | None = None
     collect_legacy_metrics: bool = True
+    backend: str = "traci"
+
+    def __post_init__(self):
+        if self.backend not in ("traci", "libsumo"):
+            raise ValueError("backend must be traci or libsumo")
 
 
 class SumoEnvironment:
@@ -59,8 +64,15 @@ class SumoEnvironment:
             path.parent.mkdir(parents=True, exist_ok=True)
             command.extend(["--tripinfo-output", str(path),
                             "--tripinfo-output.write-unfinished", "true"])
-        traci.start(command, label=self._label)
-        self._connection = traci.getConnection(self._label)
+        if self.config.backend == "libsumo":
+            import libsumo
+            if self.use_gui or libsumo.isLoaded():
+                raise RuntimeError("libsumo requires one headless simulation per process")
+            libsumo.start(command)
+            self._connection = libsumo
+        else:
+            traci.start(command, label=self._label)
+            self._connection = traci.getConnection(self._label)
         self._signals = SignalController(self._connection)
         self._state = TrafficStateExtractor(self._connection)
         self._metrics.reset()

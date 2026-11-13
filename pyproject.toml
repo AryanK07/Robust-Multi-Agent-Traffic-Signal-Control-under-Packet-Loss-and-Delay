@@ -23,6 +23,12 @@ dev = [
 ml = [
     "torch>=2.2",
 ]
+research = [
+    "libsumo==1.27.1",
+    "traci==1.27.1",
+    "sumolib==1.27.1",
+    "sumo-data==1.27.1",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

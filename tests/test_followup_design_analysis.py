@@ -59,3 +59,17 @@ def test_paired_analysis_uses_seeds_not_condition_count():
     assert result['master_seed_count'] == 2
     assert result['paired_cells'] == 6
     assert result['mean_difference'] == 2
+
+
+def test_training_validation_is_balanced_and_separate():
+    design = load_design(Path('configs/training_validation_v1.yaml'))
+    assert design['validation_budgets'] == [9, 27, 81]
+    assert not set(design['master_seeds']) & {20261, 20262, 20263, 20264, 20265}
+    for seed in design['master_seeds']:
+        streams = [set(episode_seeds(seed, role, 0).values())
+                   for role in ('training', 'validation', 'evaluation')]
+        assert all(not streams[i] & streams[j] for i in range(3) for j in range(i))
+        schedule = training_schedule(design, seed, 'full_robust')
+        for budget in design['validation_budgets']:
+            from collections import Counter
+            assert set(Counter(map(tuple, schedule[:budget])).values()) == {budget // 9}
