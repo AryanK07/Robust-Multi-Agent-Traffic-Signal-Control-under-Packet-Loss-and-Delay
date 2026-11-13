@@ -4,6 +4,10 @@
 
 ### Phase 11 completion work
 
+- Added exclusive, checksummed research archives containing original records,
+  all follow-up studies and restorable Git history. A restore/corruption test
+  verifies the archive without modifying experimental data.
+
 - Both finite metadata calibration settings passed every development
   completion cell; selected scale 0.1 using the predeclared rule.
 - Froze the reserved-seed 45-checkpoint / 1505-evaluation campaign and
