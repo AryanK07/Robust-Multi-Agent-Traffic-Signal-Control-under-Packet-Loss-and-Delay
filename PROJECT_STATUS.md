@@ -82,6 +82,9 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
   It completed 896 SUMO episodes with no execution failures but failed the
   predeclared usability criterion; see `docs/TRAINING_VALIDATION_RESULTS.md`.
   A matched phase-relative observation comparison is prepared separately.
+  It also completed 896 episodes without execution failures; local control
+  improved but full-model feasibility remained inadequate. A separate
+  traffic-completion training comparison is now predeclared.
 
 - Scientific validation remains incomplete. The four-episode pilot does not
   establish adequate greedy traffic control, convergence or a communication

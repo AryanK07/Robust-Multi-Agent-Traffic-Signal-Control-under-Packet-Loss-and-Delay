@@ -98,6 +98,8 @@ def _episode(design, variant, policies, seeds, loss, delay, strategy, directory,
                         local_only[5:] = 0
                         neighbor_action_changes += int(np.argmax(policies[agent].q_values(local_only)) != actions[agent])
             next_obs, rewards, terminal, telemetry = environment.step(actions)
+            if training and design.get('training_stop_when_clear', False):
+                terminal = terminal or environment.simulator._require_started().simulation.getMinExpectedNumber() == 0
             if training:
                 for agent in AGENT_IDS:
                     errors.append(policies[agent].update(observations[agent], actions[agent],

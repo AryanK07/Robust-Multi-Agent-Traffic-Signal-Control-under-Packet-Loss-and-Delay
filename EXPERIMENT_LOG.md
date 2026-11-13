@@ -1,5 +1,18 @@
 # Experiment Log
 
+## Phase-relative training validation — 2026-11-13
+
+- ID `training_validation_003`, source `094b1f1`, configuration
+  `configs/training_validation_v3.yaml`; same development seeds, budgets,
+  reward, demand and evaluation cells as `training_validation_001`.
+- Completed 810 training, 60 validation and 26 exploratory evaluation
+  episodes; zero execution failures. Local validation completed all trips
+  at 81 episodes, but the full-model failures kept the all-cell 95% criterion
+  unmet. All observations are preserved; no final test streams were used.
+- Mean last training arrival: 86.7115 seconds, leaving 33.2885 seconds of
+  empty-network updates. A separate controlled termination study is defined
+  in `docs/TRAFFIC_TERMINATION_VALIDATION.md` before collecting it.
+
 ## Aggregate-observation training validation — 2026-11-13
 
 - ID `training_validation_001`, source `b3a2766`, configuration

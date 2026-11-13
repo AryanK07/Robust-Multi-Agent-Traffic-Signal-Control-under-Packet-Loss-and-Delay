@@ -4,6 +4,12 @@
 
 ### Phase 11 completion work
 
+- Completed the phase-relative development study; retained its failed
+  usability outcome and predeclared a training-termination comparison.
+- Added seed-level exact sign-flip statistics with Holm correction and
+  documented close literature predecessors; no novelty claim is made.
+- Added maximum message age and observed delivery-delay telemetry.
+
 - Completed the frozen 9/27/81-episode study: 896 total SUMO episodes,
   no execution failures; the all-cell completion criterion failed.
 - Added a versioned phase-relative encoder and matched development comparison
