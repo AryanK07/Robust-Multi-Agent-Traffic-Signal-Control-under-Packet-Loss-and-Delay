@@ -83,12 +83,20 @@ def _episode(design, variant, policies, seeds, loss, delay, strategy, directory,
     environment = FollowupEnvironment(config, policies)
     before = {a: (p.weights.copy(), p.bias.copy()) for a, p in policies.items()}
     total_reward, errors = 0., []
+    neighbor_action_changes = agent_decisions = 0
     try:
         observations = environment.reset()
         terminal = False
         while not terminal:
             actions = {a: policies[a].select_action(observations[a], design['epsilon'] if training else 0.)
                        for a in AGENT_IDS}
+            if not training:
+                for agent in AGENT_IDS:
+                    agent_decisions += 1
+                    if observations[agent].size > 5:
+                        local_only = observations[agent].copy()
+                        local_only[5:] = 0
+                        neighbor_action_changes += int(np.argmax(policies[agent].q_values(local_only)) != actions[agent])
             next_obs, rewards, terminal, telemetry = environment.step(actions)
             if training:
                 for agent in AGENT_IDS:
@@ -111,6 +119,8 @@ def _episode(design, variant, policies, seeds, loss, delay, strategy, directory,
         "seeds": seeds, "packet_loss": loss, "delay_ms": delay,
         "demand_sha256": file_hash(directory / 'demand.rou.xml'),
         "tripinfo_sha256": file_hash(directory / 'trips.xml'),
+        "neighbor_action_changes": neighbor_action_changes,
+        "agent_decisions": agent_decisions,
     }
 
 
@@ -157,6 +167,7 @@ def train_one(store: CampaignStore, design: dict, variant: str, master: int) -> 
             "checkpoint_sha256": hashes, "feature_mode": feature_mode,
             "training_episodes": len(records), "condition_schedule": schedule,
             "learner_seed": seed, "freshness": design['freshness'],
+            "observation_schema": design['environment'].get('observation_schema', 'traffic_observation_v1'),
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         }
         write_json_exclusive(directory / 'metadata.json', payload)
@@ -173,6 +184,10 @@ def evaluate_one(store: CampaignStore, design: dict, spec: dict, checkpoint: dic
     directory = _artifact_directory(store, spec)
     try:
         checkpoint_dir = store.directory / checkpoint['checkpoint_directory']
+        if (checkpoint['feature_mode'] != design['variants'][spec['variant']]['features'] or
+            checkpoint.get('observation_schema', 'traffic_observation_v1') !=
+                design['environment'].get('observation_schema', 'traffic_observation_v1')):
+            raise ValueError('checkpoint observation semantics differ from evaluation')
         if {a: file_hash(checkpoint_dir / f'{a}.npz') for a in AGENT_IDS} != checkpoint['checkpoint_sha256']:
             raise ValueError("Checkpoint files changed after training")
         learners = {a: LinearQAgent.load(checkpoint_dir / f'{a}.npz') for a in AGENT_IDS}
@@ -186,7 +201,7 @@ def evaluate_one(store: CampaignStore, design: dict, spec: dict, checkpoint: dic
 
 
 def run_followup(store: CampaignStore, design: dict, retry_failed: bool = False) -> None:
-    # Processes isolate TraCI's global connection registry. At most two SUMO
+    # Processes isolate TraCI/libsumo state. At most four SUMO
     # instances run; every logical job has a distinct immutable artifact path.
     with ProcessPoolExecutor(max_workers=design['workers']) as executor:
         futures = {}

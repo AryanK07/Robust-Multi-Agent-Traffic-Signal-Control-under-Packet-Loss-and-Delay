@@ -79,6 +79,9 @@ Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
 
 - User authorized completing Phase 11 prerequisites. A predeclared balanced
   training-budget study is prepared in `docs/TRAINING_VALIDATION_PROTOCOL.md`.
+  It completed 896 SUMO episodes with no execution failures but failed the
+  predeclared usability criterion; see `docs/TRAINING_VALIDATION_RESULTS.md`.
+  A matched phase-relative observation comparison is prepared separately.
 
 - Scientific validation remains incomplete. The four-episode pilot does not
   establish adequate greedy traffic control, convergence or a communication

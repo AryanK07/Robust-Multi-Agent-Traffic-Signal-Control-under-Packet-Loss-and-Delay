@@ -4,6 +4,12 @@
 
 ### Phase 11 completion work
 
+- Completed the frozen 9/27/81-episode study: 896 total SUMO episodes,
+  no execution failures; the all-cell completion criterion failed.
+- Added a versioned phase-relative encoder and matched development comparison
+  to expose served/opposed demand and transition timing without replacing IQL.
+- Added schema mismatch protection and neighbor-action influence diagnostics.
+
 - Added a pinned optional SUMO in-process backend with a complete-trajectory
   equivalence test, preserving the existing default backend.
 - Predeclared 9/27/81-episode training validation on new development seeds;

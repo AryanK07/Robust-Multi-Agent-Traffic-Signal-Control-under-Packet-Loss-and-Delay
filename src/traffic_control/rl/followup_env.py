@@ -18,6 +18,8 @@ from traffic_control.environment.safe_signals import SafeSignalTransitions
 from traffic_control.environment.traffic_state import IntersectionTrafficState
 from .multi_agent_env import AGENT_IDS
 from .q_learning import LinearQAgent
+from .phase_features import phase_features
+from traffic_control.communication.freshness import FEATURE_SCHEMA_VERSION, PHASE_FEATURE_SCHEMA
 
 
 FEATURE_MODES = ("local", "plain", "full", "no_age", "no_availability", "no_decay", "no_stale")
@@ -29,6 +31,7 @@ class FollowupEnvironmentConfig:
     sumo_config_file: Path
     tripinfo_output: Path
     backend: str = "traci"
+    observation_schema: str = FEATURE_SCHEMA_VERSION
     horizon_seconds: float = 120.0
     simulation_step: float = 0.05
     communication_interval: float = 0.1
@@ -48,6 +51,8 @@ class FollowupEnvironmentConfig:
     freshness: FreshnessConfig = field(default_factory=FreshnessConfig)
 
     def __post_init__(self):
+        if self.observation_schema not in (FEATURE_SCHEMA_VERSION, PHASE_FEATURE_SCHEMA):
+            raise ValueError('unsupported observation schema')
         durations = (self.simulation_step, self.communication_interval,
                      self.decision_interval, self.horizon_seconds,
                      self.minimum_green, self.yellow_seconds, self.request_cooldown_ms)
@@ -87,7 +92,7 @@ class FollowupEnvironment:
             collect_legacy_metrics=False, backend=config.backend))
         self.channel = CommunicationChannel(packet_loss_probability=config.packet_loss,
                                             delay_ms=config.delay_ms, seed=config.packet_loss_seed)
-        self.cache = NeighborInformationCache(self.channel.topology)
+        self.cache = NeighborInformationCache(self.channel.topology, config.observation_schema)
         self.scheduler = CommunicationScheduler(AGENT_IDS,
             strategy=config.strategy if config.strategy in ("always", "periodic", "adaptive") else "always",
             periodic_interval_ms=config.periodic_interval_ms,
@@ -118,6 +123,18 @@ class FollowupEnvironment:
         self._lanes = {agent: tuple(dict.fromkeys(connection.trafficlight.getControlledLanes(agent)))
                        for agent in AGENT_IDS}
         self._all_lanes = tuple(connection.lane.getIDList())
+        self._served_lanes = {}
+        if self.config.observation_schema == PHASE_FEATURE_SCHEMA:
+            for agent in AGENT_IDS:
+                links = connection.trafficlight.getControlledLinks(agent)
+                phases = connection.trafficlight.getAllProgramLogics(agent)[0].phases
+                for green in (0, 2):
+                    self._served_lanes[(agent, green)] = {
+                        link[0] for index, group in enumerate(links)
+                        for link in group if phases[green].state[index] in 'Gg'}
+                first, second = (self._served_lanes[(agent, green)] for green in (0, 2))
+                if first & second or first | second != set(self._lanes[agent]):
+                    raise ValueError('phase-relative encoder requires two disjoint served lane groups')
         for lane in self._all_lanes:
             connection.lane.subscribe(lane, (tc.LAST_STEP_VEHICLE_NUMBER, tc.VAR_WAITING_TIME,
                                              tc.LAST_STEP_VEHICLE_HALTING_NUMBER, tc.LAST_STEP_OCCUPANCY))
@@ -148,6 +165,19 @@ class FollowupEnvironment:
             state.queue_length / 10, state.waiting_time / 100,
             state.vehicle_count / 20, state.lane_occupancy / 100, state.phase / 3,
         ], dtype=np.float32), 0, 1) for agent, state in self._states.items()}
+        if self.config.observation_schema == PHASE_FEATURE_SCHEMA:
+            for agent in AGENT_IDS:
+                green, since, deadline = self.signals.state[agent]
+                served = self._served_lanes[(agent, green)]
+                opposed = set(self._lanes[agent]) - served
+                def total(lanes, variable):
+                    return sum(self._lane_states[lane][variable] for lane in lanes)
+                self._local[agent] = phase_features(
+                    total(served, tc.LAST_STEP_VEHICLE_HALTING_NUMBER),
+                    total(opposed, tc.LAST_STEP_VEHICLE_HALTING_NUMBER),
+                    total(served, tc.LAST_STEP_VEHICLE_NUMBER),
+                    total(opposed, tc.LAST_STEP_VEHICLE_NUMBER), self.time, since,
+                    deadline, self.config.minimum_green, self.config.yellow_seconds)
 
     def observation(self, agent):
         if self.config.feature_mode == "local":
@@ -190,7 +220,8 @@ class FollowupEnvironment:
         self.payload_bytes += len(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode())
 
     def _snapshot(self, sender, receiver, kind="snapshot"):
-        payload = dict(TrafficSnapshot(sender, tuple(map(float, self._local[sender])), self.time).to_payload())
+        payload = dict(TrafficSnapshot(sender, tuple(map(float, self._local[sender])), self.time,
+                                      self.config.observation_schema).to_payload())
         payload["kind"] = "snapshot"
         self._send(sender, receiver, payload, kind)
 

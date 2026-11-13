@@ -19,8 +19,8 @@ def load_design(path: Path, pilot: bool = False) -> dict:
         design.update(overrides)
         design["variants"] = {name: design["variants"][name] for name in selected}
     design["purpose"] = "development_pilot" if pilot else "exploratory_followup"
-    if type(design['workers']) is not int or design['workers'] not in (1, 2):
-        raise ValueError('workers must be 1 or 2 for the bounded local runner')
+    if type(design['workers']) is not int or design['workers'] not in (1, 2, 3, 4):
+        raise ValueError('workers must be between 1 and 4 for the bounded local runner')
     seeds = design["master_seeds"]
     if not seeds or len(set(seeds)) != len(seeds) or any(type(seed) is not int or seed < 0 for seed in seeds):
         raise ValueError("master seeds must be distinct nonnegative integers")

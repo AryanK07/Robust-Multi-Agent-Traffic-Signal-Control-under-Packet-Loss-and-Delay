@@ -2005,3 +2005,15 @@ selected action-sensitive communication within existing linear IQL. The
 trip-level metrics, causal timing, preservation requirements and the focused
 extension. This addendum retains the title, RQs/H1–H6, small network and IQL;
 it does not claim novelty or replace the original experimental record.
+
+
+## Phase 11 completion development addendum — 2026-11-13
+
+The user authorized completing all prerequisites before Phase 12. The
+predeclared aggregate-observation budget study failed its usability criterion.
+A separately versioned, matched phase-relative observation comparison is
+documented in `docs/PHASE_RELATIVE_VALIDATION.md`. It retains linear IQL, the
+network, metrics, reward and hypotheses, while exposing served/opposed demand
+and signal-transition timing to all compared variants equally. This is a
+development methodology revision, not a change to completed experiments.
+Final evaluation remains subject to a separately frozen protocol.

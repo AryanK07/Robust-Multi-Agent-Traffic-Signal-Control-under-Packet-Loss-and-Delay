@@ -14,12 +14,14 @@ from traffic_control.rl import AGENT_IDS, LinearQAgent
 @pytest.mark.sumo
 @pytest.mark.skipif(find_spec('libsumo') is None or shutil.which('sumo') is None,
                     reason='libsumo and SUMO required')
-def test_libsumo_preserves_complete_training_trajectory(tmp_path):
+@pytest.mark.parametrize('schema', ['traffic_observation_v1', 'phase_relative_observation_v3'])
+def test_libsumo_preserves_complete_training_trajectory(tmp_path, schema):
     design = load_design(Path('configs/followup_v2.yaml'), pilot=True)
     outputs, parameters = [], []
     for backend in ('traci', 'libsumo'):
         current = deepcopy(design)
         current['environment']['backend'] = backend
+        current['environment']['observation_schema'] = schema
         learners = {a: LinearQAgent(23, 2, .01, .95, index + 17)
                     for index, a in enumerate(AGENT_IDS)}
         result = _episode(current, 'full_robust', learners,

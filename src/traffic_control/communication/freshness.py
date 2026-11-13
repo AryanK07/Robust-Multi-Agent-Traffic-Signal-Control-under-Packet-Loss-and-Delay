@@ -9,6 +9,7 @@ from .topology import NeighborTopology
 
 
 FEATURE_SCHEMA_VERSION = "traffic_observation_v1"
+PHASE_FEATURE_SCHEMA = "phase_relative_observation_v3"
 LOCAL_FEATURE_COUNT = 5
 NEIGHBOR_FEATURE_COUNT = 9
 
@@ -63,8 +64,11 @@ class TrafficSnapshot:
     sender_id: str
     features: tuple[float, ...]
     generation_timestamp: float
+    schema_version: str = FEATURE_SCHEMA_VERSION
 
     def __post_init__(self) -> None:
+        if self.schema_version not in (FEATURE_SCHEMA_VERSION, PHASE_FEATURE_SCHEMA):
+            raise ValueError("unsupported traffic snapshot schema")
         if len(self.features) != LOCAL_FEATURE_COUNT:
             raise ValueError("traffic snapshot must contain exactly five features")
         if not all(isfinite(value) for value in self.features):
@@ -74,7 +78,7 @@ class TrafficSnapshot:
 
     def to_payload(self) -> Mapping[str, object]:
         return {
-            "schema_version": FEATURE_SCHEMA_VERSION,
+            "schema_version": self.schema_version,
             "sender_id": self.sender_id,
             "features": list(self.features),
         }
@@ -82,7 +86,7 @@ class TrafficSnapshot:
     @classmethod
     def from_message(cls, message: CommunicationMessage) -> "TrafficSnapshot":
         payload = message.payload
-        if payload.get("schema_version") != FEATURE_SCHEMA_VERSION:
+        if payload.get("schema_version") not in (FEATURE_SCHEMA_VERSION, PHASE_FEATURE_SCHEMA):
             raise ValueError("unsupported traffic snapshot schema")
         if payload.get("sender_id") != message.sender_id:
             raise ValueError("traffic snapshot sender does not match message sender")
@@ -93,7 +97,7 @@ class TrafficSnapshot:
             normalized = tuple(float(value) for value in features)
         except (TypeError, ValueError) as error:
             raise ValueError("traffic snapshot features must be numeric") from error
-        return cls(message.sender_id, normalized, message.generation_timestamp)
+        return cls(message.sender_id, normalized, message.generation_timestamp, payload['schema_version'])
 
 
 @dataclass(frozen=True)
@@ -110,8 +114,9 @@ class CachedNeighborState:
 class NeighborInformationCache:
     """Bounded latest-message cache keyed by receiver and configured neighbor."""
 
-    def __init__(self, topology: NeighborTopology) -> None:
+    def __init__(self, topology: NeighborTopology, schema_version: str = FEATURE_SCHEMA_VERSION) -> None:
         self.topology = topology
+        self.schema_version = schema_version
         self._states: dict[tuple[str, str], CachedNeighborState] = {}
 
     def update(self, receiver_id: str, message: CommunicationMessage) -> bool:
@@ -119,6 +124,8 @@ class NeighborInformationCache:
         if not self.topology.contains(message.sender_id, receiver_id):
             raise ValueError("message sender is not a configured neighbor")
         snapshot = TrafficSnapshot.from_message(message)
+        if snapshot.schema_version != self.schema_version:
+            raise ValueError("traffic snapshot does not match cache schema")
         key = (receiver_id, message.sender_id)
         current = self._states.get(key)
         if current is not None and snapshot.generation_timestamp <= current.generation_timestamp:

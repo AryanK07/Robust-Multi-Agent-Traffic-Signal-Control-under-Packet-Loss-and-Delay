@@ -1,5 +1,18 @@
 # Experiment Log
 
+## Aggregate-observation training validation — 2026-11-13
+
+- ID `training_validation_001`, source `b3a2766`, configuration
+  `configs/training_validation_v1.yaml`, seeds 31001/31002.
+- Five variants, 81 training episodes each, frozen checks at 9/27/81 with
+  separate validation streams; unchanged v2 settings and original network.
+- Completed 810 training, 60 validation and 26 exploratory evaluation
+  episodes with zero execution failures. The 95%-completion-in-every-cell
+  criterion failed. No seeds/checkpoints were removed or budget extended.
+- [Complete checkpoint table](docs/TRAINING_VALIDATION_RESULTS.md).
+  A separate matched phase-relative feature comparison is predeclared in
+  `docs/PHASE_RELATIVE_VALIDATION.md`; original and v2 data are preserved.
+
 ## Follow-up v2 development pilot — 2026-11-13
 
 - Experiment ID: `followup_v2/development_001`; source commit
