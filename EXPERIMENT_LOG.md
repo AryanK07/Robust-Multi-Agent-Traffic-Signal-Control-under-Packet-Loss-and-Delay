@@ -1,5 +1,15 @@
 # Experiment Log
 
+## Archive verification — 2026-11-14
+
+The original campaign, audit and all seven follow-up campaign directories were
+archived without raw-data edits. The 47,861,822-byte ZIP contains 36,412 verified
+payload files and a per-file manifest. GitHub digests and both public downloads
+match local checksums; actual Git-bundle restoration recovered all recorded
+source commits. See [archive evidence](docs/RESEARCH_ARCHIVE.md). An initial
+post-publication HTTP 404 resolved on a read-only download retry; assets were
+not replaced. This is archival verification, not another traffic experiment.
+
 ## Reserved-seed final campaign — 2026-11-13
 
 - ID `reserved_final_001`, source `c9547d6176e4d15520ea9492e6a5088879dfa6fd`,

@@ -2,8 +2,8 @@
 
 ## Current Phase
 
-Phase 11 — independent audit and frozen follow-up completed; off-machine
-archive publication/verification remains the final technical prerequisite.
+Phase 11 — audit, controlled follow-up, analysis and reproducibility archive
+completed. Findings are limited/mixed; no superiority or novelty is established.
 Phase 12 has not started. See [the readiness report](docs/PHASE11_READINESS.md).
 
 ## Completed
@@ -23,14 +23,17 @@ Phase 12 has not started. See [the readiness report](docs/PHASE11_READINESS.md).
   family, generated tables and five visually checked figures.
 - Verified literature comparison and archive builder with a successful source
   restoration/corruption-detection test. No paper draft was produced.
+- Published the complete 47,861,822-byte archive: 36,412 verified payload files,
+  matching GitHub/server/public-download hashes and successful actual bundle
+  restoration. [Archive receipt](docs/results/research_archive_receipt.json).
 
 ## In Progress
 
-- Publish and independently verify the complete versioned research archive.
+- No remaining Phase 11 technical prerequisite. Phase 12 remains unstarted.
 
 ## Upcoming
 
-- After archive verification, Phase 12 may document the measured mixed/negative
+- Phase 12 may document the measured mixed/negative
   findings and limitations. It remains unstarted under the user's boundary.
 - A stronger novelty, efficacy or broad-generalization claim needs a separately
   approved study; no new scenario, model or outcome-driven tuning is scheduled.
@@ -76,12 +79,14 @@ smokes for phases 4–10 and five original/five corrected frozen replays passed.
   snapshot defect is fixed and separate replays measure 168 actual attempts.
 - Whole-episode communication costs include empty-network time. Payload bytes
   exclude wireless headers. No real-world safety or publication-readiness claim.
-- Off-machine archive publication remains pending at this status revision.
+- All original and follow-up records are backed up in the verified release;
+  historical provenance gaps and scientific limitations are not erased.
 
 ## Latest Commit
 
 Original Phase 11 `4161f42`; audit `959745d`; initial v2 pilot `eada4cd`;
-reserved final source `c9547d6`; archive tooling `1937f06`.
+reserved final source `c9547d6`; archive tooling `1937f06`; audited findings
+`db3be51`. The final archive-publication record is this commit.
 This report/results revision is identified by its containing Git commit;
 `git log -1` gives the resolved documentation commit. Runtime source remains
 explicitly tied to the frozen campaign, not a later documentation commit.

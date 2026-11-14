@@ -6,8 +6,8 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-**Phase 11: independent audit and reserved-seed follow-up completed; archive
-publication is being finalized. Phase 12 has not started.**
+**Phase 11 audit, controlled follow-up, analysis and verified research archive
+are complete. Phase 12 has not started.**
 
 The [readiness report](docs/PHASE11_READINESS.md) distinguishes verified
 findings, original results, software corrections and remaining research
@@ -43,6 +43,7 @@ proxy and 20-second campaign are not pooled with these measurements.
 
 Use a clean Python 3.14 environment with SUMO 1.27.1 and
 `requirements-research-lock.txt`, then `python -m pip install -e . --no-deps`.
+Download the [verified research archive](https://github.com/AryanK07/Robust-Multi-Agent-Traffic-Signal-Control-under-Packet-Loss-and-Delay/releases/tag/phase11-records-v1).
 See [archive restoration](docs/RESEARCH_ARCHIVE.md) for complete raw records,
 checkpoints and source history. Audit or regenerate analysis from restored data:
 

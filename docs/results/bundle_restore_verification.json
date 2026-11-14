@@ -1,0 +1,15 @@
+{
+  "archive": "phase11-records-v1.zip",
+  "restored_head": "db3be5142b6d48413dcd69b0f9417a9fecc7a2e0",
+  "campaign_source_commits": {
+    "results/followup_v2/development_001/manifest.json": "eada4cdc26ac7ca07791b4e48e1f1d7ab2ad3209",
+    "results/followup_v2/metadata_calibration_001/manifest.json": "57d2b94e9b8e21ee07e5229fc4477417b4a5547a",
+    "results/followup_v2/metadata_calibration_01/manifest.json": "57d2b94e9b8e21ee07e5229fc4477417b4a5547a",
+    "results/followup_v2/reserved_final_001/manifest.json": "c9547d6176e4d15520ea9492e6a5088879dfa6fd",
+    "results/followup_v2/training_validation_001/manifest.json": "b3a2766aa84ac9c4e15281cae8b6eda40307808c",
+    "results/followup_v2/training_validation_003/manifest.json": "094b1f1ff0f4edb318aad8b222b840fcd404d8a2",
+    "results/followup_v2/training_validation_004/manifest.json": "ac0cf6f8cb483522671a2f2e0b4ebcb4d74fd7f7"
+  },
+  "original_phase11_commit_available": true,
+  "restore_verified": true
+}

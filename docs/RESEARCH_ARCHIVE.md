@@ -71,5 +71,24 @@ source/configuration identities. Dependency locking records the measured
 environment; it is not evidence that every OS or future package index will
 reproduce floating-point trajectories identically.
 
-The release location and verified digest will be recorded with the completed
-Phase 11 readiness report after the final campaign is finished and audited.
+## Verified archive v1
+
+Published and checked on 2026-11-14:
+[Phase 11 research record v1](https://github.com/AryanK07/Robust-Multi-Agent-Traffic-Signal-Control-under-Packet-Loss-and-Delay/releases/tag/phase11-records-v1).
+
+- ZIP: `phase11-records-v1.zip`, 47,861,822 bytes.
+- Inventory: 36,412 verified payload files plus the archive manifest.
+- SHA-256: `d7994b2c7406592d02abd6d906ace066010829e82ee57a3cb7d54765aed3f938`.
+- Source/history snapshot: `db3be5142b6d48413dcd69b0f9417a9fecc7a2e0`.
+- Both GitHub asset digests and independently streamed public downloads matched
+  local checksums. An immediate post-publication download returned HTTP 404;
+  a subsequent read-only retry succeeded. No asset was replaced.
+- The actual archived Git bundle was cloned into a temporary directory. Its
+  HEAD and all seven campaign source references, plus the original Phase 11
+  commit, were verified. The temporary clone was then cleaned up.
+
+[Release/download receipt](results/research_archive_receipt.json) and
+[actual bundle restoration](results/bundle_restore_verification.json) record
+these checks. The final publication-receipt documentation commit follows the
+archive snapshot; runtime collection remains tied to `c9547d6` and earlier
+campaign-specific sources. No raw data were changed to close the archive.

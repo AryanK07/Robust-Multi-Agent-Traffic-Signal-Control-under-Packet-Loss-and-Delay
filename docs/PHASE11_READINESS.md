@@ -270,10 +270,16 @@ All 13 Holm-adjusted p-values equal 1. Learning curves do not demonstrate
 convergence. The candidate extension is implemented and evaluated, including
 its unfavorable result; it is not an established novel or superior method.
 
-**Disposition:** the implementation, controlled experiments, audits and
-analysis are complete. Off-machine archive publication/verification remains
-the last technical prerequisite at this report revision. Once that check is
-recorded, Phase 12 can begin as documentation of this limited, mixed/negative
+**Disposition:** all authorized Phase 11 implementation, controlled experiments,
+audits, analysis and archival prerequisites are complete. The [versioned
+research archive](https://github.com/AryanK07/Robust-Multi-Agent-Traffic-Signal-Control-under-Packet-Loss-and-Delay/releases/tag/phase11-records-v1)
+contains 36,412 verified payload files plus its manifest (47,861,822 bytes).
+Both public assets were downloaded and matched their local SHA-256 values;
+restoring the actual Git bundle recovered all campaign source commits and the
+original Phase 11 commit. See the [release receipt](results/research_archive_receipt.json)
+and [restoration evidence](results/bundle_restore_verification.json).
+
+Phase 12 can begin as documentation of this limited, mixed/negative
 small-network study. Strong efficacy, novelty or publication-readiness claims
 are unsupported. A separately approved study would be needed for those goals;
 no extra tuning or campaign is silently started. **Phase 12 remains unstarted.**

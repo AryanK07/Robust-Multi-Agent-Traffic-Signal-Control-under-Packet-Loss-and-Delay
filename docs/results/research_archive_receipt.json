@@ -1,0 +1,31 @@
+{
+  "release_url": "https://github.com/AryanK07/Robust-Multi-Agent-Traffic-Signal-Control-under-Packet-Loss-and-Delay/releases/tag/phase11-records-v1",
+  "tag": "phase11-records-v1",
+  "release_id": 445087629,
+  "archive_verification": {
+    "archive": "phase11-records-v1.zip",
+    "bytes": 47861822,
+    "sha256": "d7994b2c7406592d02abd6d906ace066010829e82ee57a3cb7d54765aed3f938",
+    "verified_files": 36412,
+    "source_commit": "db3be5142b6d48413dcd69b0f9417a9fecc7a2e0"
+  },
+  "assets": [
+    {
+      "name": "phase11-records-v1.sha256.json",
+      "bytes": 240,
+      "sha256": "3657cf3bed32d728ac3c2e914a8643a55097eceb7e7cded9d653dc25e802b8a9",
+      "url": "https://github.com/AryanK07/Robust-Multi-Agent-Traffic-Signal-Control-under-Packet-Loss-and-Delay/releases/download/phase11-records-v1/phase11-records-v1.sha256.json",
+      "asset_id": 746612033,
+      "public_download_verified": true
+    },
+    {
+      "name": "phase11-records-v1.zip",
+      "bytes": 47861822,
+      "sha256": "d7994b2c7406592d02abd6d906ace066010829e82ee57a3cb7d54765aed3f938",
+      "url": "https://github.com/AryanK07/Robust-Multi-Agent-Traffic-Signal-Control-under-Packet-Loss-and-Delay/releases/download/phase11-records-v1/phase11-records-v1.zip",
+      "asset_id": 746611477,
+      "public_download_verified": true
+    }
+  ],
+  "initial_download_attempt": "HTTP 404 immediately after publication; retained release, then retried read-only verification."
+}

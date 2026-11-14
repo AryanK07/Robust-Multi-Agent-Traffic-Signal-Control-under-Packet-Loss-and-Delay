@@ -4,6 +4,10 @@
 
 ### Phase 11 completion work
 
+- Published the complete versioned research archive with per-file checksums;
+  independently verified both public downloads and restored its actual source
+  bundle. Closed Phase 11 technical prerequisites; Phase 12 remains unstarted.
+
 - Completed and independently audited the frozen 45-checkpoint, 3645-training,
   1505-evaluation reserved-seed campaign with zero execution failures.
 - Preserved 19 censored final evaluations and the action gate's zero incremental
