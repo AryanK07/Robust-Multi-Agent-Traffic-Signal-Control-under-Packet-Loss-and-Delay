@@ -1,0 +1,16 @@
+{
+  "campaign_identity": "99301db0a93c6d44f15cb7170c22447af1a70ff5fcf09d7d1969ed5ae028cb31",
+  "source_commit": "c9547d6176e4d15520ea9492e6a5088879dfa6fd",
+  "expected_evaluations": 1505,
+  "successful_evaluations": 1505,
+  "training_sets": 45,
+  "failed_attempts": 0,
+  "source_files_verified": 73,
+  "paired_demand_verified": true,
+  "seed_domains_disjoint": true,
+  "checkpoint_files": 180,
+  "training_episodes": 3645,
+  "training_censored": 0,
+  "evaluation_episodes": 1505,
+  "evaluation_censored": 19
+}

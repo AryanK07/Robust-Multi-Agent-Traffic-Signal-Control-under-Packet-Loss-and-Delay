@@ -1,0 +1,355 @@
+{
+  "design": {
+    "demand_seconds": 30,
+    "discount_factor": 0.95,
+    "environment": {
+      "backend": "libsumo",
+      "change_threshold": 0.1,
+      "communication_interval": 0.1,
+      "decision_interval": 1.0,
+      "heartbeat_ms": 5000,
+      "horizon_seconds": 120,
+      "metadata_scale": 0.1,
+      "minimum_green": 5.0,
+      "observation_schema": "phase_relative_observation_v3",
+      "periodic_interval_ms": 1000,
+      "request_cooldown_ms": 1000,
+      "simulation_step": 0.05,
+      "yellow_seconds": 3.0
+    },
+    "epsilon": 0.2,
+    "evaluation_conditions": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        100
+      ],
+      [
+        0,
+        250
+      ],
+      [
+        0,
+        500
+      ],
+      [
+        0,
+        1000
+      ],
+      [
+        0.05,
+        0
+      ],
+      [
+        0.05,
+        100
+      ],
+      [
+        0.05,
+        250
+      ],
+      [
+        0.05,
+        500
+      ],
+      [
+        0.05,
+        1000
+      ],
+      [
+        0.1,
+        0
+      ],
+      [
+        0.1,
+        100
+      ],
+      [
+        0.1,
+        250
+      ],
+      [
+        0.1,
+        500
+      ],
+      [
+        0.1,
+        1000
+      ],
+      [
+        0.2,
+        0
+      ],
+      [
+        0.2,
+        100
+      ],
+      [
+        0.2,
+        250
+      ],
+      [
+        0.2,
+        500
+      ],
+      [
+        0.2,
+        1000
+      ],
+      [
+        0.3,
+        0
+      ],
+      [
+        0.3,
+        100
+      ],
+      [
+        0.3,
+        250
+      ],
+      [
+        0.3,
+        500
+      ],
+      [
+        0.3,
+        1000
+      ]
+    ],
+    "freshness": {
+      "freshness_decay_tau_ms": 500,
+      "max_message_age_ms": 2000,
+      "stale_message_threshold_ms": 1000
+    },
+    "held_out_conditions": [
+      [
+        0,
+        1000
+      ],
+      [
+        0.05,
+        1000
+      ],
+      [
+        0.1,
+        1000
+      ],
+      [
+        0.2,
+        1000
+      ],
+      [
+        0.3,
+        0
+      ],
+      [
+        0.3,
+        100
+      ],
+      [
+        0.3,
+        250
+      ],
+      [
+        0.3,
+        500
+      ],
+      [
+        0.3,
+        1000
+      ]
+    ],
+    "learning_rate": 0.01,
+    "master_seeds": [
+      41001,
+      41002,
+      41003,
+      41004,
+      41005
+    ],
+    "purpose": "reserved_seed_final",
+    "schema": "followup_v2",
+    "strategies": [
+      "always",
+      "periodic",
+      "adaptive",
+      "periodic_pull",
+      "action_sensitive"
+    ],
+    "training_conditions": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        250
+      ],
+      [
+        0,
+        500
+      ],
+      [
+        0.1,
+        0
+      ],
+      [
+        0.1,
+        250
+      ],
+      [
+        0.1,
+        500
+      ],
+      [
+        0.2,
+        0
+      ],
+      [
+        0.2,
+        250
+      ],
+      [
+        0.2,
+        500
+      ]
+    ],
+    "training_episodes": 81,
+    "training_stop_when_clear": true,
+    "variants": {
+      "full_ideal": {
+        "features": "full",
+        "training": "ideal"
+      },
+      "full_robust": {
+        "features": "full",
+        "training": "robust"
+      },
+      "local": {
+        "features": "local",
+        "training": "ideal"
+      },
+      "no_age_robust": {
+        "features": "no_age",
+        "training": "robust"
+      },
+      "no_availability_robust": {
+        "features": "no_availability",
+        "training": "robust"
+      },
+      "no_decay_robust": {
+        "features": "no_decay",
+        "training": "robust"
+      },
+      "no_stale_robust": {
+        "features": "no_stale",
+        "training": "robust"
+      },
+      "plain_ideal": {
+        "features": "plain",
+        "training": "ideal"
+      },
+      "plain_robust": {
+        "features": "plain",
+        "training": "robust"
+      }
+    },
+    "vehicle_period": 6,
+    "workers": 4
+  },
+  "git_commit": "c9547d6176e4d15520ea9492e6a5088879dfa6fd",
+  "metric_schema": "tripinfo_v2",
+  "packages": {
+    "PyYAML": "6.0.3",
+    "libsumo": "1.27.1",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "sumo-data": "1.27.1",
+    "sumolib": "1.27.1",
+    "traci": "1.27.1"
+  },
+  "python": "3.14.0",
+  "reward": "negative_local_queue_integral_v2",
+  "schema": "campaign_v2",
+  "source_sha256": {
+    "configs/base.yaml": "1380ab4fa4ee6828533c18f39fe5910b72cf22e93ea961612ceb3f2b8233e1eb",
+    "configs/communication.yaml": "5b75e6420f569f6a43f309e9743b530fb354351c697a6716d9d30488482697d0",
+    "configs/evaluation.yaml": "d30152abfa5aacf00ab269e17006b6cda9b96ce91e6a4a18f5f60cebe1efe5eb",
+    "configs/experiments.yaml": "ea66263401c6e536c19b13efc1a7e8e5f021af970bb5040620e1dcbc9da01e32",
+    "configs/followup_v2.yaml": "b17bbe823dbc07bbc06f9fced40957212e5725e6fc2726e6489aef53de76fce5",
+    "configs/metadata_calibration_001.yaml": "e4e9fde06893049296cafae4255b3252f02cc9f1faee03d2af087523434e58f1",
+    "configs/metadata_calibration_01.yaml": "7795eb7a738b16adcd9f517193aa271a1ea93ffd5d8ba489e110cdcb781ca7fe",
+    "configs/network.yaml": "aafa3e5ad2f42a877996061e0bb6ecc2d1f7419b18ad324f0ff6d9c031848bd5",
+    "configs/phase10.yaml": "e498dfa2eb7a8e50006a44835c139ad775d576c837df86c21f1663266423c1bf",
+    "configs/phase11.yaml": "6914af5e3cd0807dbe363254bcb96c44f86e9ba1fc85230ed1671f6104fdda46",
+    "configs/phase11_reserved_final.yaml": "6a7da682c765fe95d721850aa0b9e046a0d6a882a8edfefdf67751789694deab",
+    "configs/phase2.yaml": "9332ec64a8b408699bc63e61c3c9f217f0b46ae0b8b8d3bcc52ae4c7c69e3cb0",
+    "configs/phase3.yaml": "c6832fbec2205504f6cfbe871aa0f5b6954180f51d3e6b62113dcb400938dec0",
+    "configs/phase7.yaml": "34ae6ef2cfce02865cdca9962e563fa85bfd5c4c602006eadbd07c3fa13fbebd",
+    "configs/phase8.yaml": "004de548366e678d524bb61f4e3262b73acffcb2057745c442baa3e44a2604d9",
+    "configs/phase9.yaml": "1c6c5a18683658c0366f57e5d139203896b505d5261f576061988274564be251",
+    "configs/training.yaml": "eb89ab6959aa3c90535ee63860ee7c8a24eefe011ffd513029e1348666e55d1c",
+    "configs/training_validation_v1.yaml": "a3235172960316be9d543dcdfa051540c1e29801c68281e5ca5390a163957177",
+    "configs/training_validation_v3.yaml": "e4f591b035bd87dee94c25a164eaf3077d306ba8ee52e98139560dfce60b0e22",
+    "configs/training_validation_v4.yaml": "cc03c6032c0fcfc3461c8328086ea4bcc02dc365d0c54728c2de94f127cf5f5f",
+    "pyproject.toml": "da89eaa61cb850bbc5565f0644036e8e2aa34343bb63c3c23a07515a347381d1",
+    "requirements-research-lock.txt": "f8cd7992b0c7dadeba51b38e8077095f8981da76f76c3c9bdd120167930061f5",
+    "scripts/analyze_final.py": "8e0cf28c5ef329643f0caff450a4f31b53f2e46d8c5cf35e911e2bb8d35ebe3d",
+    "scripts/audit_followup.py": "b162e293a03924b38d99d669b8d271d34d81835f713c1fd57f6cc830b13d6904",
+    "scripts/generate_network.py": "3e93240e8960dd87d92032dd6764e173cf7af5898125aba0aabfab5a1d8b61db",
+    "scripts/run_followup.py": "91a658125869d2606c6c4e73e65b331d27b41aa9efef45798cedd453e76516e7",
+    "scripts/run_phase10_adaptive_communication_smoke.py": "13c1a255b61bffc072fdf13231c3d93d53efe5aa9ed5cf214391865d66435ff4",
+    "scripts/run_phase11_final_experiments.py": "77818f081a92b0060b854e34e863936f84bb9be5ae155ee0614ff2cbfc20f63a",
+    "scripts/run_phase2_smoke_training.py": "7b24711cff5c43e96457029e8546b0a4e3d60772797f5312ae2c1e3fdd3887fd",
+    "scripts/run_phase3_smoke_training.py": "b198baf74844bd75031fffccdfe94a12704196f1c89e73b14da3b934c23541d2",
+    "scripts/run_phase4_communication_smoke.py": "1b6e986b7a8d0b41cd9394d1fe9a437a9ec7263b9107a2053f488dbaccdf9eee",
+    "scripts/run_phase5_packet_loss_smoke.py": "1a56673c654765e2bda3a7ed6e1b63245e279a57709267027cabff9257bd8097",
+    "scripts/run_phase6_communication_delay_smoke.py": "657c92e229f482af5004a039a364d843293576394bba3d0901a8720182ad6f05",
+    "scripts/run_phase7_combined_impairment_experiments.py": "2524dc53d293cdce46b53b65ced17d93b87ec62298918ff409d4301f6935305e",
+    "scripts/run_phase7_combined_impairment_smoke.py": "4370c8407d04a0ffde98ddbf211ca7f2e026c49ed98532ced52742c05e035cfe",
+    "scripts/run_phase8_freshness_aware_smoke.py": "dc968242e7e5b2922518de76633646f1a3495bd2e0486f418d521ed1b9d5dbf3",
+    "scripts/run_phase9_robust_training_smoke.py": "9187e1ad4bc2c731460c1f68df47fdc31b68f7cf9b5c71834c331c9d0433e56b",
+    "scripts/run_sumo_smoke.py": "b474fbc207d3a4c5f96f529e61b7876e1de841475fddfe31942c9ed0a25017d0",
+    "src/traffic_control/__init__.py": "edddb134ed5cd8e5886cb6337ec1bd65222aa4cad3385a6b6aa3847dcc9fa801",
+    "src/traffic_control/communication/__init__.py": "fc12ce77fbf46b6d4d5353f91d19ee96d1d950bf75d1b9dbb6e2d2cae200cd7c",
+    "src/traffic_control/communication/action_margin.py": "beb8a697792e79bea19fb37d034dfc58d476bb9a282754b1b8f3f69e995de261",
+    "src/traffic_control/communication/channel.py": "c5233f6e9c2eec4affd83af4d841a5f5d0f19678665660dc4c9b35c2a3b4c8ce",
+    "src/traffic_control/communication/freshness.py": "6226724c5798b867e62a65a2e5ab0637d69c0fec857b453a23beff10fefc7596",
+    "src/traffic_control/communication/message.py": "5f690af1b1d81d84e6d71300e964cb72d3bfe702b1f271256bf413905b110ccc",
+    "src/traffic_control/communication/scheduler.py": "db51c7f46aa5261a42a83e65c137dba57111fec7988f8d2b74f149081a50c95c",
+    "src/traffic_control/communication/topology.py": "6988ef5f6dd9cf915d604f9741a136828bd1d824783d7791244ac19924d0d43a",
+    "src/traffic_control/config.py": "e40fadf3da1800d750ebd4bcca77eac6e52c1b14aeeb0a36de3732ac2835ec40",
+    "src/traffic_control/environment/__init__.py": "d0b1e8f924310e4664ac9d3122212354053c71ba443d77085d61b091720d2d3b",
+    "src/traffic_control/environment/metrics.py": "bbd3fd08be232d6e0c4d2d3b5e502984d0f03c0d633dec66cc1d5ed22ff3a3bd",
+    "src/traffic_control/environment/safe_signals.py": "250e69795d34ce998d1e80ca3cd01ba5069ec617dbc8f13eb3437b3ff0bd951d",
+    "src/traffic_control/environment/signal_controller.py": "86aad8ff3ea5e66cebefa99b66a6684c340b7d83d4bc224f2d04e312c1bd5dc5",
+    "src/traffic_control/environment/sumo_env.py": "38324d950875914eee77782c18d50593fc65f674588cc9915b8997e43d8f3284",
+    "src/traffic_control/environment/traffic_state.py": "95c66939e29416acee6d26995337235be004bdcc2737d04958ea7d92f48e8525",
+    "src/traffic_control/environment/trip_metrics.py": "80506682f10f5868f6b256216273b7a800c1c51faafd575ccf5ac2907d4889e7",
+    "src/traffic_control/experiments/__init__.py": "390df00f25c48264ba4830fdd4cb84df85370b7e7570a4ea844afdff0bcec3de",
+    "src/traffic_control/experiments/artifacts.py": "d6f754d4cfcfea71cca41104399230d8189a36f591e98807b98a6784b7648396",
+    "src/traffic_control/experiments/confirmatory_analysis.py": "d9df9002a0fc164c52417df89c317a70a477ce71e3dcf90c56837d1944b7e3a9",
+    "src/traffic_control/experiments/followup.py": "617e11059e6f41e1a88d2c78ffa64120d7d8465525e73baefb6e642e6bb6161d",
+    "src/traffic_control/experiments/followup_analysis.py": "16834e4650663075960806ae26030ebcbdeb6b2ec49e849af8578ed5e9cbf474",
+    "src/traffic_control/experiments/followup_design.py": "40e320200aacb4bd66054671e89032e85f82ecfef0da1bc474e59ca3f8b56dd6",
+    "src/traffic_control/experiments/phase10.py": "ea0551de1b1ff9ae34e722f0c1d02cf4f1c076fe16951f2eed5b83850f37606d",
+    "src/traffic_control/experiments/phase11.py": "ff41557b3e7c9a7fd961d94bf632195309c554cd16d05d77d688b7ed4d658b98",
+    "src/traffic_control/experiments/phase7.py": "cb85498dbd8afe3f5e78ecafd808adda73590f8638a677bc1edc89dfc0294c55",
+    "src/traffic_control/experiments/phase9.py": "dc04aa2deab47d3f41180bbb50422b132e98edda49f113ad1c3c3c02586ab26e",
+    "src/traffic_control/experiments/research_audit.py": "f4090db4d11d187191cc42660bebcdd0ba6f6fbbaaddaaabb8ef6e50789ba2d4",
+    "src/traffic_control/rl/__init__.py": "92d9e482cc7bd5120343f593beddf426da6c08ff17c86bd1a8a26fccdff29054",
+    "src/traffic_control/rl/communication_aware_env.py": "26a370db51f230e44582f3491d0a9827c637bc1866b48cd4e48e72f0b18f89a0",
+    "src/traffic_control/rl/followup_env.py": "b771d2a7ee9f19b59a7cf700c72fecc81b999683a24ae85055f393038630ca86",
+    "src/traffic_control/rl/multi_agent_env.py": "47fcdabe2a7863957b683145ac0253016118a97d2cdbffd79dda43ed5e6a6d23",
+    "src/traffic_control/rl/phase_features.py": "3b26b063d82da27646a42357ff2e08a3039351338ac81a7ea03f1e8c604036b6",
+    "src/traffic_control/rl/q_learning.py": "31d57381aa8b454af2c5a6ffc98ebd2d48c6d9a5cab82ad6d5c6b634c4bb153a",
+    "src/traffic_control/rl/single_agent_env.py": "4aabf635595d47d196272c062d7b2486fda44eb4ed9bbf6db673e6f15d83ac92",
+    "sumo/network/grid.net.xml": "9c5600c3015ccfad40c8def18c080c2642025a31271477a6ae9ef9711b939b6c"
+  },
+  "sumo": "Eclipse SUMO sumo 1.27.1"
+}

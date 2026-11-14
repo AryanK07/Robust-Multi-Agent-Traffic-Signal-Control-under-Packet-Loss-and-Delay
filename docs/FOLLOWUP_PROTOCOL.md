@@ -1,5 +1,12 @@
 # Phase 11 follow-up v2 — development protocol
 
+This document preserves the first development-pilot design. The later
+[reserved-seed protocol](PHASE11_RESERVED_PROTOCOL.md) records the accepted
+completion work, including phase-relative observations, training termination,
+81 episodes and metadata scale 0.1. In that version, the four active metadata
+coordinates are bounded by the actual scaled range, not the pilot's unit
+range. Each design retains its own committed source and output directory.
+
 On 2026-11-13 the user authorized correction of the audit findings and selected
 action-sensitive communication within existing linear IQL. This is a new,
 exploratory protocol. The original Phase 11 record and unfavorable findings

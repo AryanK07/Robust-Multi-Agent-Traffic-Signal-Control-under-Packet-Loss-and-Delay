@@ -1,5 +1,42 @@
 # Experiment Log
 
+## Reserved-seed final campaign — 2026-11-13
+
+- ID `reserved_final_001`, source `c9547d6176e4d15520ea9492e6a5088879dfa6fd`,
+  configuration `configs/phase11_reserved_final.yaml`; protocol and analysis
+  committed before collection. Reserved master seeds 41001–41005.
+- Existing four-junction network; 20 seeded vehicles over 30 seconds,
+  120-second evaluation; 50 ms simulation / 100 ms communication / 1 s actions.
+- Nine variants, matched 81 training episodes, alpha 0.01, gamma 0.95, epsilon
+  0.2 training / 0 evaluation; phase-relative state, metadata scale 0.1 and
+  training termination after all active/future demand clears. Robust training
+  uses nine complete cycles of losses 0/0.1/0.2 × delays 0/250/500 ms.
+- Evaluation: all 25 declared conditions, nine extreme held-outs, five full
+  robust communication strategies on identical frozen checkpoints.
+- Completed 45 checkpoint sets, 3645 training and 1505 evaluation episodes;
+  zero execution failures. Nineteen evaluations were censored, all full ideal
+  seed 41003. All training traffic completed. No test-outcome retuning.
+- Independent audit verified exact coverage, 180 checkpoint files, 73 source
+  files, recomputed tripinfo metrics, paired demand, seed separation, training
+  schedules and transmission accounting. Original 870 files are unchanged.
+- Mean waiting: full ideal 9.84272 s/vehicle, full robust/local 6.9195.
+  Completion: full ideal 96.6%, full robust/local 100%. Held-out robust-minus-
+  ideal effect -2.3343 s, descriptive 95% interval [-8.5167,3.8482].
+- Full robust mean attempts: always 9600, periodic 960, state-change 339.6,
+  periodic pull and action-sensitive both 1793.92. All 600000 action-bound
+  checks were uncertain; no gate-specific suppression benefit was observed.
+- All 13 Holm-adjusted p-values equal 1; five seeds cannot support a p<0.05
+  exact two-sided rejection. No superiority, equivalence or novelty claim.
+- Full robust matched local on all seven compared traffic fields across all
+  625 strategy/condition/seed records. Neighbor-zeroing changed 732/60000
+  immediate full-robust always actions; this diagnostic is not a trained
+  ablation or evidence of useful coordination.
+- Generated statistics, seed-level effects, all condition summaries,
+  degradation values and five figures are linked from
+  [the Phase 11 readiness report](docs/PHASE11_READINESS.md). The small scenario,
+  fixed delays, one traffic stream per seed, censoring and empty-network
+  communication tail remain limitations. Phase 12 is unstarted.
+
 ## Finite metadata calibration — 2026-11-13
 
 - IDs `metadata_calibration_01` and `metadata_calibration_001`, source

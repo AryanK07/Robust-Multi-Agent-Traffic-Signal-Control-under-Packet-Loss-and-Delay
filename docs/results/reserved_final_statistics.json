@@ -1,0 +1,4006 @@
+{
+  "integrity": {
+    "campaign_identity": "99301db0a93c6d44f15cb7170c22447af1a70ff5fcf09d7d1969ed5ae028cb31",
+    "source_commit": "c9547d6176e4d15520ea9492e6a5088879dfa6fd",
+    "expected_evaluations": 1505,
+    "successful_evaluations": 1505,
+    "training_sets": 45,
+    "failed_attempts": 0,
+    "source_files_verified": 73,
+    "paired_demand_verified": true,
+    "seed_domains_disjoint": true,
+    "checkpoint_files": 180,
+    "training_episodes": 3645,
+    "training_censored": 0,
+    "evaluation_episodes": 1505,
+    "evaluation_censored": 19
+  },
+  "method_estimates": [
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.6995,
+        42.01809607843137,
+        47.215,
+        43.74
+      ],
+      "mean": 43.783519215686276,
+      "sd": 2.205094881997354
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.637499999999999,
+        21.2826,
+        8.1875,
+        7.261
+      ],
+      "mean": 9.84272,
+      "sd": 6.46038091500803
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        0.83,
+        1.0,
+        1.0
+      ],
+      "mean": 0.966,
+      "sd": 0.07602631123499287
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9395833333333333,
+        3.5471,
+        1.3645833333333333,
+        1.2101666666666666
+      ],
+      "mean": 1.6404533333333333,
+      "sd": 1.0767301525013384
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        11.36,
+        40.16,
+        94.04,
+        13.56,
+        48.12
+      ],
+      "mean": 41.448,
+      "sd": 33.52283281585851
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1425488,
+        1391428.4,
+        1432118,
+        1427596
+      ],
+      "mean": 1421818.48,
+      "sd": 17246.497521294037
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.12,
+        22.0,
+        33.0,
+        26.8
+      ],
+      "mean": 26.784,
+      "sd": 4.010645833279224
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        6270.0,
+        4670.0,
+        5270.000000000001,
+        5870.000000000001,
+        5670.000000000001
+      ],
+      "mean": 5550.000000000001,
+      "sd": 609.9180272790763
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.00000000000034,
+        370.00000000000034,
+        370.00000000000034,
+        370.00000000000034,
+        370.00000000000034
+      ],
+      "mean": 370.00000000000034,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        1021.092161722707,
+        1008.7488952788931,
+        1026.336327683351,
+        1053.1022376224544,
+        1048.2761205377285
+      ],
+      "mean": 1031.5111485690268,
+      "sd": 18.712920967684376
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        3.76,
+        3.68,
+        6.16,
+        5.28,
+        2.64
+      ],
+      "mean": 4.304,
+      "sd": 1.4010281938633498
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        139247.68,
+        140142,
+        140802,
+        138823.84,
+        138770.8
+      ],
+      "mean": 139557.264,
+      "sd": 886.5047291921273
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        1791,
+        1801.2,
+        1798,
+        1788.6,
+        1790.8
+      ],
+      "mean": 1793.92,
+      "sd": 5.389990723554214
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        11780.000000000002,
+        10431.999999999996,
+        12308.0,
+        10000.000000000004,
+        14147.999999999998
+      ],
+      "mean": 11733.6,
+      "sd": 1647.797560381735
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.00000000000006,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 2.5421149729252075e-14
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        2704.487476216463,
+        2578.5915083482246,
+        2626.404166666667,
+        2509.7622746028032,
+        2652.6094624633474
+      ],
+      "mean": 2614.370977659501,
+      "sd": 74.07954145603237
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        2.6,
+        1.2,
+        4.36,
+        1.2,
+        0.2
+      ],
+      "mean": 1.9120000000000001,
+      "sd": 1.6132947653792225
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        51402,
+        50350,
+        51474,
+        53770,
+        50000
+      ],
+      "mean": 51399.2,
+      "sd": 1473.5057516005834
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        340,
+        334,
+        338,
+        354,
+        332
+      ],
+      "mean": 339.6,
+      "sd": 8.648699324175862
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        4.28,
+        5.6,
+        7.84,
+        7,
+        4.56
+      ],
+      "mean": 5.856,
+      "sd": 1.5389866796044727
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1425356,
+        1437994,
+        1432118,
+        1428038
+      ],
+      "mean": 1431193.6,
+      "sd": 4815.188968254517
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        3640.0,
+        3840.0,
+        3640.0,
+        5240.0,
+        4240.0
+      ],
+      "mean": 4120.0,
+      "sd": 672.3094525588645
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        369.9999999999996,
+        369.99999999999966,
+        369.99999999999966,
+        369.99999999999966,
+        369.99999999999966
+      ],
+      "mean": 369.99999999999966,
+      "sd": 2.5421149729252075e-14
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        963.7251051498476,
+        954.2251433189247,
+        959.6666666666666,
+        1002.1287434391647,
+        982.6630346879663
+      ],
+      "mean": 972.481738652514,
+      "sd": 19.728226322062714
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        6,
+        7.04,
+        6.72,
+        7.88,
+        7.44
+      ],
+      "mean": 7.016,
+      "sd": 0.715318111052698
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        140122,
+        139432,
+        140586,
+        140086,
+        139678
+      ],
+      "mean": 139980.8,
+      "sd": 444.4493221954557
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        960,
+        960,
+        960,
+        960,
+        960
+      ],
+      "mean": 960,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        6270.0,
+        4670.0,
+        5270.000000000001,
+        5870.000000000001,
+        5670.000000000001
+      ],
+      "mean": 5550.000000000001,
+      "sd": 609.9180272790763
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.00000000000034,
+        370.00000000000034,
+        370.00000000000034,
+        370.00000000000034,
+        370.00000000000034
+      ],
+      "mean": 370.00000000000034,
+      "sd": 0.0
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        1021.092161722707,
+        1008.7488952788931,
+        1026.336327683351,
+        1053.1022376224544,
+        1048.2761205377285
+      ],
+      "mean": 1031.5111485690268,
+      "sd": 18.712920967684376
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        3.76,
+        3.68,
+        6.16,
+        5.28,
+        2.64
+      ],
+      "mean": 4.304,
+      "sd": 1.4010281938633498
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        139247.68,
+        140142,
+        140802,
+        138823.84,
+        138770.8
+      ],
+      "mean": 139557.264,
+      "sd": 886.5047291921273
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        1791,
+        1801.2,
+        1798,
+        1788.6,
+        1790.8
+      ],
+      "mean": 1793.92,
+      "sd": 5.389990723554214
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean": 0,
+      "sd": 0.0
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean": 0,
+      "sd": 0.0
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "mean": 0,
+      "sd": 0.0
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        4.28,
+        16.88,
+        10.16,
+        5,
+        4.52
+      ],
+      "mean": 8.168,
+      "sd": 5.438926364642198
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1425356,
+        1437994,
+        1432118,
+        1428038
+      ],
+      "mean": 1431193.6,
+      "sd": 4815.188968254517
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        4.68,
+        8.08,
+        11.12,
+        6.4,
+        7.84
+      ],
+      "mean": 7.624,
+      "sd": 2.379176328059776
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1425356,
+        1437994,
+        1432118,
+        1428038
+      ],
+      "mean": 1431193.6,
+      "sd": 4815.188968254517
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        19.4,
+        19.24,
+        21.44,
+        28.16,
+        37.72
+      ],
+      "mean": 25.192,
+      "sd": 7.8868701016309375
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1425356,
+        1437994,
+        1432118,
+        1428038
+      ],
+      "mean": 1431193.6,
+      "sd": 4815.188968254517
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        4.28,
+        5.56,
+        7.84,
+        7,
+        4.56
+      ],
+      "mean": 5.848,
+      "sd": 1.5407530626287913
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1425356,
+        1437994,
+        1432118,
+        1428038
+      ],
+      "mean": 1431193.6,
+      "sd": 4815.188968254517
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.65,
+        43.655,
+        47.215,
+        43.755
+      ],
+      "mean": 44.104,
+      "sd": 2.0027306359068877
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.6,
+        6.8225,
+        8.1875,
+        7.1425
+      ],
+      "mean": 6.9195,
+      "sd": 0.9237954995560437
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9333333333333333,
+        1.1370833333333332,
+        1.3645833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1532499999999999,
+      "sd": 0.1539659165926739
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        33.6,
+        23.6,
+        68.6,
+        50.88,
+        44.44
+      ],
+      "mean": 44.224,
+      "sd": 17.15194682827579
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1425356,
+        1437994,
+        1432118,
+        1428038
+      ],
+      "mean": 1431193.6,
+      "sd": 4815.188968254517
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.0,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.4,
+      "sd": 3.286335345030997
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "agent_decisions",
+      "n": 5,
+      "seed_means": [
+        480,
+        480,
+        480,
+        480,
+        480
+      ],
+      "mean": 480,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "average_completed_travel_time",
+      "n": 5,
+      "seed_means": [
+        44.245,
+        41.8795,
+        43.655,
+        48.3125,
+        43.755
+      ],
+      "mean": 44.3694,
+      "sd": 2.3796517444785903
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "average_waiting_time",
+      "n": 5,
+      "seed_means": [
+        6.845,
+        5.750500000000001,
+        6.8225,
+        8.4755,
+        7.1425
+      ],
+      "mean": 7.0072,
+      "sd": 0.9764641314456972
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "completion_fraction",
+      "n": 5,
+      "seed_means": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "max_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        684.0000000000002,
+        692.0000000000005,
+        691.9999999999994,
+        692.0000000000007,
+        668.0000000000008
+      ],
+      "mean": 685.6000000000004,
+      "sd": 10.43072384832398
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "mean_delivered_delay_ms",
+      "n": 5,
+      "seed_means": [
+        370.0,
+        370.0,
+        370.0,
+        370.0,
+        370.0
+      ],
+      "mean": 370.0,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "mean_message_age_ms",
+      "n": 5,
+      "seed_means": [
+        398.17554302643606,
+        397.12022031890825,
+        396.68333333333254,
+        397.32556930547355,
+        396.15574050147853
+      ],
+      "mean": 397.0920812971258,
+      "sd": 0.7538247072376215
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "mean_queue_length",
+      "n": 5,
+      "seed_means": [
+        1.1408333333333334,
+        0.9584166666666667,
+        1.1370833333333332,
+        1.4125833333333333,
+        1.1904166666666667
+      ],
+      "mean": 1.1678666666666666,
+      "sd": 0.1627440219076162
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "neighbor_action_changes",
+      "n": 5,
+      "seed_means": [
+        13.84,
+        122.52,
+        22.12,
+        168.76,
+        69.16
+      ],
+      "mean": 79.28,
+      "sd": 66.1975105272094
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "payload_bytes",
+      "n": 5,
+      "seed_means": [
+        1432462,
+        1426335.6,
+        1437994,
+        1434292.8,
+        1428038
+      ],
+      "mean": 1431824.48,
+      "sd": 4717.712550802539
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "send_attempts",
+      "n": 5,
+      "seed_means": [
+        9600,
+        9600,
+        9600,
+        9600,
+        9600
+      ],
+      "mean": 9600,
+      "sd": 0.0
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "metric": "total_stops",
+      "n": 5,
+      "seed_means": [
+        27.0,
+        25.2,
+        25.0,
+        33.0,
+        27.0
+      ],
+      "mean": 27.44,
+      "sd": 3.250846043724618
+    }
+  ],
+  "planned_test_family": [
+    {
+      "name": "loss_only",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0.3,
+          0
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "delay_only",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "combined",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "loss_delay_interaction",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "freshness_same_robust_training",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        -0.1505000000000006,
+        0.0,
+        -0.2880000000000006,
+        0.0
+      ],
+      "mean_difference": -0.08770000000000024,
+      "standard_deviation": 0.12955481465387567,
+      "descriptive_t_interval_95": [
+        -0.2485635491496791,
+        0.07316354914967864
+      ],
+      "exact_sign_flip_p": 0.5,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "robust_training_held_out",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        -0.10416666666666667,
+        -11.238055555555556,
+        0.0,
+        -0.32916666666666683
+      ],
+      "mean_difference": -2.334277777777778,
+      "standard_deviation": 4.979177400422338,
+      "descriptive_t_interval_95": [
+        -8.516743096552002,
+        3.8481875409964466
+      ],
+      "exact_sign_flip_p": 0.25,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "action_gate_vs_periodic_pull_average_waiting_time",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "action_gate_vs_periodic_pull_send_attempts",
+      "metric": "send_attempts",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "action_gate_vs_periodic_pull_completion_fraction",
+      "metric": "completion_fraction",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "no_age_robust_minus_full",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "no_availability_robust_minus_full",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "no_decay_robust_minus_full",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    },
+    {
+      "name": "no_stale_robust_minus_full",
+      "metric": "average_waiting_time",
+      "conditions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ],
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          500
+        ],
+        [
+          0,
+          1000
+        ],
+        [
+          0.05,
+          0
+        ],
+        [
+          0.05,
+          100
+        ],
+        [
+          0.05,
+          250
+        ],
+        [
+          0.05,
+          500
+        ],
+        [
+          0.05,
+          1000
+        ],
+        [
+          0.1,
+          0
+        ],
+        [
+          0.1,
+          100
+        ],
+        [
+          0.1,
+          250
+        ],
+        [
+          0.1,
+          500
+        ],
+        [
+          0.1,
+          1000
+        ],
+        [
+          0.2,
+          0
+        ],
+        [
+          0.2,
+          100
+        ],
+        [
+          0.2,
+          250
+        ],
+        [
+          0.2,
+          500
+        ],
+        [
+          0.2,
+          1000
+        ],
+        [
+          0.3,
+          0
+        ],
+        [
+          0.3,
+          100
+        ],
+        [
+          0.3,
+          250
+        ],
+        [
+          0.3,
+          500
+        ],
+        [
+          0.3,
+          1000
+        ]
+      ],
+      "n": 5,
+      "seed_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_difference": 0.0,
+      "standard_deviation": 0.0,
+      "descriptive_t_interval_95": [
+        0.0,
+        0.0
+      ],
+      "exact_sign_flip_p": 1.0,
+      "holm_adjusted_p": 1.0,
+      "reject_at_familywise_05": false
+    }
+  ],
+  "inference_limitations": "Independent units are master seeds. Five-seed exact two-sided tests cannot attain p<0.05. Holm adjusts all 13 planned tests. Descriptive intervals do not prove equivalence.",
+  "censoring_warning": "Interpret waiting with completion; unfinished vehicles contribute only waiting until the horizon.",
+  "descriptive_diagnostics": [
+    {
+      "variant": "full_ideal",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 19,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 5181,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.637499999999999,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 21.2826,
+          "completion_mean": 0.83
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.261,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "action_sensitive",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "request_attempts": 120000,
+        "request_cooldown": 1080000,
+        "request_first": 1000,
+        "request_margin": 119000,
+        "response_attempts": 104240,
+        "uncertain_checks": 600000
+      },
+      "neighbor_action_changes": 538,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "adaptive",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_change": 20725,
+        "push_first": 500,
+        "push_suppressed": 578775,
+        "snapshot_attempts": 42450
+      },
+      "neighbor_action_changes": 239,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 732,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_first": 500,
+        "push_periodic": 59500,
+        "push_suppressed": 540000,
+        "snapshot_attempts": 120000
+      },
+      "neighbor_action_changes": 877,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "full_robust",
+      "strategy": "periodic_pull",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "request_attempts": 120000,
+        "request_cooldown": 1080000,
+        "request_first": 1000,
+        "request_periodic": 119000,
+        "response_attempts": 104240,
+        "uncertain_checks": 600000
+      },
+      "neighbor_action_changes": 538,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "local",
+      "strategy": "always",
+      "episodes": 5,
+      "censored": 0,
+      "trigger_totals": {},
+      "neighbor_action_changes": 0,
+      "agent_decisions": 2400,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "no_age_robust",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 1021,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "no_availability_robust",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 953,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "no_decay_robust",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 3149,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "no_stale_robust",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 731,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "plain_ideal",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 5528,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.6,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.1875,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "plain_robust",
+      "strategy": "always",
+      "episodes": 125,
+      "censored": 0,
+      "trigger_totals": {
+        "push_always": 599500,
+        "push_first": 500,
+        "snapshot_attempts": 1200000
+      },
+      "neighbor_action_changes": 9910,
+      "agent_decisions": 60000,
+      "seed_results": [
+        {
+          "master_seed": 41001,
+          "waiting_mean": 6.845,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41002,
+          "waiting_mean": 5.750500000000001,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41003,
+          "waiting_mean": 6.8225,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41004,
+          "waiting_mean": 8.4755,
+          "completion_mean": 1.0
+        },
+        {
+          "master_seed": 41005,
+          "waiting_mean": 7.1425,
+          "completion_mean": 1.0
+        }
+      ]
+    }
+  ],
+  "full_robust_vs_local_traffic_fields": [
+    "average_waiting_time",
+    "completion_fraction",
+    "average_completed_travel_time",
+    "mean_queue_length",
+    "total_stops",
+    "completed_trips",
+    "uninserted_vehicles"
+  ],
+  "full_robust_vs_local_differing_records": 0
+}

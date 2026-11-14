@@ -4,6 +4,14 @@
 
 ### Phase 11 completion work
 
+- Completed and independently audited the frozen 45-checkpoint, 3645-training,
+  1505-evaluation reserved-seed campaign with zero execution failures.
+- Preserved 19 censored final evaluations and the action gate's zero incremental
+  benefit over periodic pull. Generated seed-level tests, all-cell tables,
+  diagnostics and five figures; no superiority or novelty claim.
+- Added the complete readiness/disposition report and synchronized project
+  status, experiment ledger and reproduction instructions. Phase 12 is unstarted.
+
 - Added exclusive, checksummed research archives containing original records,
   all follow-up studies and restorable Git history. A restore/corruption test
   verifies the archive without modifying experimental data.

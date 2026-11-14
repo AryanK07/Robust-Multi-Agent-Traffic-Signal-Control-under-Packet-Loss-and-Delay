@@ -6,49 +6,62 @@ incrementally according to [PROJECT_SPEC.md](./PROJECT_SPEC.md).
 
 ## Current status
 
-The repository is in **Phase 11: audited; follow-up v2 implemented and its
-development pilot completed**. Phase 12 has not started. The original 755 evaluation records and
-15 production checkpoint sets are present locally and were independently
-checked. See the [Phase 11 audit](docs/PHASE11_AUDIT.md) for verified findings,
-limitations, validation, and the recommendation to conduct a focused follow-up
-before treating Phase 11 as scientifically complete.
+**Phase 11: independent audit and reserved-seed follow-up completed; archive
+publication is being finalized. Phase 12 has not started.**
 
-The audit corrected a communication-counter snapshot defect. Original results
-remain unchanged; bounded correction checks are stored separately under
-`results/phase11_audit_v1/`. The original waiting-time field is a snapshot-based
-proxy, not mean accumulated waiting per vehicle. Earlier phase sections below
-describe development history; their statements about deferred features should
-be read in that historical context.
+The [readiness report](docs/PHASE11_READINESS.md) distinguishes verified
+findings, original results, software corrections and remaining research
+limitations. The [original audit](docs/PHASE11_AUDIT.md) and every unfavorable
+development study remain preserved. All 870 original files are unchanged.
 
-## Authorized Phase 11 follow-up
+The final campaign at `c9547d6` completed 45 checkpoint sets, 3645 training
+episodes and 1505 frozen evaluations with zero execution failures. It covers
+all 25 conditions, four component ablations, five communication strategies
+and five reserved master seeds. Independent audits verified metrics, source,
+checkpoints, paired demand and separated training/evaluation seed domains.
+The full automated suite passed 106 tests; compilation passed.
 
-The [v2 protocol](docs/FOLLOWUP_PROTOCOL.md) implements corrected trip-level
-metrics, time-resolved communication, constrained signal transitions, matched
-linear-IQL baselines and component ablations. Its action-sensitive extension
-uses a receiver-local action-margin test; both requests and responses incur
-the configured communication impairment and cost. This is a research candidate,
-not a claim of established novelty or superiority.
+The results are mixed. Full robust waiting averaged 6.9195 seconds/vehicle
+versus 9.8427 for full ideal; 19 ideal-trained evaluations left unfinished
+trips. Paired uncertainty does not establish superiority. Full robust matched
+the local baseline's traffic metrics. State-change adaptive used 339.6 packet
+attempts versus 9600 always-transmit. The action-sensitive gate used 1793.92,
+exactly matching periodic pull: it added no measured suppression benefit.
+See [generated tables](docs/results/reserved_final_tables.md),
+[statistics](docs/results/reserved_final_statistics.json) and
+[figures](docs/results/reserved_final_plots). No novelty, superiority,
+equivalence or publication-readiness claim is made.
+
+## Reproduce the Phase 11 follow-up
+
+The [frozen protocol](docs/PHASE11_RESERVED_PROTOCOL.md) retains linear IQL and
+the original four-junction network. The separate follow-up adds accumulated
+tripinfo metrics, phase-relative observations, signal-transition constraints,
+time-resolved communication and receiver-local action-margin requests. Both
+request and response packets incur impairment and cost. The original waiting
+proxy and 20-second campaign are not pooled with these measurements.
+
+Use a clean Python 3.14 environment with SUMO 1.27.1 and
+`requirements-research-lock.txt`, then `python -m pip install -e . --no-deps`.
+See [archive restoration](docs/RESEARCH_ARCHIVE.md) for complete raw records,
+checkpoints and source history. Audit or regenerate analysis from restored data:
 
 ```powershell
-python scripts/run_followup.py --mode audit
-# Run only after committing the reviewed source/configuration:
-python scripts/run_followup.py --mode pilot --output results/followup_v2/development_001
-python scripts/run_followup.py --mode analyze --output results/followup_v2/development_001
+python scripts/audit_followup.py results/followup_v2/reserved_final_001
+python scripts/analyze_final.py results/followup_v2/reserved_final_001
 ```
 
-The bounded pilot completed 40 training episodes and 50 frozen evaluations
-without execution failures. All 50 evaluations left trips unfinished, so the
-four-episode policies do not establish adequate traffic control. Communication
-suppression works, but no traffic benefit or superiority is claimed. See the
-[measured pilot report](docs/FOLLOWUP_DEVELOPMENT_RESULTS.md) for every baseline,
-communication costs, uncertainty, validation and next steps. Original Phase 11
-files remain unchanged. A controlled training-budget study is required before
-a final research campaign; Phase 12 remains unstarted.
+To repeat collection, use a clean checkout of `c9547d6` and a new output
+folder; the following runs the full frozen campaign, not a short smoke test:
 
-The completed pilot records source commit `eada4cd`. Its output directory cannot
-be reused under a different source/configuration identity. To reproduce it,
-use that committed source with a clean working tree and a new output directory.
-Analysis of an existing campaign uses its saved manifest.
+```powershell
+python scripts/run_followup.py --mode run --config configs/phase11_reserved_final.yaml --output results/followup_v2/reserved_final_reproduction_001
+```
+
+Do not reuse an output folder under changed source or configuration. The
+[development pilot](docs/FOLLOWUP_DEVELOPMENT_RESULTS.md) and later validation
+studies are distinct from the reserved-seed test. Earlier phase sections below
+describe development history, not current missing features.
 
 ## Requirements
 

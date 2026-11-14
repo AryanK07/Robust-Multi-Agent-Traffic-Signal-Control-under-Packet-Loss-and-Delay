@@ -2,209 +2,86 @@
 
 ## Current Phase
 
-Phase 11 — Follow-up v2 implemented; bounded development pilot completed.
-
-Phase 12 has not started. See [the audit report](docs/PHASE11_AUDIT.md).
+Phase 11 — independent audit and frozen follow-up completed; off-machine
+archive publication/verification remains the final technical prerequisite.
+Phase 12 has not started. See [the readiness report](docs/PHASE11_READINESS.md).
 
 ## Completed
 
-- Follow-up v2 tripinfo metrics, immutable campaign storage, action-margin
-  communication, time-resolved environment and constrained signal transitions.
-- Matched fresh-training/evaluation runner, seeded demand, explicit held-out
-  impairments and executable component ablations.
-- Frozen pilot: 10 checkpoint sets, 40 training episodes, 50 evaluations and
-  no execution failures. All evaluations left trips unfinished; see
-  [the measured report](docs/FOLLOWUP_DEVELOPMENT_RESULTS.md).
-
-- Deterministic 2x2 SUMO grid with four signalized junctions created.
-- Deterministic six-vehicle route demand and SUMO configuration added.
-- TraCI environment wrapper supports start, reset, step, close, simulation
-  time, traffic-light access, and programmatic phase selection.
-- Traffic-state extraction provides vehicle count, waiting time, queue length,
-  lane occupancy, and current phase.
-- Reusable metrics collector provides waiting-time, queue, vehicle, completed
-  trip, and simulation-duration summaries.
-- Phase 1 tests and a headless smoke-test script added.
-- Single-agent RL environment added for intersection `A0`.
-- Five-component normalized local observation and two-action phase-control
-  interface added.
-- Configurable delta queue/waiting-time reward added.
-- NumPy-only linear Q-learning agent with `.npz` save/load added.
-- Reproducible smoke training, CSV logging, JSON evaluation, and tests added.
-- Four-agent synchronized environment added for `A0`, `A1`, `B0`, and `B1`.
-- Independent Q-Learning learners and per-agent checkpoints added.
-- Joint action stepping advances SUMO exactly once and returns local rewards.
-- Phase 3 smoke training, evaluation, logging, and save/load verification added.
-- Ideal communication channel added with typed messages and simulation timestamps.
-- Explicit cardinal neighbor topology added for the 2x2 grid.
-- Phase 3 environment exposes send/receive operations without changing its
-  observation, action, reward, or learning interfaces.
-- Phase 4 communication smoke test and SUMO time-preservation test added.
-- Seeded stochastic packet-loss model added to the communication channel.
-- Bounded send/delivery/drop telemetry and observed-loss-rate reporting added.
-- Phase 5 packet-loss smoke test added; zero-delay behavior is preserved.
-- Fixed simulation-time communication delay added with deterministic
-  millisecond-to-second scheduling, pending queues, tie-breaking, and
-  delivery telemetry.
-- Phase 6 delay and packet-loss compatibility smoke test added.
-- Configurable 5x5 Phase 7 condition matrix and five replicate seeds added.
-- Frozen-checkpoint experiment runner, immutable raw JSON results, and grouped
-  summaries added.
-- Causal-path audit documented: current Phase 3 policies do not consume
-  communication messages.
-- Separate freshness-aware communication policy and environment variant added
-  with 23-dimensional observations.
-- Simulation-time latest-neighbor cache, exponential freshness decay, stale
-  threshold, typed traffic snapshot payloads, and incompatible checkpoint
-  metadata validation added.
-- Phase 8 functional smoke test added.
-- Condition-randomized Phase 9 training utilities added using the Phase 7
-  25-condition matrix.
-- Separate ideal-trained and robust-trained communication-aware variants added
-  with balanced-cycle scheduling, isolated seed streams, episode metrics, and
-  checkpoint metadata.
-- Phase 9 smoke training added; it does not run a production campaign.
-- Rule-based always, periodic, and adaptive event-triggered communication
-  scheduler added with heartbeat, trigger, suppression, and reduction
-  telemetry.
-- Phase 10 scheduler configuration, tests, and smoke verification added.
-- Phase 11 final evaluation runner, frozen checkpoint audit, resumable raw
-  results, statistical summaries, paired comparisons, and figures added.
-- Production checkpoints trained for 25 episodes per seed for all three policy
-  variants across five master seeds.
-- Complete 755-run evaluation campaign completed successfully.
-- GitHub remote verified as `origin`.
+- Existing phases 0–11 inspected and preserved; original 755 evaluations,
+  15 checkpoint sets and all 870 artifact hashes independently checked.
+- Corrected channel telemetry/reset behavior and tested timing boundaries.
+- Separate follow-up tripinfo metrics, immutable campaign storage, matched
+  linear-IQL baselines, constrained signals and time-resolved communication.
+- Action-sensitive joint-box margin gate with counted impaired requests and
+  responses, matched periodic-pull control and component ablations.
+- Controlled development studies of training budget, phase-relative state,
+  training termination and finite metadata scaling; all unfavorable data kept.
+- Reserved-seed final campaign frozen at `c9547d6`: 45 checkpoint sets,
+  3645 training episodes and 1505 evaluations, no execution failures.
+- Independent full-data audit, paired seed analysis with one 13-test Holm
+  family, generated tables and five visually checked figures.
+- Verified literature comparison and archive builder with a successful source
+  restoration/corruption-detection test. No paper draft was produced.
 
 ## In Progress
 
-- User authorized completing Phase 11 prerequisites. A predeclared balanced
-  training-budget study is prepared in `docs/TRAINING_VALIDATION_PROTOCOL.md`.
-  It completed 896 SUMO episodes with no execution failures but failed the
-  predeclared usability criterion; see `docs/TRAINING_VALIDATION_RESULTS.md`.
-  A matched phase-relative observation comparison is prepared separately.
-  It also completed 896 episodes without execution failures; local control
-  improved but full-model feasibility remained inadequate. A separate
-  traffic-completion training comparison is now predeclared.
-  It completed another 896 episodes; full models still failed the criterion.
-  A finite metadata-scale calibration and reserved-seed analysis plan are
-  predeclared, retaining all negative development observations.
-  Both metadata calibration settings subsequently passed all eight final
-  development cells; scale 0.1 was selected by the predeclared rule.
-  The reserved-seed campaign is frozen in `docs/PHASE11_RESERVED_PROTOCOL.md`.
-
-- Scientific validation remains incomplete. The four-episode pilot does not
-  establish adequate greedy traffic control, convergence or a communication
-  performance advantage. The software extension is implemented and tested.
-- The original Phase 11 campaign and unfavorable follow-up outcomes are
-  preserved. Neither is relabeled as a successful final research evaluation.
+- Publish and independently verify the complete versioned research archive.
 
 ## Upcoming
 
-- Predeclare a controlled training-budget study on development data, with
-  greedy-policy validation and full robust-condition cycles.
-- Then evaluate communication controls/ablations on competent checkpoints
-  and freeze a separate confirmatory design before collecting final results.
-- Phase 12 remains deferred; no paper drafting has started.
+- After archive verification, Phase 12 may document the measured mixed/negative
+  findings and limitations. It remains unstarted under the user's boundary.
+- A stronger novelty, efficacy or broad-generalization claim needs a separately
+  approved study; no new scenario, model or outcome-driven tuning is scheduled.
 
 ## Tests
 
-Follow-up implementation validation: 93 tests passed; compilation passed.
-An end-to-end temporary training smoke completed 20/20 trips in 120 seconds
-of simulation. Subscription optimization preserved its waiting and reward
-outputs exactly. These are functional checks, not comparative research results.
-
-Tests validate configuration loading, required SUMO files, package metadata,
-YAML templates, and live SUMO start/step/signal-control/metrics/shutdown
-behavior when SUMO is available, Phase 2 observation/action validation and
-model persistence, Phase 3 four-agent validation, synchronized stepping,
-independent learners, and checkpoint restoration, plus Phase 4 message
-construction, topology validation, ideal delivery, SUMO time preservation, and
-Phase 5 seeded packet-loss validation and telemetry, plus Phase 7 matrix
-generation, validation, serialization, and aggregation, plus Phase 8 freshness, cache, checkpoint, and policy-interface
-tests, Phase 9 scheduler/seed/metadata/configuration tests, and Phase 10
-scheduling/telemetry tests.
-
-Independent audit execution: original suite 65 passed; post-correction suite
-68 passed, including three new channel/scheduler timing regression cases.
-Compilation and Phase 4–10 smoke checks passed. Five original and five
-separate corrected 20-step replays validated frozen evaluation and confirmed
-that the correction changes channel telemetry only.
+Full suite: **106 passed in 38.30 seconds**. Compilation passed. This includes
+live SUMO tests, complete TraCI/libsumo trajectory equivalence, feature/bounds
+compatibility, frozen validation RNG isolation, training termination, exact
+seed-level inference and archive restoration. Final analysis was executed on
+the complete campaign; tables/figures are generated from saved records.
+Earlier audit: 65 original tests, 68 after the counter correction, communication
+smokes for phases 4–10 and five original/five corrected frozen replays passed.
 
 ## Experiments
 
-Follow-up pilot at `eada4cd`: 40 training episodes and 50 frozen evaluations,
-zero execution failures; all 50 evaluations censored. All 90 tripinfo files
-reproduced stored metrics, 40 checkpoint hashes matched, and completed-run
-resume preserved all 421 manifest/raw/artifact files. Action-sensitive
-communication averaged 564.67 attempts versus 1797.67 periodic pull and 9600
-always-transmit; state-change adaptive used 206. Traffic outcomes were
-identical across strategies and inadequate. These are development findings,
-not evidence of superiority. Full data remain local under
-`results/followup_v2/development_001/`; selected generated summaries are in
-`docs/results/` and interpreted in `docs/FOLLOWUP_DEVELOPMENT_RESULTS.md`.
-
-The original Phase 11 directory contains exactly 755 required successful
-evaluation records and zero failed records, with 15 production checkpoint
-sets and 25 training records per set. Checkpoint hashes, 151 summaries, and
-six stored statistical comparisons were independently verified. All 870
-original artifact files remain unchanged. Audit evidence and corrected
-bounded validation are separate under `results/phase11_audit_v1/`; this is
-not a replacement final campaign. Earlier pilots/smokes remain functional
-verification only.
+- Final source: `c9547d6176e4d15520ea9492e6a5088879dfa6fd`.
+- Reserved seeds: 41001–41005, 81 training episodes per model, all 25 cells,
+  nine variants, five full-robust communication strategies; 1505/1505 present.
+- Audit verified 180 checkpoint files, 73 source/configuration files, all raw
+  traffic metrics, training schedules, demand pairing and seed separation.
+- Nineteen final evaluations were censored, all full-ideal seed 41003; no
+  training episode was censored. Execution success does not imply completion.
+- Full robust waiting 6.9195 s/vehicle, full ideal 9.84272; paired uncertainty
+  does not establish superiority. Local-only matches full robust traffic.
+- Adaptive state-change: 339.6 packet attempts versus always 9600. Action gate
+  and periodic pull: both 1793.92. The gate adds no measured suppression.
+- Six development studies also passed integrity checks. The original 870 files
+  and pilot 421-file snapshot remain unchanged. See the complete experiment
+  ledger and generated results linked in the readiness report.
 
 ## Known Issues
 
-### Current follow-up limitations
-
-- All four-episode greedy policies leave unfinished trips. Training-budget
-  adequacy and policy convergence require controlled development validation.
-- Only two master seeds and three impairment cells were collected; full
-  component ablations and the larger v2 matrix have not been run.
-- Conservative action bounds can over-request; measured savings do not prove
-  useful traffic control or superiority over the simpler adaptive scheduler.
-- Local observations omit the internal minimum-green timer. Fixed delays,
-  small demand/network, censoring, and limited independent seeds constrain
-  inference. No final novelty or publication-readiness claim is supported.
-- Complete raw outputs/checkpoints are local and ignored by Git; separate
-  off-machine research archiving remains necessary.
-
-### Original Phase 11 limitations (preserved historical record)
-
-The v2 pipeline addresses metric definition, time resolution, scheduler
-settings, matched exploration, provenance and signal-transition constraints.
-The following observations describe the preserved original campaign and
-legacy path, not unresolved equivalently named v2 defects.
-
-- The original waiting field averages consecutive-wait snapshots, not total
-  waiting per vehicle. No metric definition was silently changed.
-- All original episodes last 20 seconds and complete zero trips. Six fixed
-  vehicle departures do not constitute a realistic demand benchmark; SUMO's
-  default speed variation still depends on its seed.
-- The 100–1000 ms positive delays collapse to one decision-time class under
-  one-second decisions. Delay remains fixed, not stochastic.
-- One-second periodic/heartbeat settings necessarily suppress no sends.
-  The original 160-send field was a stale snapshot; actual completed episode
-  operations include 168 sends. The reporting defect is now corrected.
-- Both communication-aware policies contain the freshness mechanism;
-  component ablations, a non-freshness communication baseline, and held-out
-  impairment evaluation are absent. The local-only baseline uses a different
-  exploration schedule.
-- Five paired training seeds and 25 short training episodes limit inference.
-  Original robust waiting-proxy mean exceeds ideal, but paired uncertainty
-  crosses zero; no superiority or convergence is established.
-- Original result Git hashes predate the Phase 11 runner. Full configuration,
-  training provenance, dependency locking, and resume/retry safeguards need
-  improvement before a new campaign.
-- Channel counters persist across reused-environment resets; original Phase
-  11 uses fresh environments. Signal actions bypass yellow/minimum-green
-  transitions; replay emitted emergency-stop warnings.
-- All raw results/checkpoints are local and ignored by Git; a separate
-  research archive backup remains necessary.
+- Small network/demand, five independent seeds, one evaluation stream per seed,
+  fixed delays and censored outcomes limit external validity and inference.
+- Exact two-sided five-seed tests cannot attain p<0.05; every Holm-adjusted
+  p-value here equals 1. Identical observed outcomes do not prove equivalence.
+- The conservative action bound stayed uncertain on every final check. No
+  incremental action-gate benefit or useful traffic coordination is shown.
+- Original waiting is a snapshot proxy, not tripinfo waiting; original source
+  metadata predates the runner. These historical limitations remain recorded.
+- Original one-second scheduling explains zero suppression; the 160-send
+  snapshot defect is fixed and separate replays measure 168 actual attempts.
+- Whole-episode communication costs include empty-network time. Payload bytes
+  exclude wireless headers. No real-world safety or publication-readiness claim.
+- Off-machine archive publication remains pending at this status revision.
 
 ## Latest Commit
 
-Original Phase 11: `4161f42`; audit/counter correction: `959745d`.
-Versioned metrics/storage: `a5c0b6e`; action-sensitive environment: `209f426`.
-Follow-up runner and frozen pilot source: `eada4cd`.
-The measured pilot documentation is recorded in the commit containing this
-status update; use `git log -1` for that documentation commit's resolved hash.
+Original Phase 11 `4161f42`; audit `959745d`; initial v2 pilot `eada4cd`;
+reserved final source `c9547d6`; archive tooling `1937f06`.
+This report/results revision is identified by its containing Git commit;
+`git log -1` gives the resolved documentation commit. Runtime source remains
+explicitly tied to the frozen campaign, not a later documentation commit.
